@@ -30,8 +30,12 @@ export default class DashboardContainer extends Component {
           <BigInfoItem text={this.state.InfoItems[2].text} value={this.state.InfoItems[2].value} />
         </div>
         <div className="top5Grid">
-          <h1>Top 5 Requested Routes</h1>
-          <Top5Grid />
+          <div>
+            <h1>Top 5 Requested Routes</h1>
+          </div>
+          <div>
+            <Top5Grid />
+          </div>
         </div>
       </div>
     );
