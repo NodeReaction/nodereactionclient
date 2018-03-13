@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import TimeSelector from "../components/TimeSelector.jsx"
 
 export default class DashboardContainer extends Component {
   constructor(props) {
@@ -7,6 +8,8 @@ export default class DashboardContainer extends Component {
   }
 
   render() {
-    return <div>Hello Chris!</div>;
+    return (
+      <div><TimeSelector /></div>
+    );
   }
 }
