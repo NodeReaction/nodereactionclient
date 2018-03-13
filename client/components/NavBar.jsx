@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Toolbar,
   ToolbarGroup,
@@ -16,8 +16,12 @@ export default class NavBar extends Component {
   render() {
     return (
       <Toolbar>
-        <RaisedButton label="Routes" primary={true} />{" "}
-        <RaisedButton label="Traces" primary={true} />
+        <Link to="/routes">
+          <RaisedButton label="Routes" primary={true} />
+        </Link>
+        <Link to="/">
+          <RaisedButton label="Traces" primary={true} />
+        </Link>
       </Toolbar>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import TimeSelector from "../components/TimeSelector.jsx";
 import BigInfoItem from "../components/BigInfoItem.jsx";
 import Top5Grid from "../components/Top5Grid.jsx";
