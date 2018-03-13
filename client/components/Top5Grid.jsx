@@ -4,7 +4,7 @@ const ReactDataGrid = require('react-data-grid');
 
 const { Toolbar, Filters: { NumericFilter, AutoCompleteFilter, MultiSelectFilter, SingleSelectFilter }, Data: { Selectors } } = require('react-data-grid-addons');
 
-export default class Example extends Component {
+export default class Top5Grid extends Component {
   constructor(props, context) {
     super(props, context);
     this._columns = [
