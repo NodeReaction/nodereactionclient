@@ -4,6 +4,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import Dashboard from "./containers/DashboardContainer.jsx";
 import Routes from "./containers/RoutesContainer.jsx";
+import Analytics from "./containers/IndividualRouteContainer.jsx";
 
 import NavBar from "./components/NavBar.jsx";
 
@@ -16,11 +17,12 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <NavBar />
         <BrowserRouter>
           <div>
+            <NavBar />
             <Route exact path="/" component={Dashboard} />
             <Route path="/routes" component={Routes} />
+            <Route path="/route/:id/:default_time" component={Analytics} />
           </div>
         </BrowserRouter>
       </MuiThemeProvider>
