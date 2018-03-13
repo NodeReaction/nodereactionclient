@@ -1,12 +1,9 @@
 body {
-    background: black;
+    background: white;
     color: #005CC5;
     text-align: center;
   }
-<<<<<<< HEAD
-  span {
+
+span {
     font-size: 29px;
-  }
-=======
-  
->>>>>>> ad1d82c82e81efe6575d17436ad345ebd3d85ad1
+}
