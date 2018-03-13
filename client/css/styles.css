@@ -1,9 +1,22 @@
 body {
     background: white;
-    color: #005CC5;
-    text-align: center;
   }
 
-span {
-    font-size: 29px;
+.headerContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bigInfoItems {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bigInfoItem {
+    text-align: center;   
+}
+
+.top5Grid {
+    display: flex;
+    justify-content: center;
 }
