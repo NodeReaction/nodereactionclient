@@ -1,3 +1,23 @@
 body {
     background: white;
 }
+
+.headerContainer {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.bigInfoItems {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bigInfoItem {
+    text-align: center;   
+}
+
+.top5Grid {
+    display: flex;
+    justify-content: center;
+}
