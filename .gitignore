@@ -64,3 +64,4 @@ typings/
 #custom ignore
 /build
 package-lock.json
+.tern-port
