@@ -18,6 +18,5 @@ body {
 }
 
 .top5Grid {
-    display: flex;
-    justify-content: center;
+    text-align: center;
 }
