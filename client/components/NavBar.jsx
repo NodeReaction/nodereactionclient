@@ -19,7 +19,10 @@ export default class NavBar extends Component {
         <Link to="/routes">
           <RaisedButton label="Routes" primary={true} />
         </Link>
-        <Link to="/">
+        <Link to="/dashboard">
+          <RaisedButton label="Dashboard" primary={true} />
+        </Link>
+        <Link to="/traces">
           <RaisedButton label="Traces" primary={true} />
         </Link>
       </Toolbar>
