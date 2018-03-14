@@ -1,11 +1,11 @@
 // MYSQL
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: process.env.RDS_HOSTNAME,
-    user: process.env.RDS_USERNAME,
-    password: process.env.RDS_PASSWORD,
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
     database: "nodereaction",
-    socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
+    // socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock"
     // port     : process.env.RDS_PORT
   });
   connection.connect(function(err) {
