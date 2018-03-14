@@ -7,6 +7,7 @@ import {
   ToolbarTitle
 } from "material-ui/Toolbar";
 import RaisedButton from "material-ui/RaisedButton";
+import Analysis from "../containers/IndividualRouteContainer.jsx";
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -21,6 +22,9 @@ export default class NavBar extends Component {
         </Link>
         <Link to="/">
           <RaisedButton label="Traces" primary={true} />
+        </Link>
+        <Link to="/route/17/hourofthewitch">
+          <RaisedButton label="Route analysis" primary={true} />
         </Link>
       </Toolbar>
     );
