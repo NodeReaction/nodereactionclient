@@ -1,6 +1,3 @@
-// NRA - running the agent on this server for testing
-const NRA = require("./../NodeReaction");
-
 // ENV FILES
 require("dotenv").config();
 
