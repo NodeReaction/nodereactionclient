@@ -31,7 +31,8 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `transactions`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `transactions`;
-
+-- Potential gotcha 
+-- SET SQL_MODE='ALLOW_INVALID_DATES';
 CREATE TABLE IF NOT EXISTS `transactions` (
   `transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
   `application_id` INT(11) NOT NULL,
