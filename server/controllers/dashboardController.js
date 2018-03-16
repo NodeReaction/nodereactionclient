@@ -1,16 +1,33 @@
+const sql = require("../dbconfig.js");
+const sqlstring = require("sqlstring");
 
-// ApplicationThroughPut (timeRange) - return an object that shows the totals routes processed over timerange and
-// calculate 60 datapoints reflecting the routes processed duration for the routes procesed over time
-// applicationController.ApplicationThroughput = (req, res, next) => {};
+module.exports = {
+  topFive: function(req, res) {
+    let date = "2018-03-15 03:36:49";
+    let query = sqlstring.format(
+      `select route, method, AVG(duration) as avg_duration, COUNT(*) as total_requests from transactions
+where start_timestamp > ?
+group by route,method
+order by avg_duration desc
+limit 5;`,
+      [req.params.offset]
+    );
 
-// ApplicationResponseTime (timeRange) - return an object that shows the routes processed over timerange and
-// calculate 60 datapoints reflecting the routes processed duration for the routes procesed over time
-// applicationController.ApplicationResponseTime = (req, res, next) => {};
+    sql.query(query, (err, results, fields) => {
+      err ? res.send(err) : res.send(results);
+    });
+  },
 
-// ApplicationResponseTime (timeRange) - return an object that shows the route failures processed over timerange and
-// calculate 60 datapoints reflecting the routes failures duration for the routes procesed over time
-// applicationController.ApplicationFailureRates = (req, res, next) => {};
+  quickStats: function(req, res) {
+    let date = "2018-03-15 03:36:49";
+    let query = sqlstring.format(
+      `select AVG(duration) as avg_duration, COUNT(*) as total_requests from transactions 
+WHERE start_timestamp > ?;`,
+      [req.params.offset]
+    );
 
-// ApplicationPopularRoutes (timeRange) - show top 5 routes with avg response time and number of
-// hits per route for given time range
-// applicationController.ApplicationPopularRoutes = (req, res, next) => {};
+    sql.query(query, (err, results, fields) => {
+      err ? res.send(err) : res.send(results);
+    });
+  }
+};

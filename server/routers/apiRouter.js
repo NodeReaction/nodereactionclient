@@ -10,6 +10,7 @@ const agentController = require("./../controllers/agentController");
 const routeController = require("./../controllers/routeController");
 const traceController = require("./../controllers/traceController");
 const apiController = require("./../controllers/apiController");
+const dashboardController = require("./../controllers/dashboardController.js");
 
 // ROUTES
 // AGENT - POSTS DATA TO SERVER
@@ -26,13 +27,22 @@ router.post(
 router.get("/getData", apiController.getTransactions, (req, res) => {
   res.json(res.locals.transactions);
 });
+
 router.get("/deleteData", apiController.deleteTransactions, (req, res) => {
   res.json({ msg: "allset" });
 });
 
+router.get("/traces/:offset", traceController);
+
+router.get("/dashboard/top/:offset", dashboardController.topFive);
+
+router.get("/dashboard/stats/:offset", dashboardController.quickStats);
+
 // DEFAULT ROUTES
 router.all("*", (req, res, next) => {
-  const err = new Error(`apiRouter.js - default catch all route - not found - ${req.url}`);
+  const err = new Error(
+    `apiRouter.js - default catch all route - not found - ${req.url}`
+  );
   err.status = 404;
   next(err);
 });

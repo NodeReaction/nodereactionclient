@@ -10,12 +10,8 @@ const PORT = 3000;
 const path = require("path");
 const bodyParser = require("body-parser");
 
-// MONOGO
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/dogs");
-
 // MYSQL
-const connection = require('./dbconfig');
+const connection = require("./dbconfig");
 
 // ROUTERS
 const apiRouter = require("./routers/apiRouter");
@@ -26,6 +22,9 @@ const analyticsController = require('./controllers/analyticsController');
 // API - ONLY TAKES JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+// STATICS
+app.use(express.static(__dirname + "./../"));
 
 // ROUTES
 app.use("/api", apiRouter);
@@ -46,4 +45,3 @@ app.listen(PORT, () => {
     `===========NODE REACTION SERVER===========\n\nListening on port: ${PORT}`
   );
 });
-     
