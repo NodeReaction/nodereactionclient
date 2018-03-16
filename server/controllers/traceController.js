@@ -1,23 +1,18 @@
-// TraceList - (timeRange) - return an object that shows the total trace transactions over timerange
-// and calculate 60 datapoints reflecting the total transactions for
-// each datapoint which represents 1/60th of the timerange
-// traceName, timeRange
-// traceController.TraceThroughput = (req, res, next) => {};
+const sql = require("../dbconfig.js");
 
-// TraceFailureRate - (timeRange) - return an object that shows the failures over timerange
-// and calculate 60 datapoints reflecting the total failures for
-// each datapoint which represents 1/60th of the timerange
-// traceName, timeRange
-// traceController.TraceFailureRate = (req, res, next) => {};
+const sqlstring = require("sqlstring");
 
-// TraceResponseTime - (timeRange) - return an object that shows the average transaction duration over timerange
-// and calculate 60 datapoints reflecting the average transaction duration for
-// each datapoint which represents 1/60th of the timerange
-// traceName, timeRange
-// traceController.TraceResponseTime = (req, res, next) => {};
+function graphData(req, res) {
+  let query = sqlstring.format(
+    `SELECT route,method,library,type, AVG(duration) as avg_duration, COUNT(*) as total_requests from traces 
+WHERE start_timestamp > ?
+GROUP BY route,method,library,type;`,
+    [req.params.offset]
+  );
 
-// TraceResponseTime - (timeRange) - return an object that shows the average transaction duration over timerange
-// and calculate 60 datapoints reflecting the average transaction duration for
-// each datapoint which represents 1/60th of the timerange
-// traceName, timeRange
-// traceController.TraceDetails = (req, res, next) => {};
+  sql.query(query, (err, results, fields) => {
+    err ? res.send(err) : res.send(results);
+  });
+}
+
+module.exports = graphData;
