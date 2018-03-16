@@ -7,7 +7,6 @@ const router = express.Router();
 
 // CONTROLLERS
 const agentController = require("./../controllers/agentController");
-const applicationController = require("./../controllers/applicationController");
 const routeController = require("./../controllers/routeController");
 const traceController = require("./../controllers/traceController");
 const apiController = require("./../controllers/apiController");
