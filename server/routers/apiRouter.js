@@ -38,6 +38,8 @@ router.get("/dashboard/top/:offset", dashboardController.topFive);
 
 router.get("/dashboard/stats/:offset", dashboardController.quickStats);
 
+router.get("/routes/:offset", routeController.getRoutes);
+
 // DEFAULT ROUTES
 router.all("*", (req, res, next) => {
   const err = new Error(

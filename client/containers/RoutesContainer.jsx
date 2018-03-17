@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDataGrid from "react-data-grid";
+import TimeSelector from "../components/TimeSelector.jsx";
+// import { Timestamp } from "../../../../../../Library/Caches/typescript/2.6/node_modules/@types/bson";
 
 const {
   Toolbar,
@@ -50,6 +52,42 @@ export default class RoutesContainer extends Component {
 
     this.state = { rows: this.createRows(500), filters: {} };
   }
+
+  //data fetching
+  fetchData(offset) {
+    let datetime = new Date(Date.now() - offset)
+      .toISOString()
+      .slice(0, 23)
+      .replace("T", " ");
+    // this.fetchStats(datetime);
+    this.fetchRows(datetime);
+  }
+
+  // fetchStats = date => {
+  //   window
+  //     .fetch(`http://localhost:3000/api/dashboard/stats/${date}`)
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       let data = json[0];
+  //       this.setState({
+  //         response_time: data.avg_duration,
+  //         requests: data.total_requests,
+  //         throughput: "tbd"
+  //       });
+  //     });
+  // };
+
+  fetchRows = date => {
+    window
+      .fetch(`http://localhost:3000/api/routes`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("herio", json);
+        this.setState({
+          rows: json
+        });
+      });
+  };
 
   getRandomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString();
@@ -111,16 +149,27 @@ export default class RoutesContainer extends Component {
 
   render() {
     return  (
-      <ReactDataGrid
-        enableCellSelect={true}
-        onGridSort={this.handleGridSort}
-        columns={this._columns}
-        rowGetter={this.rowGetter}
-        rowsCount={this.rowsCount()}
-        minHeight={500}
-        toolbar={<Toolbar enableFilter={true}/>}
-        onAddFilter={this.handleFilterChange}
-        getValidFilterValues={this.getValidFilterValues}
-        onClearFilters={this.handleOnClearFilters} />);
-  }
+      <div>
+        <div className="headerContainer">
+          <h1 className="name">Routes</h1>
+          {/* <div className="timeSelector">
+            <TimeSelector cb={this.fetchData} />
+          </div> */}
+        </div>
+        <div>
+          <ReactDataGrid
+            enableCellSelect={true}
+            onGridSort={this.handleGridSort}
+            columns={this._columns}
+            rowGetter={this.rowGetter}
+            rowsCount={this.rowsCount()}
+            minHeight={500}
+            toolbar={<Toolbar enableFilter={true}/>}
+            onAddFilter={this.handleFilterChange}
+            getValidFilterValues={this.getValidFilterValues}
+            onClearFilters={this.handleOnClearFilters} />
+        </div>
+      </div>
+    )
+  };
 }
