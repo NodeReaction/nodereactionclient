@@ -41,9 +41,25 @@ analyticsController.responseTime = (req, res, next) => {
         cache[i]['numRequests'] = 0;
       }
     }
-    res.locals.data = cache;
+    res.locals.graphData = cache;
     next();
   });
-}
+};
+
+analyticsController.timeline = (req, res, next) => {
+  const {route, method, time} = req.params;
+  sql.query(
+    `select b.library, b.type, avg(b.duration) ` +
+    `from transactions a ` +
+    `right join traces b ` +
+    `on a.transaction_id = b.transaction_id ` +
+    `where a.start_timestamp > '${time}' and a.route='/${route}' and a.method='${method}' ` +
+    `group by b.library, b.type;`, 
+  (err, result) => {
+    if (err) return res.send(err);
+    res.locals.timeline = result;
+    next();
+  });
+};
 
 module.exports = analyticsController;
