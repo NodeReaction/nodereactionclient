@@ -145,8 +145,8 @@ export default class DashboardContainer extends Component {
     return (
       <div>
         <div className="headerContainer">
-          <h1 id="name">Facebook</h1>
-          <div id="timeSelector">
+          <h1 className="name">Facebook</h1>
+          <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>

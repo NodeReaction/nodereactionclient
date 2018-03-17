@@ -46,6 +46,8 @@ analyticsController.responseTime = (req, res, next) => {
   });
 };
 
+
+// Return the average duration of functions for a route
 analyticsController.timeline = (req, res, next) => {
   const {route, method, time} = req.params;
   sql.query(

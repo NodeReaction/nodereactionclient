@@ -1,23 +1,18 @@
-// RouteList - (timeRange) - return an object that shows the total route transactions over timerange
-// and calculate 60 datapoints reflecting the total transactions for
-// each datapoint which represents 1/60th of the timerange
-// routeName, timeRange
-// routeController.RouteThroughput = (req, res, next) => {};
+const sql = require("../dbconfig.js");
+const sqlstring = require("sqlstring");
 
-// RouteFailureRate - (timeRange) - return an object that shows the failures over timerange
-// and calculate 60 datapoints reflecting the total failures for
-// each datapoint which represents 1/60th of the timerange
-// routeName, timeRange
-// routeController.RouteFailureRate = (req, res, next) => {};
+module.exports = {
+  getRoutes: function(req, res) {
+    let date = "2018-03-15 03:36:49";
+    let query = sqlstring.format(
+      `SELECT route, method, count(transaction_id), avg(duration) FROM transactions
+      WHERE start_timestamp > ?
+      GROUP BY route, method;`,
+      [req.params.offset]
+    );
 
-// RouteResponseTime - (timeRange) - return an object that shows the average transaction duration over timerange
-// and calculate 60 datapoints reflecting the average transaction duration for
-// each datapoint which represents 1/60th of the timerange
-// routeName, timeRange
-// routeController.RouteResponseTime = (req, res, next) => {};
-
-// RouteResponseTime - (timeRange) - return an object that shows the average transaction duration over timerange
-// and calculate 60 datapoints reflecting the average transaction duration for
-// each datapoint which represents 1/60th of the timerange
-// routeName, timeRange
-// routeController.RouteDetails = (req, res, next) => {};
+    sql.query(query, (err, results, fields) => {
+      err ? res.send(err) : res.send(results);
+    });
+  },
+};
