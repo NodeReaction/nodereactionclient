@@ -39,6 +39,11 @@ app.get('/test/:method/:route/:offset/:time',
   (req, res) => res.send('Success')
 );
 
+app.get('/test2/:method/:route/:offset/:time',
+  analyticsController.timeline,
+  (req, res) => res.send('Success')
+);
+
 // START EXPRESS
 app.listen(PORT, () => {
   console.log(
