@@ -18,6 +18,7 @@ const {
 export default class RoutesContainer extends Component {
   constructor(props, context) {
     super(props, context);
+    this.fetchData = this.fetchData.bind(this);
     this._columns = [
       {
         key: 'route',
@@ -35,14 +36,14 @@ export default class RoutesContainer extends Component {
         sortable: true
       },
       {
-        key: 'numRequests',
+        key: 'count(transaction_id)',
         name: '# of Requests',
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
       },
       {
-        key: 'avgTime',
+        key: 'avg(duration)',
         name: 'Avg. Time',
         filterable: true,
         filterRenderer: NumericFilter,
@@ -50,7 +51,7 @@ export default class RoutesContainer extends Component {
       }
     ];
 
-    this.state = { rows: this.createRows(500), filters: {} };
+    this.state = { rows: [], filters: {} };
   }
 
   //data fetching
@@ -79,7 +80,7 @@ export default class RoutesContainer extends Component {
 
   fetchRows = date => {
     window
-      .fetch(`http://localhost:3000/api/routes`)
+      .fetch(`http://localhost:3000/api/routes/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
@@ -152,9 +153,9 @@ export default class RoutesContainer extends Component {
       <div>
         <div className="headerContainer">
           <h1 className="name">Routes</h1>
-          {/* <div className="timeSelector">
+          <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />
-          </div> */}
+          </div>
         </div>
         <div>
           <ReactDataGrid
