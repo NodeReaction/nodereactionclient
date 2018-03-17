@@ -171,6 +171,7 @@ export default class DashboardContainer extends Component {
           <div>
             <ReactDataGrid
               enableCellSelect={true}
+              
               onGridSort={this.handleGridSort}
               columns={this._columns}
               rowGetter={this.rowGetter}

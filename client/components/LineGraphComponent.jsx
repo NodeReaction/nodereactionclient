@@ -24,6 +24,27 @@ export default class LineGraphComponent extends Component {
     super(props);
   }
 
+  fetchDataAnalytics(offset) {
+    let datetime = new Date(Date.now() - offset)
+      .toISOString()
+      .slice(0, 23)
+      .replace("T", " ");
+    // this.fetchStats(datetime);
+    this.fetchRows(datetime);
+  }
+
+  fetchRows = date => {
+    window
+      .fetch(`http://localhost:3000/api/routes/${date}`)
+      .then(res => res.json())
+      .then(json => {
+        console.log("herio", json);
+        this.setState({
+          rows: json
+        });
+      });
+  };
+
   render() {
     return (
       <LineChart

@@ -25,7 +25,7 @@ class App extends Component {
             <Route path="/routes" component={Routes} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/traces" component={Traces} />
-            <Route path="/route/:id/:default_time" component={Analytics} />
+            <Route path="/:route/:method/:default_time" component={Analytics} />
           </div>
         </BrowserRouter>
       </MuiThemeProvider>
