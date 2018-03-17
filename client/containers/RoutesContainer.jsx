@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDataGrid from "react-data-grid";
 import TimeSelector from "../components/TimeSelector.jsx";
-// import { Timestamp } from "../../../../../../Library/Caches/typescript/2.6/node_modules/@types/bson";
 
 const {
   Toolbar,
@@ -19,6 +18,7 @@ export default class RoutesContainer extends Component {
   constructor(props, context) {
     super(props, context);
     this.fetchData = this.fetchData.bind(this);
+    this.redirectAnalytics = this.redirectAnalytics.bind(this);
     this._columns = [
       {
         key: 'route',
@@ -64,20 +64,6 @@ export default class RoutesContainer extends Component {
     this.fetchRows(datetime);
   }
 
-  // fetchStats = date => {
-  //   window
-  //     .fetch(`http://localhost:3000/api/dashboard/stats/${date}`)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       let data = json[0];
-  //       this.setState({
-  //         response_time: data.avg_duration,
-  //         requests: data.total_requests,
-  //         throughput: "tbd"
-  //       });
-  //     });
-  // };
-
   fetchRows = date => {
     window
       .fetch(`http://localhost:3000/api/routes/${date}`)
@@ -90,21 +76,15 @@ export default class RoutesContainer extends Component {
       });
   };
 
+  // Redirects to analytics page on row click. Needs to preserve history when clicking back button
+  // Also first row doesn't redirect
+  redirectAnalytics = (...args) => {
+    console.log(...args);
+    this.props.history.push(`${args[1].route}/${args[1].method}/hourofthewitch`);
+  }
+
   getRandomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString();
-  };
-
-  createRows = (numberOfRows) => {
-    let rows = [];
-    for (let i = 1; i < numberOfRows; i++) {
-      rows.push({
-        route: ['Dogs', 'Cats', 'Kittens', 'Puppies'][Math.floor((Math.random() * 3) + 1)],
-        method: ['GET', 'POST', 'DELETE', 'UPDATE'][Math.floor((Math.random() * 3) + 1)],
-        numRequests: Math.round(Math.random() * 1000),
-        avgTime: (Math.random() * 30).toFixed(2) + ' ms'
-      });
-    }
-    return rows;
   };
 
   handleGridSort = (sortColumn, sortDirection) => {
@@ -154,12 +134,18 @@ export default class RoutesContainer extends Component {
         <div className="headerContainer">
           <h1 className="name">Routes</h1>
           <div className="timeSelector">
+            {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
         <div>
           <ReactDataGrid
-            enableCellSelect={true}
+            enableCellSelect={false}
+            // This function redirects to the invidual route
+            // When the analytics page is rendered it will make a request for the data
+
+            // On row select invoke a function with route data passed as parameter
+            onRowClick={this.redirectAnalytics}
             onGridSort={this.handleGridSort}
             columns={this._columns}
             rowGetter={this.rowGetter}

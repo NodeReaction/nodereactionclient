@@ -5,7 +5,7 @@ const analyticsController = {};
 
 // Given a time range, route, and method, return the avg. response time and # of requests
 // for each 1/60th interval of time in the time range
-analyticsController.responseTime = (req, res, next) => { 
+analyticsController.graphData = (req, res, next) => { 
   let results = [];
   let cache = {};
   const {route, method, offset, time} = req.params;

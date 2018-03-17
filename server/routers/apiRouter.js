@@ -10,7 +10,8 @@ const agentController = require("./../controllers/agentController");
 const routeController = require("./../controllers/routeController");
 const traceController = require("./../controllers/traceController");
 const apiController = require("./../controllers/apiController");
-const dashboardController = require("./../controllers/dashboardController.js");
+const dashboardController = require("./../controllers/dashboardController");
+const analyticsController = require("./../controllers/analyticsController");
 
 // ROUTES
 // AGENT - POSTS DATA TO SERVER
@@ -39,6 +40,8 @@ router.get("/dashboard/top/:offset", dashboardController.topFive);
 router.get("/dashboard/stats/:offset", dashboardController.quickStats);
 
 router.get("/routes/:offset", routeController.getRoutes);
+
+router.get("/analytics/graph/:route/:method/:offset/:time", analyticsController.graphData);
 
 // DEFAULT ROUTES
 router.all("*", (req, res, next) => {
