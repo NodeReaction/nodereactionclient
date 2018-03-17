@@ -67,10 +67,6 @@ export default class TracesContainer extends Component {
     this.state = { rows: [], filters: {} };
   }
 
-  // componentDidMount() {
-  //   this.fetchRows();
-  // }
-
   fetchData(offset) {
     let datetime = new Date(Date.now() - offset)
       .toISOString()
@@ -135,12 +131,19 @@ export default class TracesContainer extends Component {
     this.setState({ filters: {} });
   };
 
+  onRowClick = (rowIdx, row) => {
+    this.props.history.push("route/17/hourofthewitch");
+    let rows = this.state.rows.slice();
+    rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
+    this.setState({ rows });
+  };
+
   render() {
     return (
       <div>
         <TimeSelector cb={this.fetchData} />
         <ReactDataGrid
-          enableCellSelect={true}
+          enableCellSelect={false}
           onGridSort={this.handleGridSort}
           columns={this._columns}
           rowGetter={this.rowGetter}
@@ -150,6 +153,7 @@ export default class TracesContainer extends Component {
           onAddFilter={this.handleFilterChange}
           getValidFilterValues={this.getValidFilterValues}
           onClearFilters={this.handleOnClearFilters}
+          onRowClick={this.onRowClick}
         />
       </div>
     );
