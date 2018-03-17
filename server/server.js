@@ -30,12 +30,12 @@ app.use(express.static(__dirname + "./../"));
 app.use("/api", apiRouter);
 
 app.post('/test',
-  analyticsController.responseTime,
+  analyticsController.graphData,
   (req, res) => res.send('Success')
 );
 
 app.get('/test/:method/:route/:offset/:time',
-  analyticsController.responseTime,
+  analyticsController.graphData,
   (req, res) => res.send('Success')
 );
 
