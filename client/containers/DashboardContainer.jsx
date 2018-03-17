@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-
-import { Link } from "react-router-dom";
 import TimeSelector from "../components/TimeSelector.jsx";
 import BigInfoItem from "../components/BigInfoItem.jsx";
 const ReactDataGrid = require("react-data-grid");
@@ -87,7 +85,6 @@ export default class DashboardContainer extends Component {
       .fetch(`http://localhost:3000/api/dashboard/top/${date}`)
       .then(res => res.json())
       .then(json => {
-        console.log("herio", json);
         this.setState({
           rows: json
         });
@@ -141,6 +138,14 @@ export default class DashboardContainer extends Component {
     this.setState({ filters: {} });
   };
 
+  onRowClick = (rowIdx, row) => {
+    console.log("click", row);
+    this.props.history.push("route/17/hourofthewitch");
+    let rows = this.state.rows.slice();
+    rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
+    this.setState({ rows });
+  };
+
   render() {
     return (
       <div>
@@ -166,12 +171,11 @@ export default class DashboardContainer extends Component {
         </div>
         <div className="top5Grid">
           <div>
-            <h1>Top 5 Requested Routes</h1>
+            <h1>Top 5 Requested Routes </h1>
           </div>
           <div>
             <ReactDataGrid
-              enableCellSelect={true}
-              
+              enableCellSelect={false}
               onGridSort={this.handleGridSort}
               columns={this._columns}
               rowGetter={this.rowGetter}
@@ -181,6 +185,7 @@ export default class DashboardContainer extends Component {
               onAddFilter={this.handleFilterChange}
               getValidFilterValues={this.getValidFilterValues}
               onClearFilters={this.handleOnClearFilters}
+              onRowClick={this.onRowClick}
             />
           </div>
         </div>
