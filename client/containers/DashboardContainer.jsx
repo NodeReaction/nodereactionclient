@@ -41,14 +41,14 @@ export default class DashboardContainer extends Component {
       },
       {
         key: "total_requests",
-        name: "# of Requests",
+        name: "Requests",
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
       },
       {
         key: "avg_duration",
-        name: "Avg. Time",
+        name: "Average Time",
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -148,16 +148,16 @@ export default class DashboardContainer extends Component {
 
   render() {
     return (
-      <div>
-        <div className="headerContainer">
-          <h1 className="name">Facebook</h1>
+      <div className="pageContainer">
+        <div className="pageHeaderContainer">
+          <h1 className="pageHeader">Application Name - Dashboard</h1>
           <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
         <div className="bigInfoItems">
           <BigInfoItem
-            text={"Total Number of Requests"}
+            text={"Total Requests"}
             value={this.state.requests}
           />
           <BigInfoItem
@@ -165,13 +165,13 @@ export default class DashboardContainer extends Component {
             value={this.state.response_time}
           />
           <BigInfoItem
-            text={"Average Throughput Time"}
+            text={"Average Throughput"}
             value={this.state.throughput}
           />
         </div>
         <div className="top5Grid">
           <div>
-            <h1>Top 5 Requested Routes </h1>
+            <h2>Routes - Top 5</h2>
           </div>
           <div>
             <ReactDataGrid
@@ -180,7 +180,7 @@ export default class DashboardContainer extends Component {
               columns={this._columns}
               rowGetter={this.rowGetter}
               rowsCount={this.rowsCount()}
-              minHeight={500}
+              minHeight={300}
               toolbar={<Toolbar enableFilter={true} />}
               onAddFilter={this.handleFilterChange}
               getValidFilterValues={this.getValidFilterValues}

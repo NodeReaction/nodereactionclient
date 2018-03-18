@@ -130,9 +130,9 @@ export default class RoutesContainer extends Component {
 
   render() {
     return  (
-      <div>
-        <div className="headerContainer">
-          <h1 className="name">Routes</h1>
+      <div className="pageContainer">
+        <div className="pageHeaderContainer">
+          <h1 className="pageHeader">Application Name - Routes</h1>
           <div className="timeSelector">
             {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />
