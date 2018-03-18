@@ -1,22 +1,60 @@
-body {
-    background: white;
+* {
+    box-sizing: border-box;
 }
 
-.headerContainer {
-    display: flex;
-    justify-content: space-around;
+html {
+    padding: 0;
+    margin: 0;
+}
 
+body {
+    margin: 0;
+    font-size: 1rem;
+    font-family: arial, sans-serif;
+}
+
+.navbar-menu {
+    border-top: 2px solid red;
+}
+
+.navbar-menu-item {
+    margin: 0 1rem 0 0;
+}
+
+.pageContainer {
+    padding: 2rem 4rem 4rem 4rem;
+}
+
+.pageHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 3rem 0;
 }
 
 .bigInfoItems {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    padding: 0 4rem 3rem 4rem;
 }
 
 .bigInfoItem {
-    text-align: center;   
+    text-align: center;
+    background: rgb(249, 249, 249);
+    margin-right: 4rem;
+    padding: 1rem;
+    min-width: 20rem;
+    flex-grow: 1;
+}
+
+.bigInfoItem:last-child {
+    margin-right: 0rem;
 }
 
 .top5Grid {
-    text-align: center;
+}
+
+h1.pageHeader {
+    color: #000;
 }

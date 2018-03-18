@@ -9,8 +9,8 @@ export default class BigInfoItem extends Component {
   render() {
     return (
       <div className="bigInfoItem">
-        <h1>{this.props.text}</h1>
-        <h1>{this.props.value}</h1>
+        <h2>{this.props.text}</h2>
+        <h2>{this.props.value}</h2>
       </div>
     );
   }
