@@ -8,44 +8,46 @@ const analyticsController = {};
 analyticsController.graphData = (req, res, next) => { 
   let results = [];
   let cache = {};
+  let seconds;
+  let datetime;
   const {route, method, offset, time} = req.params;
-  // Convert milliseconds to seconds
-  offset *= 1000;
+  seconds = parseInt(offset) / 1000;
   // todo: use sqlstring
   sql.query(
-    `SELECT AVG(duration), COUNT(*) as numRequests, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(start_timestamp) / (${offset} / 60)) * (${offset} / 60)) as timekey ` + 
-    `FROM transactions ` +
-    `WHERE route='/${route}' and method='${method}' and start_timestamp > '${time}' ` +
-    `GROUP BY UNIX_TIMESTAMP(start_timestamp) DIV (${offset} / 60), timekey;`, 
+    `SET @date_min = '2018-03-14 23:00:03.533';
+    SET @date_max = '2018-03-18 19:34:36.335';
+    
+    CREATE TEMPORARY TABLE IF NOT EXISTS datesTable AS (
+      SELECT *, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_generator.date) / (259200/60)) * (259200/60)) as timekey2
+         -- ifnull(avg(duration),0) as sum_val
+      from (
+         select DATE_ADD(@date_min, INTERVAL (@i:=@i+72)-1 MINUTE) as 'date'
+         from information_schema.columns,(SELECT @i:=0) gen_sub 
+         where DATE_ADD(@date_min,INTERVAL @i MINUTE) BETWEEN @date_min AND @date_max
+      ) as date_generator
+    );
+    
+    CREATE TEMPORARY TABLE IF NOT EXISTS joinTable AS (
+      SELECT * FROM datesTable as a
+      LEFT JOIN (
+        SELECT AVG(duration) as avgdur, COUNT(*) as numRequests, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(start_timestamp) / (259200/60)) * (259200/60)) as timekey 
+        FROM transactions
+        WHERE route='/dogs' and method='POST' and start_timestamp > '2018-03-14 23:00:03.533' 
+        GROUP BY UNIX_TIMESTAMP(start_timestamp) DIV (259200/60), timekey
+      ) as b
+      ON a.timekey2 = b.timekey
+      ORDER BY a.timekey2 ASC
+    );
+    
+    SELECT timekey2, IFNULL(avgdur,0) AS avgduration, IFNULL(numRequests,0) AS numRequests FROM joinTable;`, 
   (err, result) => {
-    if (err) return res.send(err);
-    // Make an object from the results
-    result.forEach(elem => {
-      // Change time to seconds
-      timeSec = (new Date(elem.timekey)).getTime() / 1000;
-      // Save avg. time and # of requests
-      cache[timeSec] = {};
-      cache[timeSec]['avgTime'] = elem['AVG(duration)'];
-      cache[timeSec]['numRequests'] = elem['numRequests'];
-    });
-    // Start time in seconds
-    startRange = (new Date(`${time}`)).getTime() / 1000;
-    // End time in seconds
-    endRange = (new Date).getTime() / 1000;
-    // Check if i is a property in cache
-    // If not, fill the values with 0
-    for (let i = startRange; i < endRange; i += (offset / 60)) {
-      if (!cache.hasOwnProperty(i)) {
-        cache[i] = {};
-        cache[i]['avgTime'] = 0;
-        cache[i]['numRequests'] = 0;
-      }
-    }
+    if (err) return res.send(err); 
+    console.log('**datetime* ', datetime);
+    console.log('***params** ', req.params);
     res.locals.graphData = cache;
-    next();
+    res.send(cache);
   });
 };
-
 
 // Return the average duration of functions for a route
 analyticsController.timeline = (req, res, next) => {
