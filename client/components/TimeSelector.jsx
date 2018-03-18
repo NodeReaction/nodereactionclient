@@ -45,12 +45,12 @@ export default class TimeSelector extends Component {
         onChange={this.handleChange}
         openImmediately={false}
       >
-        <MenuItem value={1} primaryText="Prev. 5 minutes" />
-        <MenuItem value={2} primaryText="Prev. 30 minutes" />
-        <MenuItem value={3} primaryText="Prev. 1 hour" />
-        <MenuItem value={4} primaryText="Prev. 12 hours" />
-        <MenuItem value={5} primaryText="Prev. 1 day" />
-        <MenuItem value={6} primaryText="Prev. 3 days" />
+        <MenuItem value={1} primaryText="Last 5 minutes" />
+        <MenuItem value={2} primaryText="Last 30 minutes" />
+        <MenuItem value={3} primaryText="Last 1 hour" />
+        <MenuItem value={4} primaryText="Last 12 hours" />
+        <MenuItem value={5} primaryText="Last 1 day" />
+        <MenuItem value={6} primaryText="Last 3 days" />
       </DropDownMenu>
     );
   }

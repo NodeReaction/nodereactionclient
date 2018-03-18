@@ -5,7 +5,9 @@
   "main": "server/server.js",
   "scripts": {
     "start": "nodemon src/server/index.js",
-    "webpack": "./node_modules/.bin/webpack -w",
+    "webpack": "webpack -w --mode development",
+    "builddev": "webpack -w --mode development",
+    "build": "webpack -w --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

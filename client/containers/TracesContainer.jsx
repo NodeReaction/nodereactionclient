@@ -140,21 +140,29 @@ export default class TracesContainer extends Component {
 
   render() {
     return (
-      <div>
-        <TimeSelector cb={this.fetchData} />
-        <ReactDataGrid
-          enableCellSelect={false}
-          onGridSort={this.handleGridSort}
-          columns={this._columns}
-          rowGetter={this.rowGetter}
-          rowsCount={this.rowsCount()}
-          minHeight={500}
-          toolbar={<Toolbar enableFilter={true} />}
-          onAddFilter={this.handleFilterChange}
-          getValidFilterValues={this.getValidFilterValues}
-          onClearFilters={this.handleOnClearFilters}
-          onRowClick={this.onRowClick}
-        />
+      <div className="pageContainer">
+        <div className="pageHeaderContainer">
+          <h1 className="pageTitle">Application Name - Traces</h1>
+          <div className="timeSelector">
+            {/* Pass in cb which gets invoked whenever a time selection is made */}
+            <TimeSelector cb={this.fetchData} />
+          </div>
+        </div>
+        <div>
+          <ReactDataGrid
+            enableCellSelect={false}
+            onGridSort={this.handleGridSort}
+            columns={this._columns}
+            rowGetter={this.rowGetter}
+            rowsCount={this.rowsCount()}
+            minHeight={500}
+            toolbar={<Toolbar enableFilter={true} />}
+            onAddFilter={this.handleFilterChange}
+            getValidFilterValues={this.getValidFilterValues}
+            onClearFilters={this.handleOnClearFilters}
+            onRowClick={this.onRowClick}
+          />
+        </div>
       </div>
     );
   }

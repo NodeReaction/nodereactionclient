@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
-import Dashboard from "./containers/DashboardContainer.jsx";
-import Routes from "./containers/RoutesContainer.jsx";
-import Traces from "./containers/TracesContainer.jsx"
-import Analytics from "./containers/IndividualRouteContainer.jsx";
-
 import NavBar from "./components/NavBar.jsx";
+import DashboardContainer from "./containers/DashboardContainer.jsx";
+import RoutesContainer from "./containers/RoutesContainer.jsx";
+import TracesContainer from "./containers/TracesContainer.jsx"
+import RouteContainer from "./containers/RouteContainer.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -21,11 +20,11 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <NavBar />
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/routes" component={Routes} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/traces" component={Traces} />
-            <Route path="/:route/:method/:default_time" component={Analytics} />
+            <Route className="sectionContainer" exact path="/" component={DashboardContainer} />
+            <Route className="sectionContainer" path="/dashboard" component={DashboardContainer} />
+            <Route className="sectionContainer" path="/routes" component={RoutesContainer} />
+            <Route className="sectionContainer" path="/:route/:method/:default_time" component={RouteContainer} />
+            <Route className="sectionContainer" path="/traces" component={TracesContainer} />
           </div>
         </BrowserRouter>
       </MuiThemeProvider>

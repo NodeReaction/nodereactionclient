@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import LineGraph from "../components/LineGraphComponent.jsx";
 import TimeSelector from "../components/TimeSelector.jsx";
 
-export default class IndividualRouteContainer extends Component {
+export default class RouteContainer extends Component {
   constructor() {
     super();
     this.fetchData = this.fetchData.bind(this);
@@ -30,9 +30,9 @@ export default class IndividualRouteContainer extends Component {
   render() {
     console.log(this.props.match)
     return (
-      <div>
-        <div className="headerContainer">
-          <h1 className="name">{this.props.match.params.method} {this.props.match.params.route}</h1>
+      <div className="pageContainer">
+        <div className="pageHeaderContainer">
+          <h1 className="pageHeader">Application Name - Route - {this.props.match.params.method} {this.props.match.params.route}</h1>
           <div className="timeSelector">
             {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />
