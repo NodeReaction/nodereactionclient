@@ -4,7 +4,8 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "password",
-  database: "nodereaction"
+  database: "nodereaction",
+  multipleStatements: true
 });
 connection.connect(function(err) {
   if (err) {
