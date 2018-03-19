@@ -1,6 +1,13 @@
 import React, { Component } from "react";
-import TimeSelector from "../components/TimeSelector.jsx";
-import BigInfoItem from "../components/BigInfoItem.jsx";
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from "material-ui/Card";
+import FlatButton from "material-ui/FlatButton";
 const ReactDataGrid = require("react-data-grid");
 const {
   Toolbar,
@@ -13,6 +20,8 @@ const {
   Data: { Selectors }
 } = require("react-data-grid-addons");
 
+import TimeSelector from "../components/TimeSelector.jsx";
+import DashboardCard from "../components/DashboardCard.jsx";
 export default class DashboardContainer extends Component {
   constructor(props) {
     super(props);
@@ -155,20 +164,12 @@ export default class DashboardContainer extends Component {
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
-        <div className="bigInfoItems">
-          <BigInfoItem
-            text={"Total Requests"}
-            value={this.state.requests}
-          />
-          <BigInfoItem
-            text={"Average Response Time"}
-            value={this.state.response_time}
-          />
-          <BigInfoItem
-            text={"Average Throughput"}
-            value={this.state.throughput}
-          />
+        <div className="dashboardCards">
+          <DashboardCard title="Total Requests" value={this.state.requests}/>
+          <DashboardCard title="Average Response Time" value={this.state.response_time}/>
+          <DashboardCard title="Average Throughput" value={this.state.throughput}/>
         </div>
+
         <div className="top5Grid">
           <div>
             <h2>Routes - Top 5</h2>

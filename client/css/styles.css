@@ -10,11 +10,11 @@ html {
 body {
     margin: 0;
     font-size: 1rem;
-    font-family: arial, sans-serif;
+    font-family: Roboto,arial, sans-serif;
 }
 
 .navbar-menu {
-    border-top: 2px solid red;
+    border-top: 3px solid red;
 }
 
 .navbar-menu-item {
@@ -31,7 +31,7 @@ body {
     margin: 0 0 3rem 0;
 }
 
-.bigInfoItems {
+.dashboardCards {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -39,7 +39,7 @@ body {
     padding: 0 4rem 3rem 4rem;
 }
 
-.bigInfoItem {
+.dashboardCard {
     text-align: center;
     background: rgb(249, 249, 249);
     margin-right: 4rem;
@@ -48,9 +48,12 @@ body {
     flex-grow: 1;
 }
 
-.bigInfoItem:last-child {
+.dashboardCard:last-child {
     margin-right: 0rem;
 }
+
+
+
 
 .top5Grid {
 }
