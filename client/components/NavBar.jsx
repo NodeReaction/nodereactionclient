@@ -8,7 +8,8 @@ import IconMenu from "material-ui/IconMenu";
 import IconButton from "material-ui/IconButton";
 import MenuItem from "material-ui/MenuItem";
 import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
-import Person from "material-ui/svg-icons/social/person";
+import PersonIcon from "material-ui/svg-icons/social/person";
+import ApplicationSelector from "../components/ApplicationSelector.jsx";
 // import Setting from 'material-ui/svg-icons/action/setting';
 import {
   Toolbar,
@@ -20,26 +21,24 @@ import {
 export default class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.fetchData = this.fetchData.bind(this);
+  }
+
+  //data fetching
+  fetchData(offset) {
+    let datetime = new Date(Date.now() - offset)
+      .toISOString()
+      .slice(0, 23)
+      .replace("T", " ");
   }
   render() {
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
-        <IconButton touch={true}>
-                <NavigationExpandMoreIcon />
-              </IconButton>
+          <h2>NodeReaction</h2>
         </ToolbarGroup>
         <ToolbarGroup>
-        <IconMenu
-            iconButtonElement={
-              <IconButton touch={true}>
-                <NavigationExpandMoreIcon />
-              </IconButton>
-            }
-          >
-            <MenuItem primaryText="Application 1" />
-            <MenuItem primaryText="Application 2" />
-          </IconMenu>
+          <ApplicationSelector cb={this.fetchData}/>
           <Link className="navbar-menu-item" to="/dashboard">
             <FlatButton size="medium" label="Dashboard" primary={true} />
           </Link>
@@ -57,15 +56,18 @@ export default class NavBar extends Component {
 
           <IconMenu
             iconButtonElement={
-              <IconButton touch={true}>
-                <NavigationExpandMoreIcon />
+              <IconButton label="" touch={true}>
+                <PersonIcon />
               </IconButton>
             }
           >
-            <MenuItem primaryText="Profile" leftIcon={<Person />} />
-            <MenuItem primaryText="Manage Applications" leftIcon={<Person />} />
+            <MenuItem primaryText="Profile" leftIcon={<PersonIcon />} />
+            <MenuItem
+              primaryText="Manage Applications"
+              leftIcon={<PersonIcon />}
+            />
             <Divider />
-            <MenuItem primaryText="Logout" leftIcon={<Person />} />
+            <MenuItem primaryText="Logout" leftIcon={<PersonIcon />} />
           </IconMenu>
         </ToolbarGroup>
       </Toolbar>
