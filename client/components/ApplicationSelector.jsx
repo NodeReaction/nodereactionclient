@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import DropDownMenu from "material-ui/DropDownMenu";
 import FlatButton from "material-ui/FlatButton";
-import IconButton from 'material-ui/IconButton';
-import IconMenu from 'material-ui/IconMenu';
+import IconButton from "material-ui/IconButton";
+import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
-import ActionAndroid from 'material-ui/svg-icons/action/android';
+import ActionAndroid from "material-ui/svg-icons/action/android";
 
 export default class ApplicationSelector extends Component {
   constructor(props) {
@@ -21,25 +21,29 @@ export default class ApplicationSelector extends Component {
   };
 
   render() {
+    const applications = [];
+    // change to this that props.applications
+
+    for (let i = 0; i < 3; i++) {
+      applications.push(
+        <MenuItem key={i} primaryText={"Application Name - " + i} />
+      );
+    }
     return (
       <IconMenu
         iconButtonElement={
-          <FlatButton size="medium" label="Applications" labelPosition="before" primary={true} icon={<ActionAndroid />} />
+          <FlatButton
+            size="medium"
+            label="Applications"
+            labelPosition="before"
+            primary={true}
+            icon={<ActionAndroid />}
+          />
         }
         onChange={this.handleChangeApplication}
       >
-        <MenuItem value={1} primaryText="Application Name 1" />
-        <MenuItem value={2} primaryText="Application Name 2" />
+        {applications}
       </IconMenu>
-
-      // <DropDownMenu
-      //   value={this.state.value}
-      //   onChange={this.handleChange}
-      //   openImmediately={false}
-      // >
-      //   <MenuItem value={1} primaryText="Application Name 1" />
-      //   <MenuItem value={2} primaryText="Application Name 2" />
-      // </DropDownMenu>
     );
   }
 }
