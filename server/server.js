@@ -28,6 +28,7 @@ app.use(express.static(__dirname + "./../"));
 
 // ROUTES
 app.use("/api", apiRouter);
+app.use("/api/:appId", apiRouter);
 
 app.post('/test',
   analyticsController.graphData,

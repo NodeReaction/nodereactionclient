@@ -1,10 +1,10 @@
 // MYSQL
 const mysql = require("mysql");
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "nodereaction",
+  host: process.env.RDS_HOSTNAME,
+  user: process.env.RDS_USERNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
   multipleStatements: true
 });
 connection.connect(function(err) {
@@ -14,5 +14,3 @@ connection.connect(function(err) {
   }
   console.log("Connected to database.");
 });
-
-module.exports = connection;
