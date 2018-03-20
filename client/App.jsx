@@ -18,25 +18,83 @@ class App extends Component {
   constructor(props) {
     super(props);
        this.state = {};
-       this.state.authenticated = true;
+       this.state.user = {username: "", email: "", isLoggedIn: false}
+       this.state.applications = [];
+
+       this.handleUserLogin = this.handleUserLogin.bind(this);
+       this.handleUserLogout = this.handleUserLogout.bind(this);
+       this.handleUserUpdate = this.handleUserUpdate.bind(this);
+       this.handleUserAuthentication = this.handleUserAuthentication.bind(this);
+
+       this.handleApplicationCreate = this.handleApplicationCreate.bind(this);
+       this.handleApplicationDelete = this.handleApplicationDelete.bind(this);
+       this.handleApplicationChangeActive = this.handleApplicationChangeActive.bind(this);
+       
+       
   }
+
+  handleUserAuthentication(data) {
+    console.log(`handleAuthentication: ${JSON.stringify(data)}`);
+    fetch('/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'content-type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res !== 'Invalid credentials') {
+        this.setState({
+          userId: res,
+          isLoggedIn: true
+        });
+      }
+    });
+  }
+
+  handleUserLogin(data) {
+    console.log('handleUserLogin');
+  }
+  handleUserLogout(data) {
+    console.log('handleUserLogout');
+  }
+  handleUserUpdate(data) {
+    console.log('handleUserUpdate');
+  }
+
+
+  handleApplicationChangeActive(data){
+    console.log('handleApplicationChangeActive');
+  }
+  handleApplicationCreate(data){
+    console.log('handleApplicationCreate');
+  }
+  handleApplicationDelete(data){
+    console.log('handleApplicationDelete');
+  }
+ 
 
   render() {
     const dashboard = (props) => {
       return <DashboardContainer authenticated={this.state.authenticated}/>
     }
     const login = (props) => {
-      return <LoginContainer  authenticated={this.state.authenticated}/>
+      return <LoginContainer handleUserLogin={this.handleUserLogin} user={this.state.user} />
+    }
+    const account = (props) => {
+      return <AccountContainer handleUserUpdate={this.handleUserUpdate} user={this.state.user} />
+    }
+    const applications = (props) => {
+      return <ApplicationsContainer handleApplicationCreate={this.handleApplicationCreate} handleApplicationDelete={this.handleApplicationDelete} />
     }
     return (
       <MuiThemeProvider>
         <BrowserRouter>
           <div>
-            <NavBar />
+            <NavBar handleUserLogout={this.handleUserLogout} handleApplicationChangeActive={this.handleApplicationChangeActive} />
             <Route className="sectionContainer" exact path="/" render={dashboard} />
             <Route className="sectionContainer" path="/login" render={login} />
-            <Route className="sectionContainer" path="/account" component={AccountContainer} />
-            <Route className="sectionContainer" path="/applications" component={ApplicationsContainer} />
+            <Route className="sectionContainer" path="/account" component={account} />
+            <Route className="sectionContainer" path="/applications" component={applications} />
             <Route className="sectionContainer" path="/dashboard" component={DashboardContainer} />
             <Route className="sectionContainer" path="/routes" component={RoutesContainer} />
             <Route className="sectionContainer" path="/:route/:method/:default_time" component={RouteContainer} />
