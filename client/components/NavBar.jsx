@@ -21,25 +21,6 @@ import {
 export default class NavBar extends Component {
   constructor(props) {
     super(props);
-    
-    this.fetchData = this.fetchData.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  //data fetching
-  fetchData(offset) {
-    let datetime = new Date(Date.now() - offset)
-      .toISOString()
-      .slice(0, 23)
-      .replace("T", " ");
-  }
-
-  handleChange(event, item) {
-    console.log(click);
-  }
-  handleClick(event, menuItem, obj, i) {
-    console.log("menu item click: " + menuItem);
   }
 
   render() {
@@ -50,7 +31,7 @@ export default class NavBar extends Component {
           <h2>NodeReaction</h2>
         </ToolbarGroup>
         <ToolbarGroup>
-          <ApplicationSelector cb={this.fetchData} />
+          <ApplicationSelector handleApplicationChangeActive={this.props.handleApplicationChangeActive} />
           <Link className="navbar-menu-item" to="/login">
             <FlatButton size="medium" label="Login" primary={true} />
           </Link>
@@ -70,7 +51,6 @@ export default class NavBar extends Component {
           <ToolbarSeparator />
 
           <IconMenu
-            onItemClick={this.handleClick}
             iconButtonElement={
               <IconButton label="" touch={true}>
                 <PersonIcon />
@@ -87,10 +67,11 @@ export default class NavBar extends Component {
               />
             </Link>
             <Divider />
-            <MenuItem primaryText="Logout" leftIcon={<PersonIcon />} />
+            <MenuItem primaryText="Logout" onClick={this.props.handleUserLogout} leftIcon={<PersonIcon />} />
           </IconMenu>
         </ToolbarGroup>
       </Toolbar>
     );
   }
 }
+
