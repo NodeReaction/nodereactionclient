@@ -10,15 +10,7 @@ import ActionAndroid from "material-ui/svg-icons/action/android";
 export default class ApplicationSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = { currentApplication: "1" };
-    this.handleChangeApplication = this.handleChangeApplication.bind(this);
   }
-
-  handleChangeApplication = (event, value) => {
-    this.setState({
-      currentApplication: value
-    });
-  };
 
   render() {
     const applications = [];
@@ -26,7 +18,7 @@ export default class ApplicationSelector extends Component {
 
     for (let i = 0; i < 3; i++) {
       applications.push(
-        <MenuItem key={i} primaryText={"Application Name - " + i} />
+        <MenuItem onClick={this.props.handleApplicationChangeActive} key={i} primaryText={"Application Name - " + i} />
       );
     }
     return (
@@ -40,7 +32,6 @@ export default class ApplicationSelector extends Component {
             icon={<ActionAndroid />}
           />
         }
-        onChange={this.handleChangeApplication}
       >
         {applications}
       </IconMenu>
