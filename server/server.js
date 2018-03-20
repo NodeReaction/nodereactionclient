@@ -48,7 +48,7 @@ app.get('/test2/:method/:route/:offset/:time',
 app.get('/test3/')
 
 // START EXPRESS
-app.listen(PORT, () => {
+app.listen((process.env.PORT || PORT), () => {
   console.log(
     `===========NODE REACTION SERVER===========\n\nListening on port: ${PORT}`
   );
