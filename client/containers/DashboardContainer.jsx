@@ -1,13 +1,4 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
-import FlatButton from "material-ui/FlatButton";
 const ReactDataGrid = require("react-data-grid");
 const {
   Toolbar,

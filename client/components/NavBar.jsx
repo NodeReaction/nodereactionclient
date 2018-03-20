@@ -21,7 +21,10 @@ import {
 export default class NavBar extends Component {
   constructor(props) {
     super(props);
+    
     this.fetchData = this.fetchData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   //data fetching
@@ -31,14 +34,26 @@ export default class NavBar extends Component {
       .slice(0, 23)
       .replace("T", " ");
   }
+
+  handleChange(event, item) {
+    console.log(click);
+  }
+  handleClick(event, menuItem, obj, i) {
+    console.log("menu item click: " + menuItem);
+  }
+
   render() {
+    // const showApplication = (this.props.applications.length > 1)
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
           <h2>NodeReaction</h2>
         </ToolbarGroup>
         <ToolbarGroup>
-          <ApplicationSelector cb={this.fetchData}/>
+          <ApplicationSelector cb={this.fetchData} />
+          <Link className="navbar-menu-item" to="/login">
+            <FlatButton size="medium" label="Login" primary={true} />
+          </Link>
           <Link className="navbar-menu-item" to="/dashboard">
             <FlatButton size="medium" label="Dashboard" primary={true} />
           </Link>
@@ -55,17 +70,22 @@ export default class NavBar extends Component {
           <ToolbarSeparator />
 
           <IconMenu
+            onItemClick={this.handleClick}
             iconButtonElement={
               <IconButton label="" touch={true}>
                 <PersonIcon />
               </IconButton>
             }
           >
-            <MenuItem primaryText="Profile" leftIcon={<PersonIcon />} />
-            <MenuItem
-              primaryText="Manage Applications"
-              leftIcon={<PersonIcon />}
-            />
+          <Link className="navbar-menu-item" to="/account">
+            <MenuItem primaryText="Account" leftIcon={<PersonIcon />} />
+            </Link>
+            <Link className="navbar-menu-item" to="/applications">
+              <MenuItem
+                primaryText="Manage Applications"
+                leftIcon={<PersonIcon />}
+              />
+            </Link>
             <Divider />
             <MenuItem primaryText="Logout" leftIcon={<PersonIcon />} />
           </IconMenu>

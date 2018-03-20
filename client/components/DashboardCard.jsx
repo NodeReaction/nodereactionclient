@@ -19,9 +19,7 @@ export default class DashboardCard extends Component {
     return (
       <Card className="dashboardCard">
         <CardTitle title={this.props.title} subtitle="" />
-        <CardText>
-          200 / rpm
-        </CardText>
+        <CardText>200 / rpm</CardText>
       </Card>
     );
   }

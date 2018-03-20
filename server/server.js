@@ -46,6 +46,10 @@ app.get('/test2/:method/:route/:offset/:time',
 
 app.get('/test3/')
 
+app.get('*', function (req, res){
+  res.sendFile(path.resolve(__dirname, './../', 'index.html'))
+})
+
 // START EXPRESS
 app.listen(PORT, () => {
   console.log(
