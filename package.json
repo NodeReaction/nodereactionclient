@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/retrowavelabs/nodereactionclient#readme",
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
