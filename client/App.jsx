@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, browserHistory, Switch } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
+import PrivateRoute from "./auth/PrivateRoute.jsx";
 import NavBar from "./components/NavBar.jsx";
 
 import LoginContainer from "./containers/LoginContainer.jsx";
@@ -9,96 +9,122 @@ import AccountContainer from "./containers/AccountContainer.jsx";
 import ApplicationsContainer from "./containers/ApplicationsContainer.jsx";
 import DashboardContainer from "./containers/DashboardContainer.jsx";
 import RoutesContainer from "./containers/RoutesContainer.jsx";
-import TracesContainer from "./containers/TracesContainer.jsx"
+import TracesContainer from "./containers/TracesContainer.jsx";
 import RouteContainer from "./containers/RouteContainer.jsx";
 import NotFoundContainer from "./containers/NotFoundContainer.jsx";
-
 
 class App extends Component {
   constructor(props) {
     super(props);
-       this.state = {};
-       this.state.user = {username: "", email: "", isLoggedIn: false}
-       this.state.applications = [];
+    this.state = {};
+    this.state.user = { username: "", email: "", isLoggedIn: false };
+    this.state.applications = [];
 
-       this.handleUserLogin = this.handleUserLogin.bind(this);
-       this.handleUserLogout = this.handleUserLogout.bind(this);
-       this.handleUserUpdate = this.handleUserUpdate.bind(this);
-       this.handleUserAuthentication = this.handleUserAuthentication.bind(this);
+    this.handleUserLogin = this.handleUserLogin.bind(this);
+    this.handleUserLogout = this.handleUserLogout.bind(this);
+    this.handleUserUpdate = this.handleUserUpdate.bind(this);
+    this.handleUserAuthentication = this.handleUserAuthentication.bind(this);
 
-       this.handleApplicationCreate = this.handleApplicationCreate.bind(this);
-       this.handleApplicationDelete = this.handleApplicationDelete.bind(this);
-       this.handleApplicationChangeActive = this.handleApplicationChangeActive.bind(this);
-       
-       
+    this.handleApplicationCreate = this.handleApplicationCreate.bind(this);
+    this.handleApplicationDelete = this.handleApplicationDelete.bind(this);
+    this.handleApplicationChangeActive = this.handleApplicationChangeActive.bind(
+      this
+    );
   }
 
   handleUserAuthentication(data) {
     console.log(`handleAuthentication: ${JSON.stringify(data)}`);
-    fetch('/login', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'content-type': 'application/json' }
-    })
-    .then(res => res.json())
-    .then(res => {
-      if (res !== 'Invalid credentials') {
-        this.setState({
-          userId: res,
-          isLoggedIn: true
-        });
-      }
-    });
   }
 
   handleUserLogin(data) {
-    console.log('handleUserLogin');
+    console.log("handleUserLogin");
   }
   handleUserLogout(data) {
-    console.log('handleUserLogout');
+    console.log("handleUserLogout");
   }
   handleUserUpdate(data) {
-    console.log('handleUserUpdate');
+    console.log("handleUserUpdate");
   }
 
-
-  handleApplicationChangeActive(data){
-    console.log('handleApplicationChangeActive');
+  handleApplicationChangeActive(data) {
+    console.log("handleApplicationChangeActive");
   }
-  handleApplicationCreate(data){
-    console.log('handleApplicationCreate');
+  handleApplicationCreate(data) {
+    console.log("handleApplicationCreate");
   }
-  handleApplicationDelete(data){
-    console.log('handleApplicationDelete');
+  handleApplicationDelete(data) {
+    console.log("handleApplicationDelete");
   }
- 
 
   render() {
-    const dashboard = (props) => {
-      return <DashboardContainer authenticated={this.state.authenticated}/>
-    }
-    const login = (props) => {
-      return <LoginContainer handleUserLogin={this.handleUserLogin} user={this.state.user} />
-    }
-    const account = (props) => {
-      return <AccountContainer handleUserUpdate={this.handleUserUpdate} user={this.state.user} />
-    }
-    const applications = (props) => {
-      return <ApplicationsContainer handleApplicationCreate={this.handleApplicationCreate} handleApplicationDelete={this.handleApplicationDelete} />
-    }
+    const dashboard = props => {
+      return <DashboardContainer authenticated={this.state.authenticated} />;
+    };
+    const login = props => {
+      return (
+        <LoginContainer
+          handleUserLogin={this.handleUserLogin}
+          user={this.state.user}
+        />
+      );
+    };
+    const account = props => {
+      return (
+        <AccountContainer
+          handleUserUpdate={this.handleUserUpdate}
+          user={this.state.user}
+        />
+      );
+    };
+    const applications = props => {
+      return (
+        <ApplicationsContainer
+          handleApplicationCreate={this.handleApplicationCreate}
+          handleApplicationDelete={this.handleApplicationDelete}
+        />
+      );
+    };
     return (
       <MuiThemeProvider>
         <BrowserRouter>
           <div>
-            <NavBar handleUserLogout={this.handleUserLogout} handleApplicationChangeActive={this.handleApplicationChangeActive} />
-            <Route className="sectionContainer" exact path="/" render={dashboard} />
+            <NavBar
+              handleUserLogout={this.handleUserLogout}
+              handleApplicationChangeActive={this.handleApplicationChangeActive}
+            />
             <Route className="sectionContainer" path="/login" render={login} />
-            <Route className="sectionContainer" path="/account" component={account} />
-            <Route className="sectionContainer" path="/applications" component={applications} />
-            <Route className="sectionContainer" path="/dashboard" component={DashboardContainer} />
-            <Route className="sectionContainer" path="/routes" component={RoutesContainer} />
-            <Route className="sectionContainer" path="/:route/:method/:default_time" component={RouteContainer} />
-            <Route className="sectionContainer" path="/traces" component={TracesContainer} />
+            <PrivateRoute
+              className="sectionContainer"
+              exact
+              path="/"
+              render={dashboard}
+            />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/account"
+              component={account}
+            />
+            <PrivateRoute path="/applications" component={applications} />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/dashboard"
+              component={DashboardContainer}
+            />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/routes"
+              component={RoutesContainer}
+            />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/:route/:method/:default_time"
+              component={RouteContainer}
+            />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/traces"
+              component={TracesContainer}
+            />
             {/* <Route className="sectionContainer" path="*" exact={true}  component={NotFoundContainer} /> */}
           </div>
         </BrowserRouter>
@@ -108,7 +134,6 @@ class App extends Component {
 }
 
 export default App;
-
 
 /*//
 

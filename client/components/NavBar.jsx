@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import Divider from "material-ui/Divider";
 import DropDownMenu from "material-ui/DropDownMenu";
 import FlatButton from "material-ui/FlatButton";
@@ -10,6 +9,9 @@ import MenuItem from "material-ui/MenuItem";
 import NavigationExpandMoreIcon from "material-ui/svg-icons/navigation/expand-more";
 import PersonIcon from "material-ui/svg-icons/social/person";
 import ApplicationSelector from "../components/ApplicationSelector.jsx";
+import authService from "../auth/AuthService.js";
+import { Link, browserHistory, withRouter } from "react-router-dom";
+
 // import Setting from 'material-ui/svg-icons/action/setting';
 import {
   Toolbar,
@@ -18,9 +20,14 @@ import {
   ToolbarTitle
 } from "material-ui/Toolbar";
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
+    this.signout = this.signout.bind(this);
+  }
+
+  signout() {
+    authService.signout(() => this.props.history.push("/login"));
   }
 
   render() {
@@ -31,7 +38,11 @@ export default class NavBar extends Component {
           <h2>NodeReaction</h2>
         </ToolbarGroup>
         <ToolbarGroup>
-          <ApplicationSelector handleApplicationChangeActive={this.props.handleApplicationChangeActive} />
+          <ApplicationSelector
+            handleApplicationChangeActive={
+              this.props.handleApplicationChangeActive
+            }
+          />
           <Link className="navbar-menu-item" to="/login">
             <FlatButton size="medium" label="Login" primary={true} />
           </Link>
@@ -57,8 +68,8 @@ export default class NavBar extends Component {
               </IconButton>
             }
           >
-          <Link className="navbar-menu-item" to="/account">
-            <MenuItem primaryText="Account" leftIcon={<PersonIcon />} />
+            <Link className="navbar-menu-item" to="/account">
+              <MenuItem primaryText="Account" leftIcon={<PersonIcon />} />
             </Link>
             <Link className="navbar-menu-item" to="/applications">
               <MenuItem
@@ -67,7 +78,11 @@ export default class NavBar extends Component {
               />
             </Link>
             <Divider />
-            <MenuItem primaryText="Logout" onClick={this.props.handleUserLogout} leftIcon={<PersonIcon />} />
+            <MenuItem
+              primaryText="Logout"
+              onClick={this.signout}
+              leftIcon={<PersonIcon />}
+            />
           </IconMenu>
         </ToolbarGroup>
       </Toolbar>
@@ -75,3 +90,4 @@ export default class NavBar extends Component {
   }
 }
 
+export default withRouter(NavBar);
