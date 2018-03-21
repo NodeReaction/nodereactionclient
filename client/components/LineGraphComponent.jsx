@@ -9,19 +9,13 @@ import {
   Legend
 } from "recharts";
 
-const data = [
-  { name: "Page A", uv: 4100, pv: 2400, amt: 2400 },
-  { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Page G", uv: 3490, pv: 4300, amt: 2100 }
-];
-
 export default class LineGraphComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {data: [
+    { time: "Page B", numReq: 3000, avgTime: 1398, herro: 123},
+    { time: "Page C", numReq: 2000, avgTime: 9800, herro: 123},
+    { time: "Page D", numReq: 2780, avgTime: 3908, herro: 123}]};
   }
 
   fetchDataAnalytics(offset) {
@@ -29,7 +23,6 @@ export default class LineGraphComponent extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    // this.fetchStats(datetime);
     this.fetchRows(datetime);
   }
 
@@ -47,24 +40,15 @@ export default class LineGraphComponent extends Component {
 
   render() {
     return (
-      <LineChart
-        width={600}
-        height={300}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="name" />
-        <YAxis />
+      <LineChart width={600} height={300} data={this.props.data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <XAxis dataKey="Time" />
+        <YAxis yAxisId="left" />
+        <YAxis yAxisId="right" orientation="right" />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        <Line yAxisId="left" type="monotone" dataKey="AverageResponse" stroke="#8884d8" activeDot={{r: 8}} />
+        <Line yAxisId="right" type="monotone" dataKey="NumberOfRequests" stroke="#82ca9d" />
       </LineChart>
     );
   }

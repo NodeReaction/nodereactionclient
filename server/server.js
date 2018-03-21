@@ -28,6 +28,7 @@ app.use(express.static(__dirname + "./../"));
 
 // ROUTES
 app.use("/api", apiRouter);
+app.use("/api/:appId", apiRouter);
 
 app.post('/test',
   analyticsController.graphData,
@@ -51,7 +52,7 @@ app.get('*', function (req, res){
 })
 
 // START EXPRESS
-app.listen(PORT, () => {
+app.listen((process.env.PORT || PORT), () => {
   console.log(
     `===========NODE REACTION SERVER===========\n\nListening on port: ${PORT}`
   );
