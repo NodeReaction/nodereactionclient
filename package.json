@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/retrowavelabs/nodereactionclient#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -35,6 +36,7 @@
     "react-router-dom": "^4.2.2",
     "recharts": "^1.0.0-beta.10",
     "request": "^2.85.0",
+    "sqlstring": "^2.3.1",
     "webpack-cli": "^2.0.11"
   },
   "devDependencies": {

@@ -19,7 +19,11 @@ agentController.create = (req, res, next) => {
     `);
 
   transactions.forEach(transaction => {
-   console.log('=========================\n' + JSON.stringify(transaction) + '=========================\n');
+    console.log(
+      "=========================\n" +
+        JSON.stringify(transaction) +
+        "=========================\n"
+    );
     const applicationId = 9;
     sql.query(
       sqlstring.format(
@@ -34,14 +38,16 @@ agentController.create = (req, res, next) => {
           transaction.traceTimer.startTimestamp,
           transaction.traceTimer.endTimestamp,
           transaction.traceTimer.duration
-        ]),function(error, results, fields) {
+        ]
+      ),
+      function(error, results, fields) {
         if (error) {
           console.log("database error at transaction: ", error);
           next(error);
         }
         console.log("database save trasaction_id: ", results.insertId);
         transaction.traces.forEach(trace => {
-          console.log('Inside trace: ', trace);
+          console.log("Inside trace: ", trace);
           sql.query(
             sqlstring.format(
               "INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) VALUES (?,?,?,?,?,?,?,?,?)",
@@ -55,15 +61,17 @@ agentController.create = (req, res, next) => {
                 trace.traceTimer.startTimestamp,
                 trace.traceTimer.endTimestamp,
                 trace.traceTimer.duration
-              ]), function(err, results, fields) {
+              ]
+            ),
+            function(err, results, fields) {
               if (err) {
                 console.log("database error at trace: ", err);
                 next(err);
               }
               console.log("database save trace_id: ", results);
             }
-          )
-        })
+          );
+        });
       }
     );
   });
