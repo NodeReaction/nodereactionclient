@@ -147,6 +147,7 @@ export default class DashboardContainer extends Component {
   };
 
   render() {
+    console.log("passed ", this.props);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -156,9 +157,15 @@ export default class DashboardContainer extends Component {
           </div>
         </div>
         <div className="dashboardCards">
-          <DashboardCard title="Total Requests" value={this.state.requests}/>
-          <DashboardCard title="Average Response Time" value={this.state.response_time}/>
-          <DashboardCard title="Average Throughput" value={this.state.throughput}/>
+          <DashboardCard title="Total Requests" value={this.state.requests} />
+          <DashboardCard
+            title="Average Response Time"
+            value={this.state.response_time}
+          />
+          <DashboardCard
+            title="Average Throughput"
+            value={this.state.throughput}
+          />
         </div>
 
         <div className="top5Grid">

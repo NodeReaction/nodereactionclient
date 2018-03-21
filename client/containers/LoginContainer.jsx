@@ -7,8 +7,10 @@ import {
   CardText
 } from "material-ui/Card";
 import FlatButton from "material-ui/FlatButton";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import TextField from "material-ui/TextField";
+import authService from "../auth/AuthService.js";
+
 export default class LoginContainer extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,8 @@ export default class LoginContainer extends Component {
       message: "Event added to your calendar",
       open: false,
       username: "",
-      password: ""
+      password: "",
+      redirectToReferer: false
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
@@ -27,10 +30,16 @@ export default class LoginContainer extends Component {
       username: this.state.username,
       password: this.state.password
     };
+    authService.isAuthenticated = true;
+    this.setState({ redirectToReferer: true });
     this.props.handleUserLogin(user);
   }
 
   render() {
+    // const { from } = this.props.location.state || { from: { pathname: "/" } };
+    if (this.state.redirectToReferer) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <div>
         <div className="pageContainer">
