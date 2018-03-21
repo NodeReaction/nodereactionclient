@@ -7,9 +7,10 @@ const router = express.Router();
 
 // CONTROLLERS
 const agentController = require("./../controllers/agentController");
+const userController = require("./../controllers/userController");
+const applicationController = require("./../controllers/applicationController");
 const routeController = require("./../controllers/routeController");
 const traceController = require("./../controllers/traceController");
-const apiController = require("./../controllers/apiController");
 const dashboardController = require("./../controllers/dashboardController");
 const analyticsController = require("./../controllers/analyticsController");
 
@@ -17,6 +18,10 @@ const analyticsController = require("./../controllers/analyticsController");
 // AGENT - POSTS DATA TO SERVER
 router.post(
   "/agent/data/save",
+  (req, res, next) => {
+    console.log("recieved msg");
+    next();
+  },
   agentController.validate,
   agentController.create,
   (req, res) => {
@@ -24,24 +29,82 @@ router.post(
   }
 );
 
-// ROUTES
-router.get("/getData", apiController.getTransactions, (req, res) => {
-  res.json(res.locals.transactions);
-});
+// GRAPHING DATA
+router.post("/test", analyticsController.graphData, (req, res) =>
+  res.send("Success")
+);
 
-router.get("/deleteData", apiController.deleteTransactions, (req, res) => {
-  res.json({ msg: "allset" });
-});
+router.get(
+  "/test/:method/:route/:offset/:time",
+  analyticsController.graphData,
+  (req, res) => res.send("Success")
+);
 
+router.get(
+  "/test2/:method/:route/:offset/:time",
+  analyticsController.timeline,
+  (req, res) => res.send("Success")
+);
+
+// TRACES
 router.get("/traces/:offset", traceController);
 
+// DASHBOARD
 router.get("/dashboard/top/:offset", dashboardController.topFive);
-
 router.get("/dashboard/stats/:offset", dashboardController.quickStats);
 
+// ROUTE
 router.get("/routes/:offset", routeController.getRoutes);
+router.get(
+  "/analytics/graph/:route/:method/:offset/:time",
+  analyticsController.graphData
+);
 
-router.get("/analytics/graph/:route/:method/:offset/:time", analyticsController.graphData);
+// USER
+router.post("/user/create",
+  userController.userCreate,
+  (req, res) => {
+  res.status(200).json(res.locals.userId);
+});
+
+router.get("/user/read/:id",
+  userController.userRead,
+  (req, res) => {
+  res.status(200).json(res.locals.userId);
+});
+
+router.post("/user/update",
+  userController.userUpdate,
+  (req, res) => {
+  res.status(200).json(res.locals.userId);
+});
+
+router.post("/user/delete/:id",
+  userController.userDelete,
+  (req, res) => {
+  res.status(200).json(res.locals.userId);
+});
+
+router.get("/users/",
+  userController.usersList,
+  (req, res) => {
+  res.status(200).json(res.locals.users);
+});
+
+// APPLICATION
+router.post("/application/create", applicationController.applicationCreate, (req, res) => {
+  res.status(200).json(res.locals.applicationId);
+});
+router.get("/application/read/:id", applicationController.applicationRead, (req, res) => {
+  res.status(200).json(res.locals.application);
+});
+
+router.get("/application/delete/:id", applicationController.applicationDelete, (req, res) => {
+  res.status(200).json(res.locals.applicationId);
+});
+router.get("/applications", applicationController.applicationsList, (req, res) => {
+  res.status(200).json(res.locals.applications);
+});
 
 // DEFAULT ROUTES
 router.all("*", (req, res, next) => {
