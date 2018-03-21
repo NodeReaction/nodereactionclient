@@ -6,6 +6,7 @@ export default class RouteContainer extends Component {
   constructor() {
     super();
     this.fetchData = this.fetchData.bind(this);
+    this.state = {rows: []};
   }
 
   //data fetching
@@ -18,13 +19,24 @@ export default class RouteContainer extends Component {
   }
 
   fetchGraphData = (offset, datetime) => {
+    let data = [];
     window
       .fetch(`http://localhost:3000/api/analytics/graph/${this.props.match.params.route}/${this.props.match.params.method}/${offset}/${datetime}`)
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
+        json[4].forEach(elem => {
+          data.push({
+            Time: elem.timekey2,
+            AverageResponse: elem.avgduration,
+            NumberOfRequests: elem.numRequests
+          });
+        });
+        this.setState({rows: data});
       });
   };
+
+  // {"timekey2":"2018-03-20 15:30:25","avgduration":0,"numRequests":0};
 
   // Available data: route (match), method (match), offset (time), time (component)
   render() {
@@ -39,7 +51,7 @@ export default class RouteContainer extends Component {
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph />
+        <LineGraph data={this.state.rows}/>
       </div>
     )
   }
