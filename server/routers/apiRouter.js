@@ -57,7 +57,7 @@ router.get(
 router.get("/routes/:application_id/:offset", routeController.getRoutes);
 router.get(
   "/analytics/graph/:application_id/:route/:method/:offset/:time",
-  analyticsController.graphData
+  analyticsController.graphData, analyticsController.rangeData
 );
 
 // USER
