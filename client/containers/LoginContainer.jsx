@@ -25,6 +25,8 @@ export default class LoginContainer extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
+  //We login here and also set up some inital state by using callback props. Not ideal
+  //but hard to avoid with current UI set up
   handleLogin() {
     const user = {
       username: this.state.username,
@@ -32,11 +34,10 @@ export default class LoginContainer extends Component {
     };
     authService.isAuthenticated = true;
     this.setState({ redirectToReferer: true });
-    this.props.handleUserLogin(user);
+    this.props.cb([9, 10]);
   }
 
   render() {
-    // const { from } = this.props.location.state || { from: { pathname: "/" } };
     if (this.state.redirectToReferer) {
       return <Redirect to="/dashboard" />;
     }

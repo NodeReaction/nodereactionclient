@@ -6,7 +6,7 @@ export default class RouteContainer extends Component {
   constructor() {
     super();
     this.fetchData = this.fetchData.bind(this);
-    this.state = {rows: []};
+    this.state = { rows: [] };
   }
 
   //data fetching
@@ -15,13 +15,17 @@ export default class RouteContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchGraphData(offset, datetime);
+    this.fetchGraphData(this.props.app_id, offset, datetime);
   }
 
-  fetchGraphData = (offset, datetime) => {
+  fetchGraphData = (app_id, offset, datetime) => {
     let data = [];
     window
-      .fetch(`http://localhost:3000/api/analytics/graph/${this.props.match.params.route}/${this.props.match.params.method}/${offset}/${datetime}`)
+      .fetch(
+        `http://localhost:3000/api/analytics/graph/${
+          this.props.match.params.route
+        }/${this.props.match.params.method}/${offset}/${datetime}`
+      )
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
@@ -32,7 +36,7 @@ export default class RouteContainer extends Component {
             NumberOfRequests: elem.numRequests
           });
         });
-        this.setState({rows: data});
+        this.setState({ rows: data });
       });
   };
 
@@ -40,19 +44,22 @@ export default class RouteContainer extends Component {
 
   // Available data: route (match), method (match), offset (time), time (component)
   render() {
-    console.log(this.props.match)
+    console.log(this.props.match);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageHeader">Application Name - Route - {this.props.match.params.method} {this.props.match.params.route}</h1>
+          <h1 className="pageHeader">
+            Application Name - Route - {this.props.match.params.method}{" "}
+            {this.props.match.params.route}
+          </h1>
           <div className="timeSelector">
             {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph data={this.state.rows}/>
+        <LineGraph data={this.state.rows} />
       </div>
-    )
+    );
   }
-};
+}
