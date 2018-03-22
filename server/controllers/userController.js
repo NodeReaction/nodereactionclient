@@ -135,7 +135,6 @@ userController.userVerify = (req, res, next) => {
       }
       console.log('results =====>' + results);
       if (results.length) {
-        
         res.locals.auth = true;
         res.locals.userId = results[0].user_id;
         // valid credentials

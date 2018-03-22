@@ -20,7 +20,7 @@ export default class LineGraphComponent extends Component {
     return (
       <div>
         <div>
-          <LineChart width={600} height={300} data={this.props.data.graphData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <LineChart width={700} height={300} data={this.props.data.graphData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <XAxis dataKey="Time" />
             <YAxis yAxisId="left" />
             <YAxis yAxisId="right" orientation="right" />
