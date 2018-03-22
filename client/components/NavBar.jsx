@@ -31,7 +31,6 @@ class NavBar extends Component {
   }
 
   render() {
-    // const showApplication = (this.props.applications.length > 1)
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
@@ -39,9 +38,8 @@ class NavBar extends Component {
         </ToolbarGroup>
         <ToolbarGroup>
           <ApplicationSelector
-            handleApplicationChangeActive={
-              this.props.handleApplicationChangeActive
-            }
+            apps={this.props.apps}
+            change_app={this.props.change_app}
           />
           <Link className="navbar-menu-item" to="/login">
             <FlatButton size="medium" label="Login" primary={true} />
