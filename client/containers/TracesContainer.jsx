@@ -72,12 +72,12 @@ export default class TracesContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchRows(datetime);
+    this.fetchRows(this.props.app_id, datetime);
   }
 
-  fetchRows = date => {
+  fetchRows = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/traces/${date}`)
+      .fetch(`http://localhost:3000/api/traces/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log(json);
