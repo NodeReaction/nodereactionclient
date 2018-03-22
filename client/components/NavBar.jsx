@@ -28,10 +28,10 @@ class NavBar extends Component {
 
   signout() {
     authService.signout(() => this.props.history.push("/login"));
+    this.props.navbarToggle();
   }
 
   render() {
-    // const showApplication = (this.props.applications.length > 1)
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
@@ -39,9 +39,8 @@ class NavBar extends Component {
         </ToolbarGroup>
         <ToolbarGroup>
           <ApplicationSelector
-            handleApplicationChangeActive={
-              this.props.handleApplicationChangeActive
-            }
+            change_app={this.props.change_app}
+            apps={this.props.apps}
           />
           <Link className="navbar-menu-item" to="/login">
             <FlatButton size="medium" label="Login" primary={true} />

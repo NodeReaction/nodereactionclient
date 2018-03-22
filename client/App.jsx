@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, browserHistory, Switch } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import PrivateRoute from "./auth/PrivateRoute.jsx";
+import { PropsRoute, PrivateRoute } from "./auth/PrivateRoute.jsx";
+import authService from "./auth/AuthService.js";
 import NavBar from "./components/NavBar.jsx";
 
 import LoginContainer from "./containers/LoginContainer.jsx";
@@ -47,6 +48,7 @@ class App extends Component {
 
   //cb for when we get apps in login component. We will default select 1st
   populateApplications(apps) {
+    console.log("filling apps", apps);
     this.setState({ applications: apps });
     this.setState({ selectedApp: apps[0] });
   }
@@ -60,10 +62,10 @@ class App extends Component {
       spacing: spacing,
       fontFamily: "Open Sans, sans-serif",
       palette: {
-        primary1Color: '#000000', // button color
+        primary1Color: "#000000", // button color
         primary2Color: blueGrey800,
         primary3Color: grey400,
-        accent1Color: '#FF530D',
+        accent1Color: "#FF530D",
         accent2Color: grey100,
         accent3Color: grey500,
         textColor: darkBlack,
@@ -71,8 +73,8 @@ class App extends Component {
         canvasColor: white,
         borderColor: grey300,
         disabledColor: fade(darkBlack, 0.3),
-        pickerHeaderColor: '#FF530D',
-        clockCircleColor: fade('#FF530D', 0.07),
+        pickerHeaderColor: "#FF530D",
+        clockCircleColor: fade("#FF530D", 0.07),
         shadowColor: fullBlack
       },
       appBar: {
@@ -88,9 +90,12 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <div>
-            <NavBar
+            <PropsRoute
+              path="/"
+              navbarToggle={this.navbarToggle}
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
+              component={NavBar}
             />
             <Route className="sectionContainer" path="/login" render={login} />
             <PrivateRoute
