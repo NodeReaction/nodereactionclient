@@ -22,7 +22,7 @@ app.use(express.static(__dirname + "./../"));
 
 // ROUTES
 app.use("/api", apiRouter);
-app.use("/api/:appId", apiRouter);
+// app.use("/api/:appId", apiRouter);
 
 app.get('*', function (req, res){
   res.sendFile(path.resolve(__dirname + '/../', 'index.html'))

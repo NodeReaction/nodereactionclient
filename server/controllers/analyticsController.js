@@ -11,7 +11,7 @@ analyticsController.graphData = (req, res, next) => {
   let cache = {};
   let seconds;
   let datetime;
-  const {route, method, offset, time} = req.params;
+  const {application_id, route, method, offset, time} = req.params;
   seconds = parseInt(offset) / 1000;
   let currentTime = new Date(Date.now()).toISOString().slice(0, 23).replace("T", " ");
   // todo: use sqlstring
@@ -34,7 +34,7 @@ analyticsController.graphData = (req, res, next) => {
       LEFT JOIN (
         SELECT AVG(duration) as avgdur, COUNT(*) as numRequests, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(start_timestamp) / (${seconds} / 60)) * (${seconds} / 60)) as timekey 
         FROM transactions
-        WHERE route='/${route}' and method='${method}' and start_timestamp > '${time}' 
+        WHERE application_id='${application_id}' and route='/${route}' and method='${method}' and start_timestamp > '${time}' 
         GROUP BY UNIX_TIMESTAMP(start_timestamp) DIV (${seconds} / 60), timekey
       ) as b
       ON a.timekey2 = b.timekey
