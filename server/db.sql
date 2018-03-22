@@ -107,130 +107,143 @@ DEFAULT CHARACTER SET = utf8;
 
 -- Users
 
-insert into users (`email`, `username`, `password`) VALUES ('user_01@gmail.com', 'user_01', 'bcrypthash');
-insert into users (`email`, `username`, `password`) VALUES ('user_02@gmail.com', 'user_02', 'bcrypthash');
-insert into users (`email`, `username`, `password`) VALUES ('user_03@gmail.com', 'user_03', 'bcrypthash');
+-- insert into users (`email`, `username`, `password`) VALUES ('user_01@gmail.com', 'user_01', 'bcrypthash');
+-- insert into users (`email`, `username`, `password`) VALUES ('user_02@gmail.com', 'user_02', 'bcrypthash');
+-- insert into users (`email`, `username`, `password`) VALUES ('user_03@gmail.com', 'user_03', 'bcrypthash');
+
+-- select * from users;
+
+-- -- Applications
+
+-- insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app1');
+-- insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app2');
+-- insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app3');
+-- insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app1');
+-- insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app2');
+-- insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app3');
+-- insert into applications (`user_id`, `name`) VALUES ('11', 'user03 - app1');
+
+-- select * from applications;
+
+-- -- Transactions
+
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+-- INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
+
+-- select * from transactions;
+
+-- -- Traces
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,1,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,1,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,1,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,1,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,2,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,2,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,2,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,2,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,3,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,3,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,3,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,3,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,4,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,4,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,4,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (9,4,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,1,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,1,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,1,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (10,1,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,2,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,2,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,2,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,2,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,3,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,3,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,3,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (11,3,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (12,4,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (12,4,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (12,4,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
+-- INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
+-- VALUES (12,4,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
+
+-- select * from traces
+
+
+insert into users (`email`, `username`, `password`) VALUES ('retrowavelabs@gmail.com', 'retrowavelabs', 'a');
 
 select * from users;
 
 -- Applications
 
-insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app1');
-insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app2');
-insert into applications (`user_id`, `name`) VALUES ('9', 'user01 - app3');
-insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app1');
-insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app2');
-insert into applications (`user_id`, `name`) VALUES ('10', 'user02 - app3');
-insert into applications (`user_id`, `name`) VALUES ('11', 'user03 - app1');
+insert into applications (`user_id`, `name`) VALUES ('9', 'Grocery List');
+insert into applications (`user_id`, `name`) VALUES ('9', 'MySql CRUD');
+insert into applications (`user_id`, `name`) VALUES ('9', 'Task App');
 
 select * from applications;
-
--- Transactions
-
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (9,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (9,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (9,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (9,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (10,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (10,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (10,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (10,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (11,'/dogs','POST', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (11,'/dogs','GET', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (11,'/dogs','DELETE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-INSERT INTO transactions (application_id, route, method, start_timestamp, end_timestamp, duration) 
-VALUES (11,'/dogs','UPDATE', '2018-11-11 11:11:11', '2018-11-11 12:12:12',10);
-
-select * from transactions;
-
--- Traces
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,1,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,1,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,1,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,1,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,2,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,2,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,2,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,2,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,3,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,3,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,3,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,3,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,4,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,4,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,4,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (9,4,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (10,1,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (10,1,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (10,1,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (10,1,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,2,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,2,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,2,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,2,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,3,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,3,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,3,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (11,3,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (12,4,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (12,4,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (12,4,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
-INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (12,4,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11-11 12:12:14',30);
-
-select * from traces
 
 -- Selects
 

@@ -11,6 +11,9 @@ pids
 *.seed
 *.pid.lock
 
+Archive5.zip
+/Archive5
+
 # Build
 build/bundle.js 
 
