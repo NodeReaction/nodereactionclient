@@ -16,7 +16,7 @@ export default class RouteContainer extends Component {
     this.setState({
       graphData: [],
       rangeData: []
-    })
+    });
     let datetime = new Date(Date.now() - offset)
       .toISOString()
       .slice(0, 23)
@@ -29,7 +29,7 @@ export default class RouteContainer extends Component {
     let rangeDataJson = [];
     window
       .fetch(
-        `http://localhost:3000/api/analytics/graph/${
+        `http://localhost:3000/api/analytics/graph/9/route/${
           this.props.match.params.route
         }/${this.props.match.params.method}/${offset}/${datetime}`
       )
@@ -45,15 +45,17 @@ export default class RouteContainer extends Component {
         });
         rangeDataJson.push({
           Name: `${json.rangeData[0].method} ${json.rangeData[0].route}`,
-          AverageDuration: parseFloat(json.rangeData[0]['avg(a.duration)'].toPrecision(3))
+          AverageDuration: parseFloat(
+            json.rangeData[0]["avg(a.duration)"].toPrecision(3)
+          )
         });
         json.rangeData.forEach(elem => {
           rangeDataJson.push({
             Name: `${elem.library} ${elem.type}`,
-            AverageDuration: parseFloat(elem['avg(b.duration)'].toPrecision(3))
+            AverageDuration: parseFloat(elem["avg(b.duration)"].toPrecision(3))
           });
         });
-        this.setState({graphData: graphDataJson, rangeData: rangeDataJson});
+        this.setState({ graphData: graphDataJson, rangeData: rangeDataJson });
       });
   };
 
@@ -71,7 +73,7 @@ export default class RouteContainer extends Component {
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph data={this.state}/>
+        <LineGraph data={this.state} />
       </div>
     );
   }

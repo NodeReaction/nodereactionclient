@@ -71,10 +71,15 @@ export default class DashboardContainer extends Component {
   }
 
   fetchStats = (app_id, date) => {
+    console.log(
+      "fetching",
+      `http://localhost:3000/api/dashboard/stats/${app_id}/${date}`
+    );
     window
       .fetch(`http://localhost:3000/api/dashboard/stats/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
+        console.log("json = ", json);
         let data = json[0];
         this.setState({
           response_time: data.avg_duration,
@@ -175,19 +180,23 @@ export default class DashboardContainer extends Component {
             <h2>Routes - Top 5</h2>
           </div>
           <div>
-          <Paper children={<ReactDataGrid
-              enableCellSelect={false}
-              onGridSort={this.handleGridSort}
-              columns={this._columns}
-              rowGetter={this.rowGetter}
-              rowsCount={this.rowsCount()}
-              minHeight={300}
-              toolbar={<Toolbar enableFilter={true} />}
-              onAddFilter={this.handleFilterChange}
-              getValidFilterValues={this.getValidFilterValues}
-              onClearFilters={this.handleOnClearFilters}
-              onRowClick={this.onRowClick}
-            />} />
+            <Paper
+              children={
+                <ReactDataGrid
+                  enableCellSelect={false}
+                  onGridSort={this.handleGridSort}
+                  columns={this._columns}
+                  rowGetter={this.rowGetter}
+                  rowsCount={this.rowsCount()}
+                  minHeight={300}
+                  toolbar={<Toolbar enableFilter={true} />}
+                  onAddFilter={this.handleFilterChange}
+                  getValidFilterValues={this.getValidFilterValues}
+                  onClearFilters={this.handleOnClearFilters}
+                  onRowClick={this.onRowClick}
+                />
+              }
+            />
           </div>
         </div>
       </div>

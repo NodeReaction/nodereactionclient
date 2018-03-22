@@ -7,6 +7,17 @@ const renderMergedProps = (component, ...rest) => {
   return React.createElement(component, finalProps);
 };
 
+const PropsRoute = ({ component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={routeProps => {
+        return renderMergedProps(component, routeProps, rest);
+      }}
+    />
+  );
+};
+
 const PrivateRoute = ({ component, redirectTo, ...rest }) => {
   return (
     <Route
@@ -22,4 +33,4 @@ const PrivateRoute = ({ component, redirectTo, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export { PropsRoute, PrivateRoute };
