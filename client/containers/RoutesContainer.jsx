@@ -81,9 +81,16 @@ export default class RoutesContainer extends Component {
   // Redirects to analytics page on row click. Needs to preserve history when clicking back button
   // Also first row doesn't redirect
   redirectAnalytics = (...args) => {
-    console.log(...args);
+    let routeName;
+    let str = args[1].route.slice();
+    console.log('****There are the arguments****\n', ...args);
+
+    let newStr = str.replace(/\//g, '%2f');
+    newStr = '/' + newStr.slice(3);
+    console.log('***string***', newStr);
+
     this.props.history.push(
-      `${args[1].route}/${args[1].method}/hourofthewitch`
+      `${newStr}/${args[1].method}`
     );
   };
 

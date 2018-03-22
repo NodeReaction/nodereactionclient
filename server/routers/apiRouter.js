@@ -29,17 +29,6 @@ router.post(
   }
 );
 
-// GRAPHING DATA
-router.post("/test", analyticsController.graphData, (req, res) =>
-  res.send("Success")
-);
-
-router.get(
-  "/test/:method/:route/:offset/:time",
-  analyticsController.graphData,
-  (req, res) => res.send("Success")
-);
-
 // TRACES
 router.get("/traces/:application_id/:offset", traceController);
 
