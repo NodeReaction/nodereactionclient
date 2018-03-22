@@ -6,11 +6,17 @@ export default class RouteContainer extends Component {
   constructor() {
     super();
     this.fetchData = this.fetchData.bind(this);
-    this.state = { rows: [] };
+    this.state = {
+      graphData: [],
+      rangeData: []
+    };
   }
 
-  //data fetching
   fetchData(offset) {
+    this.setState({
+      graphData: [],
+      rangeData: []
+    })
     let datetime = new Date(Date.now() - offset)
       .toISOString()
       .slice(0, 23)
@@ -19,7 +25,8 @@ export default class RouteContainer extends Component {
   }
 
   fetchGraphData = (app_id, offset, datetime) => {
-    let data = [];
+    let graphDataJson = [];
+    let rangeDataJson = [];
     window
       .fetch(
         `http://localhost:3000/api/analytics/graph/${
@@ -29,20 +36,27 @@ export default class RouteContainer extends Component {
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
-        json[4].forEach(elem => {
-          data.push({
+        json.graphData[4].forEach(elem => {
+          graphDataJson.push({
             Time: elem.timekey2,
             AverageResponse: elem.avgduration,
             NumberOfRequests: elem.numRequests
           });
         });
-        this.setState({ rows: data });
+        rangeDataJson.push({
+          Name: `${json.rangeData[0].method} ${json.rangeData[0].route}`,
+          AverageDuration: parseFloat(json.rangeData[0]['avg(a.duration)'].toPrecision(3))
+        });
+        json.rangeData.forEach(elem => {
+          rangeDataJson.push({
+            Name: `${elem.library} ${elem.type}`,
+            AverageDuration: parseFloat(elem['avg(b.duration)'].toPrecision(3))
+          });
+        });
+        this.setState({graphData: graphDataJson, rangeData: rangeDataJson});
       });
   };
 
-  // {"timekey2":"2018-03-20 15:30:25","avgduration":0,"numRequests":0};
-
-  // Available data: route (match), method (match), offset (time), time (component)
   render() {
     console.log(this.props.match);
     return (
@@ -53,12 +67,11 @@ export default class RouteContainer extends Component {
             {this.props.match.params.route}
           </h1>
           <div className="timeSelector">
-            {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph data={this.state.rows} />
+        <LineGraph data={this.state}/>
       </div>
     );
   }
