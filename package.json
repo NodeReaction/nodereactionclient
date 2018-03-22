@@ -1,0 +1,55 @@
+{
+  "name": "nodereactionclient",
+  "version": "1.0.0",
+  "description": "client facing react app for NRA",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "nodemon src/server/index.js",
+    "webpack": "webpack -w --mode development",
+    "builddev": "webpack -w --mode development",
+    "build": "webpack -w --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/retrowavelabs/nodereactionclient.git"
+  },
+  "author": "retrowavelabs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/retrowavelabs/nodereactionclient/issues"
+  },
+  "homepage": "https://github.com/retrowavelabs/nodereactionclient#readme",
+  "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "material-ui": "^0.20.0",
+    "moment": "^2.21.0",
+    "mongoose": "^5.0.10",
+    "mysql": "^2.15.0",
+    "nodemon": "1.17.2",
+    "react": "^15.4.0",
+    "react-data-grid": "^3.0.11",
+    "react-data-grid-addons": "^3.0.11",
+    "react-dom": "^15.4.0",
+    "react-router-dom": "^4.2.2",
+    "recharts": "^1.0.0-beta.10",
+    "request": "^2.85.0",
+    "sqlstring": "^2.3.1",
+    "webpack-cli": "^2.0.11"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.1.1"
+  }
+}
