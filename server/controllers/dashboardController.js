@@ -3,14 +3,13 @@ const sqlstring = require("sqlstring");
 
 module.exports = {
   topFive: function(req, res) {
-    let date = "2018-03-15 03:36:49";
     let query = sqlstring.format(
-      `select route, method, AVG(duration) as avg_duration, COUNT(*) as total_requests from transactions
-where start_timestamp > ?
-group by route,method
+      `select application_id, method, AVG(duration) as avg_duration, COUNT(*) as total_requests from transactions
+where start_timestamp > ? AND application_id = ?
+group by route,method,application_id
 order by avg_duration desc
 limit 5;`,
-      [req.params.offset]
+      [req.params.offset, req.params.application_id]
     );
 
     sql.query(query, (err, results, fields) => {
@@ -19,11 +18,11 @@ limit 5;`,
   },
 
   quickStats: function(req, res) {
-    let date = "2018-03-15 03:36:49";
     let query = sqlstring.format(
       `select AVG(duration) as avg_duration, COUNT(*) as total_requests from transactions 
-WHERE start_timestamp > ?;`,
-      [req.params.offset]
+WHERE start_timestamp > ? and application_id = ?;`,
+      [req.params.offset],
+      [req.params.application_id]
     );
 
     sql.query(query, (err, results, fields) => {

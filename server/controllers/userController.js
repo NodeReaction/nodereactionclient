@@ -10,14 +10,21 @@ const userController = {};
 userController.userCreate = (req, res, next) => {
   const { email, username, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, SALT_WORK_FACTOR);
-  console.log('create user: ' + email + ' username: ' + username + ' password: ' + password);
+  console.log(
+    "create user: " +
+      email +
+      " username: " +
+      username +
+      " password: " +
+      password
+  );
   sql.query(
     sqlstring.format(
       "INSERT INTO users (email, username, password) VALUES (?,?,?)",
       [email, username, hashedPassword]
     ),
-    (error, results, fields) => {
-      if (error) {
+    (err, results, fields) => {
+      if (err) {
         let err = new Error("Invalid credentials or duplicate email/username");
         err.functionName = "userController.createUser";
         err.status = 400;
@@ -36,8 +43,8 @@ userController.userRead = (req, res, next) => {
   const { id } = req.params;
   sql.query(
     sqlstring.format("SELECT * from users WHERE id=?", [id]),
-    (error, results, fields) => {
-      if (error) {
+    (err, results, fields) => {
+      if (err) {
         err = new Error("Invalid credentials");
         err.functionName = "userController.createUser";
         err.status = 400;
@@ -59,8 +66,8 @@ userController.userUpdate = (req, res, next) => {
       username,
       id
     ]),
-    (error, results, fields) => {
-      if (error) {
+    (err, results, fields) => {
+      if (err) {
         err = new Error("Invalid credentials");
         err.functionName = "userController.createUser";
         err.status = 400;
@@ -77,11 +84,9 @@ userController.userUpdate = (req, res, next) => {
 userController.userDelete = (req, res, next) => {
   const { id } = req.params;
   sql.query(
-    sqlstring.format("DELETE from users SETWHERE id=?", [
-      id
-    ]),
-    (error, results, fields) => {
-      if (error) {
+    sqlstring.format("DELETE from users SETWHERE id=?", [id]),
+    (err, results, fields) => {
+      if (err) {
         err = new Error("Invalid credentials");
         err.functionName = "userController.delete";
         err.status = 400;
@@ -97,17 +102,15 @@ userController.userDelete = (req, res, next) => {
 userController.usersList = (req, res, next) => {
   const { id } = req.params;
   sql.query(
-    sqlstring.format("SELECT * from users", [
-      id
-    ]),
-    (error, results, fields) => {
-      if (error) {
+    sqlstring.format("SELECT * from users", [id]),
+    (err, results, fields) => {
+      if (err) {
         err = new Error("Invalid credentials");
         err.functionName = "userController.delete";
         err.status = 400;
         next(err);
       } else {
-          res.locals.users = results;
+        res.locals.users = results;
         next();
       }
     }
@@ -124,8 +127,8 @@ userController.userVerify = (req, res, next) => {
       "SELECT id, username, password FROM user WHERE username = ?",
       [username]
     ),
-    (error, results, fields) => {
-      if (error) {
+    (err, results, fields) => {
+      if (err) {
         err = new Error("Database error");
         err.functionName = "userController.verifyUser";
         err.status = 400;

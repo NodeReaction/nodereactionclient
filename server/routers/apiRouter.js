@@ -41,61 +41,78 @@ router.get(
 );
 
 // TRACES
-router.get("/traces/:offset", traceController);
+router.get("/traces/:application_id/:offset", traceController);
 
 // DASHBOARD
-router.get("/dashboard/top/:offset", dashboardController.topFive);
-router.get("/dashboard/stats/:offset", dashboardController.quickStats);
+router.get(
+  "/dashboard/top/:application_id/:offset",
+  dashboardController.topFive
+);
+router.get(
+  "/dashboard/stats/:application_id/:offset",
+  dashboardController.quickStats
+);
 
 // ROUTE
-router.get("/routes/:offset", routeController.getRoutes);
-router.get( "/analytics/graph/:route/:method/:offset/:time", analyticsController.graphData, analyticsController.rangeData);
+router.get("/routes/:application_id/:offset", routeController.getRoutes);
+router.get(
+  "/analytics/graph/:application_id/:route/:method/:offset/:time",
+  analyticsController.graphData
+);
 
 // USER
-router.post("/user/create",
-  userController.userCreate,
-  (req, res) => {
+router.post("/user/create", userController.userCreate, (req, res) => {
   res.status(200).json(res.locals.userId);
 });
 
-router.get("/user/read/:id",
-  userController.userRead,
-  (req, res) => {
+router.get("/user/read/:id", userController.userRead, (req, res) => {
   res.status(200).json(res.locals.userId);
 });
 
-router.post("/user/update",
-  userController.userUpdate,
-  (req, res) => {
+router.post("/user/update", userController.userUpdate, (req, res) => {
   res.status(200).json(res.locals.userId);
 });
 
-router.post("/user/delete/:id",
-  userController.userDelete,
-  (req, res) => {
+router.post("/user/delete/:id", userController.userDelete, (req, res) => {
   res.status(200).json(res.locals.userId);
 });
 
-router.get("/users/",
-  userController.usersList,
-  (req, res) => {
+router.get("/users/", userController.usersList, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 
 // APPLICATION
-router.post("/application/create", applicationController.applicationCreate, (req, res) => {
-  res.status(200).json(res.locals.applicationId);
-});
-router.get("/application/read/:id", applicationController.applicationRead, (req, res) => {
-  res.status(200).json(res.locals.application);
-});
+router.post(
+  "/application/create",
+  applicationController.applicationCreate,
+  (req, res) => {
+    res.status(200).json(res.locals.applicationId);
+  }
+);
+router.get(
+  "/application/read/:id",
+  applicationController.applicationRead,
+  (req, res) => {
+    res.status(200).json(res.locals.application);
+  }
+);
 
-router.get("/application/delete/:id", applicationController.applicationDelete, (req, res) => {
-  res.status(200).json(res.locals.applicationId);
-});
-router.get("/applications", applicationController.applicationsList, (req, res) => {
-  res.status(200).json(res.locals.applications);
-});
+router.get(
+  "/application/delete/:id",
+  applicationController.applicationDelete,
+  (req, res) => {
+    res.status(200).json(res.locals.applicationId);
+  }
+);
+router.get(
+  "/applications",
+  applicationController.applicationsList,
+  (req, res) => {
+    res.status(200).json(res.locals.applications);
+  }
+);
+
+router.get("/applications/:user_id", applicationController.userApplications);
 
 // DEFAULT ROUTES
 router.all("*", (req, res, next) => {

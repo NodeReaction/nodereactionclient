@@ -13,10 +13,10 @@ applicationController.applicationCreate = (req, res, next) => {
     ]),
     (error, result) => {
       if (error) {
-        err = new Error("Database Error");
-        err.functionName = "applicationController.create";
-        err.status = 400;
-        next(err);
+        error = new Error("Database Error");
+        error.functionName = "applicationController.create";
+        error.status = 400;
+        next(error);
       }
       // console.log(`applicationController.read ${results}`);
       res.locals.id = result.insertId;
@@ -33,10 +33,10 @@ applicationController.applicationRead = (req, res, next) => {
     ]),
     function(error, results, fields) {
       if (error) {
-        err = new Error("Database Error");
-        err.functionName = "applicationController.read";
-        err.status = 400;
-        next(err);
+        error = new Error("Database Error");
+        error.functionName = "applicationController.read";
+        error.status = 400;
+        next(error);
       }
       // console.log(`applicationController.read ${results}`);
       res.locals.application = results[0];
@@ -53,10 +53,10 @@ applicationController.applicationDelete = (req, res, next) => {
     ]),
     function(error, results, fields) {
       if (error) {
-        err = new Error("Database Error");
-        err.functionName = "applicationController.read";
-        err.status = 400;
-        next(err);
+        error = new Error("Database Error");
+        error.functionName = "applicationController.read";
+        error.status = 400;
+        next(error);
       }
       // console.log(`applicationController.read ${results}`);
       res.locals.application = results;
@@ -73,15 +73,29 @@ applicationController.applicationsList = (req, res, next) => {
     fields
   ) {
     if (error) {
-      err = new Error("Database Error");
-      err.functionName = "applicationController.listAll";
-      err.status = 400;
-      next(err);
+      error = new Error("Database Error");
+      error.functionName = "applicationController.listAll";
+      error.status = 400;
+      next(error);
     }
     // console.log(`applicationController.read ${results}`);
     res.locals.applications = results;
     next();
   });
+};
+
+applicationController.userApplications = (req, res, next) => {
+  sql.query(
+    sqlstring.format("SELECT * FROM applications WHERE user_id = ?", [
+      req.params.user_id
+    ]),
+    (err, results, fields) => {
+      if (err) {
+        return res.send(err);
+      }
+      res.send(results);
+    }
+  );
 };
 
 module.exports = applicationController;
