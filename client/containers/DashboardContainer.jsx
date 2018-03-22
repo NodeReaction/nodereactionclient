@@ -10,9 +10,10 @@ const {
   },
   Data: { Selectors }
 } = require("react-data-grid-addons");
-
+import Paper from "material-ui/Paper";
 import TimeSelector from "../components/TimeSelector.jsx";
 import DashboardCard from "../components/DashboardCard.jsx";
+
 export default class DashboardContainer extends Component {
   constructor(props) {
     super(props);
@@ -27,7 +28,6 @@ export default class DashboardContainer extends Component {
       {
         key: "route",
         name: "Route",
-        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -35,6 +35,7 @@ export default class DashboardContainer extends Component {
       {
         key: "method",
         name: "Method",
+        width: 150,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -42,6 +43,7 @@ export default class DashboardContainer extends Component {
       {
         key: "total_requests",
         name: "Requests",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -49,6 +51,7 @@ export default class DashboardContainer extends Component {
       {
         key: "avg_duration",
         name: "Average Time",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -62,13 +65,14 @@ export default class DashboardContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchStats(datetime);
-    this.fetchRows(datetime);
+    this.fetchStats(this.props.app_id, datetime);
+    this.fetchRows(this.props.app_id, datetime);
+    console.log("this.props.app_id = ", this.props.app_id);
   }
 
-  fetchStats = date => {
+  fetchStats = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/dashboard/stats/${date}`)
+      .fetch(`http://localhost:3000/api/dashboard/stats/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         let data = json[0];
@@ -80,9 +84,9 @@ export default class DashboardContainer extends Component {
       });
   };
 
-  fetchRows = date => {
+  fetchRows = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/dashboard/top/${date}`)
+      .fetch(`http://localhost:3000/api/dashboard/top/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -139,7 +143,6 @@ export default class DashboardContainer extends Component {
   };
 
   onRowClick = (rowIdx, row) => {
-    console.log("click", row);
     this.props.history.push("route/17/hourofthewitch");
     let rows = this.state.rows.slice();
     rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
@@ -147,7 +150,6 @@ export default class DashboardContainer extends Component {
   };
 
   render() {
-    console.log("passed ", this.props);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -173,7 +175,7 @@ export default class DashboardContainer extends Component {
             <h2>Routes - Top 5</h2>
           </div>
           <div>
-            <ReactDataGrid
+          <Paper children={<ReactDataGrid
               enableCellSelect={false}
               onGridSort={this.handleGridSort}
               columns={this._columns}
@@ -185,7 +187,7 @@ export default class DashboardContainer extends Component {
               getValidFilterValues={this.getValidFilterValues}
               onClearFilters={this.handleOnClearFilters}
               onRowClick={this.onRowClick}
-            />
+            />} />
           </div>
         </div>
       </div>

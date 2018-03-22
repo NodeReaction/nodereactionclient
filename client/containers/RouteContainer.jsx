@@ -21,14 +21,18 @@ export default class RouteContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchGraphData(offset, datetime);
+    this.fetchGraphData(this.props.app_id, offset, datetime);
   }
 
-  fetchGraphData = (offset, datetime) => {
+  fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
     window
-      .fetch(`http://localhost:3000/api/analytics/graph/${this.props.match.params.route}/${this.props.match.params.method}/${offset}/${datetime}`)
+      .fetch(
+        `http://localhost:3000/api/analytics/graph/${
+          this.props.match.params.route
+        }/${this.props.match.params.method}/${offset}/${datetime}`
+      )
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
@@ -54,11 +58,14 @@ export default class RouteContainer extends Component {
   };
 
   render() {
-    console.log(this.props.match)
+    console.log(this.props.match);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageHeader">Application Name - Route - {this.props.match.params.method} {this.props.match.params.route}</h1>
+          <h1 className="pageHeader">
+            Application Name - Route - {this.props.match.params.method}{" "}
+            {this.props.match.params.route}
+          </h1>
           <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />
           </div>
@@ -66,6 +73,6 @@ export default class RouteContainer extends Component {
         <h3>Default time: {this.props.match.params.default_time}</h3>
         <LineGraph data={this.state}/>
       </div>
-    )
+    );
   }
-};
+}

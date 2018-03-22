@@ -121,11 +121,10 @@ userController.usersList = (req, res, next) => {
 // Possible extension: For increased security, delay response if error or invalid credentials
 userController.userVerify = (req, res, next) => {
   const { username, password } = req.body;
-  console.log("userController.verifyUser: " + username + " " + password);
   sql.query(
     sqlstring.format(
-      "SELECT id, username, password FROM user WHERE username = ?",
-      [username]
+      "SELECT * FROM users WHERE username = ? AND password = ?;",
+      [username, password]
     ),
     (err, results, fields) => {
       if (err) {
@@ -134,20 +133,15 @@ userController.userVerify = (req, res, next) => {
         err.status = 400;
         next(err);
       }
+      console.log('results =====>' + results);
       if (results.length) {
-        if (bcrypt.compareSync(password, results[0].password)) {
-          res.locals.auth = true;
-          res.locals.userId = results[0].id;
-          // valid credentials
-          next();
-        } else {
-          err = new Error("Invalid credentials");
-          err.functionName = "userController.verifyUser";
-          err.status = 400;
-          next(err);
-        }
+        
+        res.locals.auth = true;
+        res.locals.userId = results[0].user_id;
+        // valid credentials
+        next();
       } else {
-        err = new Error("Invalid credentials");
+        err = new Error("Invalid credentials username: " + username + " password: " + password);
         err.functionName = "userController.verifyUser";
         err.status = 400;
         next(err);

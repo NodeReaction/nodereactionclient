@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDataGrid from "react-data-grid";
+import Paper from "material-ui/Paper";
 import TimeSelector from "../components/TimeSelector.jsx";
 const {
   Toolbar,
@@ -29,6 +30,7 @@ export default class TracesContainer extends Component {
       {
         key: "type",
         name: "Function",
+        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -36,7 +38,6 @@ export default class TracesContainer extends Component {
       {
         key: "route",
         name: "Route",
-        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -44,6 +45,7 @@ export default class TracesContainer extends Component {
       {
         key: "method",
         name: "Method",
+        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -51,6 +53,7 @@ export default class TracesContainer extends Component {
       {
         key: "avg_duration",
         name: "Avg. Time",
+        width: 120,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -58,6 +61,7 @@ export default class TracesContainer extends Component {
       {
         key: "total_requests",
         name: "# of Calls",
+        width: 120,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -72,12 +76,12 @@ export default class TracesContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchRows(datetime);
+    this.fetchRows(this.props.app_id, datetime);
   }
 
-  fetchRows = date => {
+  fetchRows = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/traces/${date}`)
+      .fetch(`http://localhost:3000/api/traces/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log(json);
@@ -149,7 +153,7 @@ export default class TracesContainer extends Component {
           </div>
         </div>
         <div>
-          <ReactDataGrid
+        <Paper children={<ReactDataGrid
             enableCellSelect={false}
             onGridSort={this.handleGridSort}
             columns={this._columns}
@@ -161,7 +165,7 @@ export default class TracesContainer extends Component {
             getValidFilterValues={this.getValidFilterValues}
             onClearFilters={this.handleOnClearFilters}
             onRowClick={this.onRowClick}
-          />
+          />}/>
         </div>
       </div>
     );

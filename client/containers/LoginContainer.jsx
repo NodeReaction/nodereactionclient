@@ -25,18 +25,37 @@ export default class LoginContainer extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
+  //We login here and also set up some inital state by using callback props. Not ideal
+  //but hard to avoid with current UI set up
   handleLogin() {
     const user = {
       username: this.state.username,
       password: this.state.password
     };
-    authService.isAuthenticated = true;
-    this.setState({ redirectToReferer: true });
-    this.props.handleUserLogin(user);
+
+    window
+      .fetch(`http://localhost:3000/api/user/validate/`, {
+        body: JSON.stringify(user),
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(user_id => {
+        window
+          .fetch(`http://localhost:3000/api/applications/${user_id}`)
+          .then(res => res.json())
+          .then(apps => {
+            console.log(apps);
+            authService.isAuthenticated = true;
+            this.setState({ redirectToReferer: true });
+            this.props.cb(apps.map(el => el.application_id));
+          });
+      });
   }
 
   render() {
-    // const { from } = this.props.location.state || { from: { pathname: "/" } };
     if (this.state.redirectToReferer) {
       return <Redirect to="/dashboard" />;
     }
