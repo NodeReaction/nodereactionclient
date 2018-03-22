@@ -11,11 +11,13 @@ agentController.validate = (req, res, next) => {
 
 agentController.create = (req, res, next) => {
   const transactions = req.body.transactions;
+  const credentials = req.body.credentials;
   const d = new Date();
   console.log(`
     ===========Server received data from Agent===========\n
     time: ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}
     transactions sent: ${JSON.stringify(transactions.length)}
+    credentials: ${JSON.stringify(credentials)}
     `);
 
   transactions.forEach(transaction => {
@@ -24,7 +26,7 @@ agentController.create = (req, res, next) => {
         JSON.stringify(transaction) +
         "=========================\n"
     );
-    const applicationId = 9;
+    const applicationId = credentials.appId;
     sql.query(
       sqlstring.format(
         "INSERT INTO transactions (application_id, route, method, user_agent, cookies, remote_address, start_timestamp, end_timestamp, duration) VALUES (?,?,?,?,?,?,?,?,?)",
