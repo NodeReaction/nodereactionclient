@@ -133,14 +133,15 @@ userController.userVerify = (req, res, next) => {
         err.status = 400;
         next(err);
       }
-      if (results) {
-        console.log(results);
+      console.log('results =====>' + results);
+      if (results.length) {
+        
         res.locals.auth = true;
         res.locals.userId = results[0].user_id;
         // valid credentials
         next();
       } else {
-        err = new Error("Invalid credentials");
+        err = new Error("Invalid credentials username: " + username + " password: " + password);
         err.functionName = "userController.verifyUser";
         err.status = 400;
         next(err);

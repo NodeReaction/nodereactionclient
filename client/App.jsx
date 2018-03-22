@@ -12,7 +12,27 @@ import RoutesContainer from "./containers/RoutesContainer.jsx";
 import TracesContainer from "./containers/TracesContainer.jsx";
 import RouteContainer from "./containers/RouteContainer.jsx";
 import NotFoundContainer from "./containers/NotFoundContainer.jsx";
-
+//
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import {
+  cyan500,
+  cyan700,
+  pinkA200,
+  deepOrange500,
+  deepOrange700,
+  grey100,
+  grey300,
+  grey400,
+  grey500,
+  blueGrey300,
+  blueGrey800,
+  white,
+  darkBlack,
+  fullBlack
+} from "material-ui/styles/colors";
+import { fade } from "material-ui/utils/colorManipulator";
+import spacing from "material-ui/styles/spacing";
+//
 class App extends Component {
   constructor(props) {
     super(props);
@@ -36,12 +56,36 @@ class App extends Component {
   }
 
   render() {
+    const muiTheme = getMuiTheme({
+      spacing: spacing,
+      fontFamily: "Open Sans, sans-serif",
+      palette: {
+        primary1Color: '#000000', // button color
+        primary2Color: blueGrey800,
+        primary3Color: grey400,
+        accent1Color: '#FF530D',
+        accent2Color: grey100,
+        accent3Color: grey500,
+        textColor: darkBlack,
+        alternateTextColor: white,
+        canvasColor: white,
+        borderColor: grey300,
+        disabledColor: fade(darkBlack, 0.3),
+        pickerHeaderColor: '#FF530D',
+        clockCircleColor: fade('#FF530D', 0.07),
+        shadowColor: fullBlack
+      },
+      appBar: {
+        height: 50
+      }
+    });
+
     const login = props => {
       return <LoginContainer cb={this.populateApplications} />;
     };
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <div>
             <NavBar
