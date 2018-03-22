@@ -11,6 +11,84 @@ body {
     margin: 0;
     font-size: 1rem;
     font-family: Roboto,arial, sans-serif;
+    color: #2B3A42;
+    background-color: #eeeeee;
+}
+/* nice electric green - BDF271;*/
+.navbar-menu {
+    border-top: 3px solid #EB7F00;
+    background: #225378 !IMPORTANT;
+}
+
+.navbar-menu-item {
+    margin: 0 1rem 0 0;
+    text-decoration: none;
+    color: #2F2933;
+}
+
+.pageContainer {
+    padding: 2rem 4rem 4rem 4rem;
+}
+
+.pageHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 3rem 0;
+}
+
+
+
+.dashboardCards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    padding: 0 4rem 3rem 4rem;
+}
+
+.dashboardCard {
+    text-align: center;
+    background: rgb(249, 249, 249);
+    margin-right: 4rem;
+    padding: 1rem;
+    min-width: 20rem;
+    flex-grow: 1;
+}
+
+.dashboardCard:last-child {
+    margin-right: 0rem;
+}
+
+
+
+
+.top5Grid {
+}
+
+h2.logo {
+    color: #000;
+}
+h1,h2,h3 {
+    color: #EB7F00;
+}
+
+
+
+/*
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    font-size: 1rem;
+    font-family: Roboto,arial, sans-serif;
 }
 
 .navbar-menu {
@@ -61,3 +139,5 @@ body {
 h1.pageHeader {
     color: #000;
 }
+
+*/

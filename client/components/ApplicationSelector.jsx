@@ -5,7 +5,7 @@ import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
-import ActionAndroid from "material-ui/svg-icons/action/android";
+import DownArrow from "material-ui/svg-icons/hardware/keyboard-arrow-down";
 
 export default class ApplicationSelector extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class ApplicationSelector extends Component {
             label="Applications"
             labelPosition="before"
             primary={true}
-            icon={<ActionAndroid />}
+            icon={<DownArrow />}
           />
         }
       >
