@@ -124,7 +124,7 @@ class App extends Component {
             />
             <PrivateRoute
               className="sectionContainer"
-              path="/:route/:method/:default_time"
+              path="/:route/:method"
               app_id={this.state.selectedApp}
               component={RouteContainer}
             />

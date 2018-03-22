@@ -12,6 +12,11 @@ export default class RouteContainer extends Component {
     };
   }
 
+  componentDidMount() {
+    this.routePre = this.props.match.params.route;
+    this.routePost = this.routePre.replace(/%2f/g, '/');
+  }
+
   fetchData(offset) {
     this.setState({
       graphData: [],
@@ -27,9 +32,12 @@ export default class RouteContainer extends Component {
   fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
+    console.log('****RouteContainer****\n', this.props);
+    console.log('****RouteContainer this.props.match****\n', this.props.match);
+    
     window
       .fetch(
-        `http://localhost:3000/api/analytics/graph/${
+        `http://localhost:3000/api/analytics/graph/9/${
           this.props.match.params.route
         }/${this.props.match.params.method}/${offset}/${datetime}`
       )
@@ -64,7 +72,7 @@ export default class RouteContainer extends Component {
         <div className="pageHeaderContainer">
           <h1 className="pageHeader">
             Application Name - Route - {this.props.match.params.method}{" "}
-            {this.props.match.params.route}
+            {this.routePost}
           </h1>
           <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />

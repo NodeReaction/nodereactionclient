@@ -197,7 +197,7 @@ VALUES (9,4,'/mice','DELETE','Redis','writeFile','2018-11-11 11:11:14', '2018-11
 INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
 VALUES (10,1,'/dogs','POST','Redis','writeFile','2018-11-11 11:11:11', '2018-11-11 12:12:11',30);
 INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
-VALUES (10,1,'/cats','GET','FS','writeFile','2018-11-11 11:11:12', '2018-11-11 12:12:12',30);
+VALUES (10,1,'/cats','GET','FS','writeFile','2018-03-21 11:11:12', '2018-11-11 12:12:12',30);
 INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 
 VALUES (10,1,'/birds','UPDATE','FS','writeFile','2018-11-11 11:11:13', '2018-11-11 12:12:13',30);
 INSERT INTO traces (application_id, transaction_id, route, method, library, type, start_timestamp, end_timestamp, duration) 

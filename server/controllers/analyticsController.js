@@ -62,6 +62,7 @@ analyticsController.graphData = (req, res, next) => {
 
 // Return the average duration of functions for a route
 analyticsController.rangeData = (req, res, next) => {
+  console.log('***params*** ', req.params);
   const {route, method, time} = req.params;
   sql.query(
     `select a.route, a.method, avg(a.duration), b.library, b.type, avg(b.duration) ` +

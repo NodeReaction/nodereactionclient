@@ -44,14 +44,10 @@ router.get(
 
 // ROUTE
 router.get("/routes/:application_id/:offset", routeController.getRoutes);
-<<<<<<< HEAD
-router.get("/analytics/graph/:application_id/:route/:method/:offset/:time", analyticsController.graphData);
-=======
 router.get(
   "/analytics/graph/:application_id/:route/:method/:offset/:time",
-  analyticsController.graphData
+  analyticsController.graphData, analyticsController.rangeData
 );
->>>>>>> 72e7262398ffddcfabbe151ecb5dfa16b5ae6a61
 
 // USER
 router.post("/user/create", userController.userCreate, (req, res) => {
