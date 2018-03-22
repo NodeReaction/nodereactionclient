@@ -87,6 +87,10 @@ router.get("/users/", userController.usersList, (req, res) => {
   res.status(200).json(res.locals.users);
 });
 
+router.post("/user/validate", userController.userVerify, (req, res) => {
+  res.status(200).json(res.locals.userId);
+});
+
 // APPLICATION
 router.post(
   "/application/create",
