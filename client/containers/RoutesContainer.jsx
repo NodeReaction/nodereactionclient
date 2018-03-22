@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactDataGrid from "react-data-grid";
 import TimeSelector from "../components/TimeSelector.jsx";
+import Paper from "material-ui/Paper";
 
 const {
   Toolbar,
@@ -23,7 +24,6 @@ export default class RoutesContainer extends Component {
       {
         key: "route",
         name: "Route",
-        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -31,6 +31,7 @@ export default class RoutesContainer extends Component {
       {
         key: "method",
         name: "Method",
+        width: 150,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -38,6 +39,7 @@ export default class RoutesContainer extends Component {
       {
         key: "count(transaction_id)",
         name: "# of Requests",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -45,6 +47,7 @@ export default class RoutesContainer extends Component {
       {
         key: "avg(duration)",
         name: "Avg. Time",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -147,7 +150,7 @@ export default class RoutesContainer extends Component {
           </div>
         </div>
         <div>
-          <ReactDataGrid
+        <Paper children={<ReactDataGrid
             enableCellSelect={false}
             // This function redirects to the invidual route
             // When the analytics page is rendered it will make a request for the data
@@ -163,7 +166,7 @@ export default class RoutesContainer extends Component {
             onAddFilter={this.handleFilterChange}
             getValidFilterValues={this.getValidFilterValues}
             onClearFilters={this.handleOnClearFilters}
-          />
+          />}/>
         </div>
       </div>
     );

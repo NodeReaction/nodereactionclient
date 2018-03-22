@@ -10,7 +10,7 @@ const {
   },
   Data: { Selectors }
 } = require("react-data-grid-addons");
-
+import Paper from "material-ui/Paper";
 import TimeSelector from "../components/TimeSelector.jsx";
 import DashboardCard from "../components/DashboardCard.jsx";
 
@@ -28,7 +28,6 @@ export default class DashboardContainer extends Component {
       {
         key: "route",
         name: "Route",
-        width: 120,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -36,6 +35,7 @@ export default class DashboardContainer extends Component {
       {
         key: "method",
         name: "Method",
+        width: 150,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -43,6 +43,7 @@ export default class DashboardContainer extends Component {
       {
         key: "total_requests",
         name: "Requests",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -50,6 +51,7 @@ export default class DashboardContainer extends Component {
       {
         key: "avg_duration",
         name: "Average Time",
+        width: 150,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -173,7 +175,7 @@ export default class DashboardContainer extends Component {
             <h2>Routes - Top 5</h2>
           </div>
           <div>
-            <ReactDataGrid
+          <Paper children={<ReactDataGrid
               enableCellSelect={false}
               onGridSort={this.handleGridSort}
               columns={this._columns}
@@ -185,7 +187,7 @@ export default class DashboardContainer extends Component {
               getValidFilterValues={this.getValidFilterValues}
               onClearFilters={this.handleOnClearFilters}
               onRowClick={this.onRowClick}
-            />
+            />} />
           </div>
         </div>
       </div>

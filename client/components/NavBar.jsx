@@ -31,15 +31,17 @@ class NavBar extends Component {
   }
 
   render() {
+    // const showApplication = (this.props.applications.length > 1)
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
-          <h2>NodeReaction</h2>
+          <h2 className="logo">NodeReaction</h2>
         </ToolbarGroup>
         <ToolbarGroup>
           <ApplicationSelector
-            apps={this.props.apps}
-            change_app={this.props.change_app}
+            handleApplicationChangeActive={
+              this.props.handleApplicationChangeActive
+            }
           />
           <Link className="navbar-menu-item" to="/login">
             <FlatButton size="medium" label="Login" primary={true} />
