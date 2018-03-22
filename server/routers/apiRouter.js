@@ -40,12 +40,6 @@ router.get(
   (req, res) => res.send("Success")
 );
 
-router.get(
-  "/test2/:method/:route/:offset/:time",
-  analyticsController.timeline,
-  (req, res) => res.send("Success")
-);
-
 // TRACES
 router.get("/traces/:offset", traceController);
 
@@ -55,10 +49,7 @@ router.get("/dashboard/stats/:offset", dashboardController.quickStats);
 
 // ROUTE
 router.get("/routes/:offset", routeController.getRoutes);
-router.get(
-  "/analytics/graph/:route/:method/:offset/:time",
-  analyticsController.graphData
-);
+router.get( "/analytics/graph/:route/:method/:offset/:time", analyticsController.graphData, analyticsController.rangeData);
 
 // USER
 router.post("/user/create",

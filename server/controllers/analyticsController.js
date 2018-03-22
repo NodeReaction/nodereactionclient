@@ -55,30 +55,25 @@ analyticsController.graphData = (req, res, next) => {
       let localTime = date1.toISOString().slice(0, 19).replace("T", " ");
       elem.timekey2 = localTime;
     });
-    // console.log(req.params);
-    // console.log('****time***** ', time);
-    // console.log('**current**** ', currentTime);
-    // console.log('**UTCLocal*** ', new Date('2018-03-19 19:03:26 UTC'));
-    // console.log('***results*** \n', result);
-    res.locals.graphData = cache;
-    res.send(result);
+    res.locals.graphData = result;
+    next();
   });
 };
 
 // Return the average duration of functions for a route
-analyticsController.timeline = (req, res, next) => {
+analyticsController.rangeData = (req, res, next) => {
   const {route, method, time} = req.params;
   sql.query(
-    `select b.library, b.type, avg(b.duration) ` +
+    `select a.route, a.method, avg(a.duration), b.library, b.type, avg(b.duration) ` +
     `from transactions a ` +
     `right join traces b ` +
     `on a.transaction_id = b.transaction_id ` +
     `where a.start_timestamp > '${time}' and a.route='/${route}' and a.method='${method}' ` +
-    `group by b.library, b.type;`, 
+    `group by library, b.type;`, 
   (err, result) => {
     if (err) return res.send(err);
-    res.locals.timeline = result;
-    next();
+    res.locals.rangeData = result;
+    res.send(res.locals);
   });
 };
 
