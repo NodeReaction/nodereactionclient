@@ -32,9 +32,27 @@ export default class LoginContainer extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    authService.isAuthenticated = true;
-    this.setState({ redirectToReferer: true });
-    this.props.cb([9, 10]);
+
+    window
+      .fetch(`http://localhost:3000/api/user/validate/`, {
+        body: JSON.stringify(user),
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(user_id => {
+        window
+          .fetch(`http://localhost:3000/api/applications/${user_id}`)
+          .then(res => res.json())
+          .then(apps => {
+            console.log(apps);
+            authService.isAuthenticated = true;
+            this.setState({ redirectToReferer: true });
+            this.props.cb(apps.map(el => el.application_id));
+          });
+      });
   }
 
   render() {
