@@ -73,10 +73,10 @@ export default class DashboardContainer extends Component {
   fetchStats = (app_id, date) => {
     console.log(
       "fetching",
-      `http://localhost:3000/api/dashboard/stats/${app_id}/${date}`
+      `http://nodereaction.com/api/dashboard/stats/${app_id}/${date}`
     );
     window
-      .fetch(`http://localhost:3000/api/dashboard/stats/${app_id}/${date}`)
+      .fetch(`http://nodereaction.com/api/dashboard/stats/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log("json = ", json);
@@ -91,7 +91,7 @@ export default class DashboardContainer extends Component {
 
   fetchRows = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/dashboard/top/${app_id}/${date}`)
+      .fetch(`http://nodereaction.com/api/dashboard/top/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -148,7 +148,7 @@ export default class DashboardContainer extends Component {
   };
 
   onRowClick = (rowIdx, row) => {
-    this.props.history.push("route/17/hourofthewitch");
+    this.props.history.push("/dogs/fido/post");
     let rows = this.state.rows.slice();
     rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
     this.setState({ rows });

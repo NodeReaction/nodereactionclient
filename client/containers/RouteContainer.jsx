@@ -37,7 +37,7 @@ export default class RouteContainer extends Component {
     
     window
       .fetch(
-        `http://localhost:3000/api/analytics/graph/${this.props.app_id}/${
+        `http://nodereaction.com/api/analytics/graph/${this.props.app_id}/${
           this.props.match.params.route
         }/${this.props.match.params.method}/${offset}/${datetime}`
       )
@@ -80,7 +80,6 @@ export default class RouteContainer extends Component {
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
-        <h3>Default time: {this.props.match.params.default_time}</h3>
         <LineGraph data={this.state} />
       </div>
     );
