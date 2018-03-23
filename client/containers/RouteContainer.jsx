@@ -14,7 +14,7 @@ export default class RouteContainer extends Component {
 
   componentDidMount() {
     this.routePre = this.props.match.params.route;
-    this.routePost = this.routePre.replace(/%2f/g, '/');
+    this.routePost = this.routePre.replace(/%2f/g, "/");
   }
 
   fetchData(offset) {
@@ -32,9 +32,7 @@ export default class RouteContainer extends Component {
   fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
-    console.log('****RouteContainer****\n', this.props);
-    console.log('****RouteContainer this.props.match****\n', this.props.match);
-    
+
     window
       .fetch(
         `http://localhost:3000/api/analytics/graph/${this.props.app_id}/${
@@ -68,7 +66,6 @@ export default class RouteContainer extends Component {
   };
 
   render() {
-    console.log(this.props.match);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
