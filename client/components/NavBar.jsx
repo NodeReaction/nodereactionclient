@@ -42,17 +42,12 @@ class NavBar extends Component {
             change_app={this.props.change_app}
             apps={this.props.apps}
           />
-          <Link className="navbar-menu-item" to="/login">
-            <FlatButton size="medium" label="Login" primary={true} />
-          </Link>
+
           <Link className="navbar-menu-item" to="/dashboard">
             <FlatButton size="medium" label="Dashboard" primary={true} />
           </Link>
           <Link className="navbar-menu-item" to="/routes">
             <FlatButton size="medium" label="Routes" primary={true} />
-          </Link>
-          <Link className="navbar-menu-item" to="/route/17/hourofthewitch">
-            <FlatButton size="medium" label="Route analysis" primary={true} />
           </Link>
 
           <Link className="navbar-menu-item" to="/traces">

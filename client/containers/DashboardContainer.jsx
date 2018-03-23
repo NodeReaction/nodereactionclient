@@ -147,11 +147,12 @@ export default class DashboardContainer extends Component {
     this.setState({ filters: {} });
   };
 
-  onRowClick = (rowIdx, row) => {
-    this.props.history.push("route/17/hourofthewitch");
-    let rows = this.state.rows.slice();
-    rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
-    this.setState({ rows });
+  redirectAnalytics = (...args) => {
+    console.log("correct!!", args);
+    let str = args[1].route.slice();
+    let newStr = str.replace(/\//g, "%2f");
+    newStr = "/" + newStr.slice(3);
+    this.props.history.push(`${newStr}/${args[1].method}`);
   };
 
   render() {
@@ -193,7 +194,7 @@ export default class DashboardContainer extends Component {
                   onAddFilter={this.handleFilterChange}
                   getValidFilterValues={this.getValidFilterValues}
                   onClearFilters={this.handleOnClearFilters}
-                  onRowClick={this.onRowClick}
+                  onRowClick={this.redirectAnalytics}
                 />
               }
             />
