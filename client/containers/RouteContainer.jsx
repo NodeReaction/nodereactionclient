@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LineGraph from "../components/LineGraphComponent.jsx";
 import TimeSelector from "../components/TimeSelector.jsx";
-
+import Paper from "material-ui/Paper";
 export default class RouteContainer extends Component {
   constructor() {
     super();
@@ -77,8 +77,10 @@ export default class RouteContainer extends Component {
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
-        <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph data={this.state} />
+
+        <Paper
+            children={<h3>Default time: {this.props.match.params.default_time}</h3>
+        <LineGraph data={this.state} />}/>
       </div>
     );
   }
