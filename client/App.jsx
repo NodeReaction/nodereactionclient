@@ -91,7 +91,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <PropsRoute
-              path="/"
+              path="/(dashboard|account|applications|routes|traces)"
               navbarToggle={this.navbarToggle}
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
