@@ -68,7 +68,7 @@ export default class RoutesContainer extends Component {
 
   fetchRows = (app_id, date) => {
     window
-      .fetch(`http://localhost:3000/api/routes/${app_id}/${date}`)
+      .fetch(`http://nodereaction.com/api/routes/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
@@ -81,14 +81,9 @@ export default class RoutesContainer extends Component {
   // Redirects to analytics page on row click. Needs to preserve history when clicking back button
   // Also first row doesn't redirect
   redirectAnalytics = (...args) => {
-    let routeName;
     let str = args[1].route.slice();
-    console.log('****There are the arguments****\n', ...args);
-
     let newStr = str.replace(/\//g, '%2f');
     newStr = '/' + newStr.slice(3);
-    console.log('***string***', newStr);
-
     this.props.history.push(
       `${newStr}/${args[1].method}`
     );
