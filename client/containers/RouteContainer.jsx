@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import LineGraph from "../components/LineGraphComponent.jsx";
 import TimeSelector from "../components/TimeSelector.jsx";
-
+import Paper from "material-ui/Paper";
 export default class RouteContainer extends Component {
   constructor() {
     super();
@@ -14,7 +14,7 @@ export default class RouteContainer extends Component {
 
   componentDidMount() {
     this.routePre = this.props.match.params.route;
-    this.routePost = this.routePre.replace(/%2f/g, '/');
+    this.routePost = this.routePre.replace(/%2f/g, "/");
   }
 
   fetchData(offset) {
@@ -32,9 +32,7 @@ export default class RouteContainer extends Component {
   fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
-    console.log('****RouteContainer****\n', this.props);
-    console.log('****RouteContainer this.props.match****\n', this.props.match);
-    
+
     window
       .fetch(
         `http://nodereaction.com/api/analytics/graph/${this.props.app_id}/${
@@ -68,7 +66,6 @@ export default class RouteContainer extends Component {
   };
 
   render() {
-    console.log(this.props.match);
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -80,7 +77,9 @@ export default class RouteContainer extends Component {
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
-        <LineGraph data={this.state} />
+        <Paper
+            children={<h3>Default time: {this.props.match.params.default_time}</h3>
+        <LineGraph data={this.state} />}/>
       </div>
     );
   }

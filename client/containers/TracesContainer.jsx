@@ -135,11 +135,12 @@ export default class TracesContainer extends Component {
     this.setState({ filters: {} });
   };
 
-  onRowClick = (rowIdx, row) => {
-    this.props.history.push("route/17/hourofthewitch");
-    let rows = this.state.rows.slice();
-    rows[rowIdx] = Object.assign({}, row, { isSelected: !row.isSelected });
-    this.setState({ rows });
+  redirectAnalytics = (...args) => {
+    console.log("muh args", args);
+    let str = args[1].route.slice();
+    let newStr = str.replace(/\//g, "%2f");
+    newStr = "/" + newStr.slice(3);
+    this.props.history.push(`${newStr}/${args[1].method}`);
   };
 
   render() {
@@ -153,19 +154,23 @@ export default class TracesContainer extends Component {
           </div>
         </div>
         <div>
-        <Paper children={<ReactDataGrid
-            enableCellSelect={false}
-            onGridSort={this.handleGridSort}
-            columns={this._columns}
-            rowGetter={this.rowGetter}
-            rowsCount={this.rowsCount()}
-            minHeight={500}
-            toolbar={<Toolbar enableFilter={true} />}
-            onAddFilter={this.handleFilterChange}
-            getValidFilterValues={this.getValidFilterValues}
-            onClearFilters={this.handleOnClearFilters}
-            onRowClick={this.onRowClick}
-          />}/>
+          <Paper
+            children={
+              <ReactDataGrid
+                enableCellSelect={false}
+                onGridSort={this.handleGridSort}
+                columns={this._columns}
+                rowGetter={this.rowGetter}
+                rowsCount={this.rowsCount()}
+                minHeight={500}
+                toolbar={<Toolbar enableFilter={true} />}
+                onAddFilter={this.handleFilterChange}
+                getValidFilterValues={this.getValidFilterValues}
+                onClearFilters={this.handleOnClearFilters}
+                onRowClick={this.redirectAnalytics}
+              />
+            }
+          />
         </div>
       </div>
     );
