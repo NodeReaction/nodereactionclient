@@ -23,7 +23,7 @@ export default class ApplicationContainer extends Component {
       .then(apps => {
         console.log("app container", apps);
         let data = {};
-        data.apps = apps.map(el => el.application_id);
+        data.apps = apps;
         this.props.update_apps(data);
       })
       .catch(err => console.log("muh error", err));
@@ -34,7 +34,6 @@ export default class ApplicationContainer extends Component {
       applicationName: this.state.applicationName,
       userId: this.props.user_id
     };
-    console.log("data = ", data);
 
     window
       .fetch(`/api/application/create/`, {
@@ -46,7 +45,6 @@ export default class ApplicationContainer extends Component {
       })
       .then(res => res.json())
       .then(data => {
-        console.log("response", data);
         this.updateApplications();
       });
   }
@@ -82,8 +80,8 @@ export default class ApplicationContainer extends Component {
           {this.props.apps.map(app => {
             return (
               <ApplicationCard
-                title={"Application - " + app}
-                subtitle="muh token"
+                title={"Application - " + app.name}
+                subtitle={"Token - " + app.token}
               />
             );
           })}

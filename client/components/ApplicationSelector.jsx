@@ -14,7 +14,7 @@ export default class ApplicationSelector extends Component {
   }
 
   menuClick = (event, child) => {
-    this.props.change_app(child.props.primaryText);
+    this.props.change_app(child.props.app_id);
   };
 
   render() {
@@ -32,7 +32,11 @@ export default class ApplicationSelector extends Component {
         onItemClick={this.menuClick}
       >
         {this.props.apps.map(app => (
-          <MenuItem primaryText={app} onItemClick={this.menuClick} />
+          <MenuItem
+            primaryText={app.name}
+            app_id={app.application_id}
+            onItemClick={this.menuClick}
+          />
         ))}
       </IconMenu>
     );

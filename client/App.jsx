@@ -56,8 +56,7 @@ class App extends Component {
   }
 
   updateApps(data) {
-    console.log("setting apps to", data);
-    this.setState({ applications: data.apps });
+    this.setState({ applications: data });
   }
 
   changeSelectedApp(app_id) {

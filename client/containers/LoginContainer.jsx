@@ -50,7 +50,7 @@ export default class LoginContainer extends Component {
             authService.isAuthenticated = true;
             this.setState({ redirectToReferer: true });
             let data = {};
-            data.apps = apps.map(el => el.application_id);
+            data.apps = apps;
             data.user_id = user_id;
             this.props.cb(data);
           });
