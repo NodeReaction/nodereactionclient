@@ -46,7 +46,8 @@ router.get(
 router.get("/routes/:application_id/:offset", routeController.getRoutes);
 router.get(
   "/analytics/graph/:application_id/:route/:method/:offset/:time",
-  analyticsController.graphData, analyticsController.rangeData
+  analyticsController.graphData,
+  analyticsController.rangeData
 );
 
 // USER
@@ -79,7 +80,7 @@ router.post(
   "/application/create",
   applicationController.applicationCreate,
   (req, res) => {
-    res.status(200).json(res.locals.applicationId);
+    res.status(200).json(res.locals.id);
   }
 );
 router.get(

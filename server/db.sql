@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `applications` (
   `application_id` INT(11) NOT NULL AUTO_INCREMENT,
   `user_id` INT(11) NOT NULL,
   `name` VARCHAR(255) NOT NULL,
+  `token` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`application_id`),
 CONSTRAINT `user_application_id`
     FOREIGN KEY (`user_id`)

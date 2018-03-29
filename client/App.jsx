@@ -42,15 +42,21 @@ class App extends Component {
     this.state.applications = [];
     this.state.selectedApp = undefined;
 
-    this.populateApplications = this.populateApplications.bind(this);
+    this.populateTopState = this.populateTopState.bind(this);
     this.changeSelectedApp = this.changeSelectedApp.bind(this);
+    this.updateApps = this.updateApps.bind(this);
   }
 
   //cb for when we get apps in login component. We will default select 1st
-  populateApplications(apps) {
-    console.log("filling apps", apps);
-    this.setState({ applications: apps });
-    this.setState({ selectedApp: apps[0] });
+  populateTopState(data) {
+    console.log("data = ", data);
+    this.setState({ applications: data.apps });
+    this.setState({ selectedApp: data.apps[0] });
+    this.setState({ user_id: data.user_id });
+  }
+
+  updateApps(data) {
+    this.setState({ applications: data });
   }
 
   changeSelectedApp(app_id) {
@@ -83,7 +89,7 @@ class App extends Component {
     });
 
     const login = props => {
-      return <LoginContainer cb={this.populateApplications} />;
+      return <LoginContainer cb={this.populateTopState} />;
     };
 
     return (
@@ -92,7 +98,6 @@ class App extends Component {
           <div>
             <PropsRoute
               path="/(dashboard|account|applications|routes|traces)"
-              navbarToggle={this.navbarToggle}
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
               component={NavBar}
@@ -113,6 +118,9 @@ class App extends Component {
             <PrivateRoute
               path="/applications"
               app_id={this.state.selectedApp}
+              user_id={this.state.user_id}
+              update_apps={this.updateApps}
+              apps={this.state.applications}
               component={ApplicationsContainer}
             />
             <PrivateRoute

@@ -41,7 +41,6 @@ export default class RouteContainer extends Component {
       )
       .then(res => res.json())
       .then(json => {
-        console.log("herio", json);
         json.graphData[4].forEach(elem => {
           graphDataJson.push({
             Time: elem.timekey2,
@@ -77,8 +76,8 @@ export default class RouteContainer extends Component {
             <TimeSelector cb={this.fetchData} />
           </div>
         </div>
-          <h3>Default time: {this.props.match.params.default_time}</h3>
-          <LineGraph data={this.state} />
+        <h3>Default time: {this.props.match.params.default_time}</h3>
+        <LineGraph data={this.state} />
       </div>
     );
   }

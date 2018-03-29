@@ -47,10 +47,12 @@ export default class LoginContainer extends Component {
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
           .then(apps => {
-            console.log(apps);
             authService.isAuthenticated = true;
             this.setState({ redirectToReferer: true });
-            this.props.cb(apps.map(el => el.application_id));
+            let data = {};
+            data.apps = apps;
+            data.user_id = user_id;
+            this.props.cb(data);
           });
       });
   }

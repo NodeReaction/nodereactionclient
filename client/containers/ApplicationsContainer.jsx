@@ -7,29 +7,54 @@ export default class ApplicationContainer extends Component {
     super();
     this.state = {};
     this.state.applicationName = "";
-    this.handleCreateApplicationClick = this.handleCreateApplicationClick.bind(this);
-    this.handleDeleteApplicationClick = this.handleDeleteApplicationClick.bind(this);
+    this.handleCreateApplicationClick = this.handleCreateApplicationClick.bind(
+      this
+    );
+    this.handleDeleteApplicationClick = this.handleDeleteApplicationClick.bind(
+      this
+    );
+    this.updateApplications = this.updateApplications.bind(this);
+  }
+
+  updateApplications() {
+    window
+      .fetch(`/api/applications/${this.props.user_id}`)
+      .then(res => res.json())
+      .then(apps => {
+        console.log("app container", apps);
+        let data = {};
+        data.apps = apps;
+        this.props.update_apps(data);
+      })
+      .catch(err => console.log("muh error", err));
   }
 
   handleCreateApplicationClick() {
-    //console.log('CreateApplication: ' + this.state.applicationName);
-    this.props.handleApplicationCreate()
+    let data = {
+      applicationName: this.state.applicationName,
+      userId: this.props.user_id
+    };
+
+    window
+      .fetch(`/api/application/create/`, {
+        body: JSON.stringify(data),
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "POST"
+      })
+      .then(res => res.json())
+      .then(data => {
+        this.updateApplications();
+      });
   }
   handleDeleteApplicationClick() {
-    //console.log('CreateApplication: ' + this.state.applicationName);
-    this.props.handleApplicationDelete()
+    this.props.handleApplicationDelete();
   }
 
-  render() {
-    // this.props.applications
-    // this.props.deleteApplication - call function in main
-    const applicationCards = [];
-    for (let i = 0; i < 3; i++) {
-      applicationCards.push(
-        <ApplicationCard key={i} title={"Application - " + i} />
-      );
-    }
+  fetchUserApplications() {}
 
+  render() {
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -37,7 +62,9 @@ export default class ApplicationContainer extends Component {
         </div>
         <TextField
           value={this.state.applicationName}
-          onChange={(event, applicationName) => this.setState({ applicationName })}
+          onChange={(event, applicationName) =>
+            this.setState({ applicationName })
+          }
           hintText="Application Name"
           id="applicationName"
         />
@@ -47,9 +74,18 @@ export default class ApplicationContainer extends Component {
           primary={true}
           onClick={this.handleCreateApplicationClick}
         />
-      <br/>
-      <br/>
-        <div className="applicationCards">{applicationCards}</div>
+        <br />
+        <br />
+        <div className="applicationCards">
+          {this.props.apps.map(app => {
+            return (
+              <ApplicationCard
+                title={"Application - " + app.name}
+                subtitle={"Token - " + app.token}
+              />
+            );
+          })}
+        </div>
       </div>
     );
   }
