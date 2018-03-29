@@ -81,7 +81,7 @@ export default class TracesContainer extends Component {
 
   fetchRows = (app_id, date) => {
     window
-      .fetch(`http://nodereaction.com/api/traces/${app_id}/${date}`)
+      .fetch(`/api/traces/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log(json);
