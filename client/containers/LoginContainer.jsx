@@ -18,19 +18,23 @@ export default class LoginContainer extends Component {
       autoHideDuration: 4000,
       message: "Event added to your calendar",
       open: false,
-      username: "",
-      password: "",
+      usernameLogin: "",
+      passwordLogin: "",
+      usernameSignup: "",
+      passwordSignup: "",
+      emailSignup: "",
       redirectToReferer: false
     };
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
   //We login here and also set up some inital state by using callback props. Not ideal
   //but hard to avoid with current UI set up
   handleLogin() {
     const user = {
-      username: this.state.username,
-      password: this.state.password
+      username: this.state.usernameLogin,
+      password: this.state.passwordLogin
     };
 
     window
@@ -43,6 +47,38 @@ export default class LoginContainer extends Component {
       })
       .then(res => res.json())
       .then(user_id => {
+        window
+          .fetch(`/api/applications/${user_id}`)
+          .then(res => res.json())
+          .then(apps => {
+            console.log(apps);
+            authService.isAuthenticated = true;
+            this.setState({ redirectToReferer: true });
+            this.props.cb(apps.map(el => el.application_id));
+          });
+      });
+  }
+
+  handleSignup() {
+    const user = {
+      username: this.state.usernameSignup,
+      password: this.state.passwordSignup,
+      email: this.state.emailSignup
+    };
+
+    window
+      .fetch(`/api/user/create/`, {
+        body: JSON.stringify(user),
+        headers: {
+          "content-type": "application/json"
+        },
+        method: "POST"
+      })
+      .then(res => res.json())
+      .catch(err => console.log('***ERROR***', err))
+      .then(user_id => {
+        console.log('***USERID***', user_id);
+        
         window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
@@ -69,17 +105,17 @@ export default class LoginContainer extends Component {
             <CardTitle title="Login" subtitle="" />
             <CardText>
               <TextField
-                value={this.state.username}
-                onChange={(event, username) => this.setState({ username })}
+                value={this.state.usernameLogin}
+                onChange={(event, usernameLogin) => this.setState({ usernameLogin })}
                 hintText="Username"
-                id="username"
+                id="usernameLogin"
               />
               <br />
               <TextField
-                value={this.state.password}
-                onChange={(event, password) => this.setState({ password })}
+                value={this.state.passwordLogin}
+                onChange={(event, passwordLogin) => this.setState({ passwordLogin })}
                 hintText="Password"
-                id="password"
+                id="passwordLogin"
                 type="password"
               />
               <br />
@@ -89,6 +125,43 @@ export default class LoginContainer extends Component {
                 label="Login"
                 primary={true}
                 onClick={this.handleLogin}
+              />
+            </CardText>
+          </Card>
+          <br />
+          <br />
+          <Card className="signup">
+            <CardTitle title="Signup" subtitle="" />
+            <CardText>
+              <TextField
+                value={this.state.usernameSignup}
+                onChange={(event, usernameSignup) => this.setState({ usernameSignup })}
+                hintText="Username"
+                id="usernameSignup"
+              />
+              <br />
+              <TextField
+                value={this.state.emailSignup}
+                onChange={(event, emailSignup) => this.setState({ emailSignup })}
+                hintText="Email"
+                id="emailSignup"
+                type="email"
+              />
+              <br />
+              <TextField
+                value={this.state.passwordSignup}
+                onChange={(event, passwordSignup) => this.setState({ passwordSignup })}
+                hintText="Password"
+                id="passwordSignup"
+                type="password"
+              />
+              <br />
+              <br />
+              <FlatButton
+                size="medium"
+                label="Signup"
+                primary={true}
+                onClick={this.handleSignup}
               />
             </CardText>
           </Card>
