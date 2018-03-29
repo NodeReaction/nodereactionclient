@@ -1,16 +1,17 @@
 // MySQL db connection
 let sql = require("../dbconfig.js");
 let sqlstring = require("sqlstring");
+const uuidv4 = require("uuid/v4");
 
 const applicationController = {};
 
 applicationController.applicationCreate = (req, res, next) => {
   const { applicationName, userId } = req.body;
   sql.query(
-    sqlstring.format("INSERT INTO applications (user_id, name) VALUES (?,?)", [
-      userId,
-      applicationName
-    ]),
+    sqlstring.format(
+      "INSERT INTO applications (user_id, name,token) VALUES (?,?,?)",
+      [userId, applicationName, uuidv4()]
+    ),
     (error, result) => {
       if (error) {
         error = new Error("Database Error");
@@ -18,7 +19,6 @@ applicationController.applicationCreate = (req, res, next) => {
         error.status = 400;
         next(error);
       }
-      // console.log(`applicationController.read ${results}`);
       res.locals.id = result.insertId;
       next();
     }
@@ -78,7 +78,6 @@ applicationController.applicationsList = (req, res, next) => {
       error.status = 400;
       next(error);
     }
-    // console.log(`applicationController.read ${results}`);
     res.locals.applications = results;
     next();
   });

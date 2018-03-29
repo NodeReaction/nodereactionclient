@@ -34,7 +34,7 @@ export default class LoginContainer extends Component {
     };
 
     window
-      .fetch(`http://nodereaction.com/api/user/validate/`, {
+      .fetch(`/api/user/validate/`, {
         body: JSON.stringify(user),
         headers: {
           "content-type": "application/json"
@@ -44,13 +44,15 @@ export default class LoginContainer extends Component {
       .then(res => res.json())
       .then(user_id => {
         window
-          .fetch(`http://nodereaction.com/api/applications/${user_id}`)
+          .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
           .then(apps => {
-            console.log(apps);
             authService.isAuthenticated = true;
             this.setState({ redirectToReferer: true });
-            this.props.cb(apps.map(el => el.application_id));
+            let data = {};
+            data.apps = apps.map(el => el.application_id);
+            data.user_id = user_id;
+            this.props.cb(data);
           });
       });
   }

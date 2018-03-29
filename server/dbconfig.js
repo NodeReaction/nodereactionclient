@@ -1,11 +1,11 @@
 // MYSQL
 const mysql = require("mysql");
 const connection = mysql.createConnection({
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
-  port: process.env.RDS_PORT,
-  database: process.env.RDS_DB_NAME,
+  host: "localhost",
+  user: "root",
+  password: "@lph@bets0oup",
+  port: 3306,
+  database: "nodereaction",
   multipleStatements: true
 });
 
