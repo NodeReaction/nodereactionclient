@@ -68,7 +68,7 @@ export default class RoutesContainer extends Component {
 
   fetchRows = (app_id, date) => {
     window
-      .fetch(`http://nodereaction.com/api/routes/${app_id}/${date}`)
+      .fetch(`/api/routes/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
         console.log("herio", json);
