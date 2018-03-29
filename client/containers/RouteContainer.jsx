@@ -35,7 +35,7 @@ export default class RouteContainer extends Component {
 
     window
       .fetch(
-        `http://nodereaction.com/api/analytics/graph/${this.props.app_id}/${
+        `/api/analytics/graph/${this.props.app_id}/${
           this.props.match.params.route
         }/${this.props.match.params.method}/${offset}/${datetime}`
       )
