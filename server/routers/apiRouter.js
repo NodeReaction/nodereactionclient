@@ -22,7 +22,7 @@ router.post(
     console.log("recieved msg");
     next();
   },
-  agentController.validate,
+  agentController.verifyToken,
   agentController.create,
   (req, res) => {
     res.end();
