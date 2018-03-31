@@ -31,13 +31,14 @@ export default class ApplicationSelector extends Component {
         }
         onItemClick={this.menuClick}
       >
-        {this.props.apps.map(app => (
-          <MenuItem
-            primaryText={app.name}
-            app_id={app.application_id}
-            onItemClick={this.menuClick}
-          />
-        ))}
+        {this.props.apps &&
+          this.props.apps.map(app => (
+            <MenuItem
+              primaryText={app.name}
+              app_id={app.application_id}
+              onItemClick={this.menuClick}
+            />
+          ))}
       </IconMenu>
     );
   }

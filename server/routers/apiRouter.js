@@ -19,7 +19,6 @@ const analyticsController = require("./../controllers/analyticsController");
 router.post(
   "/agent/data/save",
   (req, res, next) => {
-    console.log("recieved msg");
     next();
   },
   agentController.validate,

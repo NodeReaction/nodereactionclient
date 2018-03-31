@@ -21,12 +21,9 @@ export default class ApplicationContainer extends Component {
       .fetch(`/api/applications/${this.props.user_id}`)
       .then(res => res.json())
       .then(apps => {
-        console.log("app container", apps);
-        let data = {};
-        data.apps = apps;
-        this.props.update_apps(data);
+        this.props.update_apps(apps);
       })
-      .catch(err => console.log("muh error", err));
+      .catch(err => console.log(err));
   }
 
   handleCreateApplicationClick() {

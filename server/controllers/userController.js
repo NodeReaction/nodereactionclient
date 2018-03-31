@@ -8,7 +8,6 @@ const userController = {};
 
 // Creates a new user in the database with bcrypt
 userController.userCreate = (req, res, next) => {
-  console.log('INSIDE CREATE');
   const { email, username, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, SALT_WORK_FACTOR);
   sql.query(
@@ -33,9 +32,11 @@ userController.userCreate = (req, res, next) => {
 
 userController.signupVerify = (req, res, next) => {
   const { username, email } = req.body;
-  console.log(req.body);
   sql.query(
-    sqlstring.format("SELECT * from users WHERE username = ? OR email = ?", [username, email]),
+    sqlstring.format("SELECT * from users WHERE username = ? OR email = ?", [
+      username,
+      email
+    ]),
     (err, results, fields) => {
       if (err) {
         err = new Error("Invalid credentials");
@@ -43,13 +44,9 @@ userController.signupVerify = (req, res, next) => {
         err.status = 400;
         next(err);
       } else {
-        console.log('***RESULTS***\n', results);
-        console.log(results.length);
         if (results.length > 0) {
-          console.log('INSIDE RESULTS');
-          res.json({"msg": "Pick new username or email"});
+          res.json({ msg: "Pick new username or email" });
         } else {
-          console.log('INSIDE NEXT');
           next();
         }
       }
@@ -60,7 +57,10 @@ userController.signupVerify = (req, res, next) => {
 userController.userRead = (req, res, next) => {
   const { username, email } = req.params;
   sql.query(
-    sqlstring.format("SELECT * from users WHERE username = ? OR email = ?", [username, email]),
+    sqlstring.format("SELECT * from users WHERE username = ? OR email = ?", [
+      username,
+      email
+    ]),
     (err, results, fields) => {
       if (err) {
         err = new Error("Invalid credentials");
@@ -68,7 +68,7 @@ userController.userRead = (req, res, next) => {
         err.status = 400;
         next(err);
       } else {
-          res.locals.userId = results.insertId;
+        res.locals.userId = results.insertId;
         next();
       }
     }
@@ -138,12 +138,8 @@ userController.usersList = (req, res, next) => {
 // Possible extension: For increased security, delay response if error or invalid credentials
 userController.userVerify = (req, res, next) => {
   const { username, password } = req.body;
-  console.log(req.body);
   sql.query(
-    sqlstring.format(
-      "SELECT * FROM users WHERE username = ?;",
-      [username]
-    ),
+    sqlstring.format("SELECT * FROM users WHERE username = ?;", [username]),
     (err, results, fields) => {
       if (err) {
         err = new Error("Database error");
@@ -151,7 +147,6 @@ userController.userVerify = (req, res, next) => {
         err.status = 400;
         next(err);
       }
-      console.log('results =====>' + results);
       if (results.length) {
         if (bcrypt.compareSync(password, results[0].password)) {
           res.locals.auth = true;
@@ -160,7 +155,9 @@ userController.userVerify = (req, res, next) => {
           next();
         }
       } else {
-        err = new Error("Invalid credentials username: " + username + " password: " + password);
+        err = new Error(
+          "Invalid credentials username: " + username + " password: " + password
+        );
         err.functionName = "userController.verifyUser";
         err.status = 400;
         next(err);

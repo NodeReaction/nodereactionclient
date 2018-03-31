@@ -77,18 +77,17 @@ export default class LoginContainer extends Component {
         method: "POST"
       })
       .then(res => res.json())
-      .catch(err => console.log('***ERROR***', err))
       .then(user_id => {
-        console.log('***USERID***', user_id);
-        
         window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
           .then(apps => {
-            console.log(apps);
             authService.isAuthenticated = true;
             this.setState({ redirectToReferer: true });
-            this.props.cb(apps.map(el => el.application_id));
+            let data = {};
+            data.apps = apps;
+            data.user_id = user_id;
+            this.props.cb(data);
           });
       });
   }
@@ -108,14 +107,18 @@ export default class LoginContainer extends Component {
             <CardText>
               <TextField
                 value={this.state.usernameLogin}
-                onChange={(event, usernameLogin) => this.setState({ usernameLogin })}
+                onChange={(event, usernameLogin) =>
+                  this.setState({ usernameLogin })
+                }
                 hintText="Username"
                 id="usernameLogin"
               />
               <br />
               <TextField
                 value={this.state.passwordLogin}
-                onChange={(event, passwordLogin) => this.setState({ passwordLogin })}
+                onChange={(event, passwordLogin) =>
+                  this.setState({ passwordLogin })
+                }
                 hintText="Password"
                 id="passwordLogin"
                 type="password"
@@ -137,14 +140,18 @@ export default class LoginContainer extends Component {
             <CardText>
               <TextField
                 value={this.state.usernameSignup}
-                onChange={(event, usernameSignup) => this.setState({ usernameSignup })}
+                onChange={(event, usernameSignup) =>
+                  this.setState({ usernameSignup })
+                }
                 hintText="Username"
                 id="usernameSignup"
               />
               <br />
               <TextField
                 value={this.state.emailSignup}
-                onChange={(event, emailSignup) => this.setState({ emailSignup })}
+                onChange={(event, emailSignup) =>
+                  this.setState({ emailSignup })
+                }
                 hintText="Email"
                 id="emailSignup"
                 type="email"
@@ -152,7 +159,9 @@ export default class LoginContainer extends Component {
               <br />
               <TextField
                 value={this.state.passwordSignup}
-                onChange={(event, passwordSignup) => this.setState({ passwordSignup })}
+                onChange={(event, passwordSignup) =>
+                  this.setState({ passwordSignup })
+                }
                 hintText="Password"
                 id="passwordSignup"
                 type="password"
