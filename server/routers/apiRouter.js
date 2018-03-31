@@ -21,7 +21,7 @@ router.post(
   (req, res, next) => {
     next();
   },
-  agentController.validate,
+  agentController.verifyToken,
   agentController.create,
   (req, res) => {
     res.end();

@@ -13,7 +13,7 @@ const bodyParser = require("body-parser");
 // ROUTERS
 const apiRouter = require("./routers/apiRouter");
 
-// API - ONLY TAKES JSON
+// BODYPARSER - CONFIG FOR JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -23,6 +23,7 @@ app.use(express.static(__dirname + "./../"));
 // ROUTES
 app.use("/api", apiRouter);
 
+// CATCH ALL ROUTE - SEND UNKNOWN ROUTES TO FRONTEND FOR HANDLING
 app.get("*", function(req, res) {
   res.sendFile(path.resolve(__dirname + "/../", "index.html"));
 });
