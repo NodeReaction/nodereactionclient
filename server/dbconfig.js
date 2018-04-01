@@ -1,21 +1,15 @@
+require('dotenv').config()
 // MYSQL
 const mysql = require("mysql");
-// const connection = mysql.createConnection({
-//   host: process.env.RDS_HOSTNAME,
-//   user: process.env.RDS_USERNAME,
-//   password: process.env.RDS_PASSWORD,
-//   port: process.env.RDS_PORT,
-//   database: process.env.RDS_DB_NAME,
-//   multipleStatements: true
-// });
 
 let db_config = {
-  host: 'aadz8ce13521en.cwch5iv9x8ei.us-west-2.rds.amazonaws.com',
-  user: 'root',
-  password: 'password',
-  database: 'ebdb',
-  multipleStatements: true
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  name: process.env.DB_NAME,
+  port: process.env.DB_PORT
 };
+console.log('================ ', process.env.DB_HOST);
 
 let connection;
 
