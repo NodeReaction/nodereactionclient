@@ -9,7 +9,6 @@ let db_config = {
   database: process.env.DB_NAME,
   port: process.env.DB_PORT
 };
-console.log('================ ', JSON.stringify(db_config));
 
 let connection;
 
