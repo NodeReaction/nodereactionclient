@@ -69,7 +69,7 @@ export default class RouteContainer extends Component {
       <div className="pageContainer">
         <div className="pageHeaderContainer">
           <h1 className="pageHeader">
-            Application Name - Route - {this.props.match.params.method}{" "}
+          {this.props.app_name}- Route - {this.props.match.params.method}{" "}
             {this.routePost}
           </h1>
           <div className="timeSelector">
