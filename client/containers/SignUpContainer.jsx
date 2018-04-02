@@ -106,8 +106,6 @@ export default class SignUpContainer extends Component {
                 autoComplete="new-password"
               />
               <br />
-              <Link className="navbar-menu-item" to="/login">login</Link>
-              <br />
               <br />
               <br />
               <FlatButton

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, browserHistory, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, browserHistory, Switch } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { PropsRoute, PrivateRoute } from "./auth/PrivateRoute.jsx";
 import authService from "./auth/AuthService.js";
@@ -15,6 +15,7 @@ import RoutesContainer from "./containers/RoutesContainer.jsx";
 import TracesContainer from "./containers/TracesContainer.jsx";
 import RouteContainer from "./containers/RouteContainer.jsx";
 import NotFoundContainer from "./containers/NotFoundContainer.jsx";
+import OverviewContainer from "./containers/OverviewContainer.jsx";
 import muiTheme from "./components/Theme.js";
 
 //
@@ -135,25 +136,31 @@ class App extends Component {
     const signup = props => {
       return <SignUpContainer cb={this.populateTopState} />;
     };
-
+    const overview = props => {
+      return <OverviewContainer />;
+    }
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <div>
+           {/* public routes */}
+            <PropsRoute
+              path="/(login|signup|overview)"
+              change_app={this.changeSelectedApp}
+              apps={this.state.applications}
+              component={NavBarMinimal}
+            />
+            <Route className="sectionContainer" path="/login" render={login} />
+            <Route className="sectionContainer" path="/overview" render={overview} />
+            <Route className="sectionContainer" path="/signup" render={signup} />
+            <Redirect from="/" to="/overview" key="from-root" />
+            {/* private routes */}
             <PropsRoute
               path="/(dashboard|account|applications|routes|traces|analytics)"
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
               component={NavBar}
             />
-            <PropsRoute
-              path="/(login|signup)"
-              change_app={this.changeSelectedApp}
-              apps={this.state.applications}
-              component={NavBarMinimal}
-            />
-            <Route className="sectionContainer" path="/login" render={login} />
-            <Route className="sectionContainer" path="/signup" render={signup} />
             <PrivateRoute
               className="sectionContainer"
               path="/account"
@@ -167,26 +174,7 @@ class App extends Component {
               apps={this.state.applications}
               component={ApplicationsContainer}
             />
-            <PrivateRoute
-              className="sectionContainer"
-              exact
-              path="/"
-              app_id={this.state.selectedApp}
-              app_name={this.state.selectedAppName}
-              timeRanges={this.state.timeRanges}
-              timeRangeSelected={this.state.timeRangeSelected}
-              setTimeRangeSelected={this.setTimeRangeSelected}
-
-              dashboardStats={this.state.dashboardStats}
-              dashboardTop5={this.state.dashboardTop5}
-              setDashboardTop5={this.setDashboardTop5}
-              fetchDashboardStats={this.fetchDashboardStats}
-              fetchDashboadTop5={this.fetchDashboadTop5}
-              fetchDashboard={this.fetchDashboard}
-
-              
-              component={DashboardContainer}
-            />
+            
             <PrivateRoute
               className="sectionContainer"
               path="/dashboard"
