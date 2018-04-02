@@ -145,7 +145,7 @@ export default class TracesContainer extends Component {
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageTitle">Application Name - Traces</h1>
+          <h1 className="pageTitle">{this.props.app_name} - Traces</h1>
           <div className="timeSelector">
             {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />

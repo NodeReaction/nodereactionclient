@@ -142,7 +142,7 @@ export default class RoutesContainer extends Component {
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageHeader">Application Name - Routes</h1>
+          <h1 className="pageHeader">{this.props.app_name} - Routes</h1>
           <div className="timeSelector">
             {/* Pass in cb which gets invoked whenever a time selection is made */}
             <TimeSelector cb={this.fetchData} />

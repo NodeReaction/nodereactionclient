@@ -97,18 +97,21 @@ class App extends Component {
               className="sectionContainer"
               path="/routes"
               app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
               component={RoutesContainer}
             />
             <PrivateRoute
               className="sectionContainer"
               path="/analytics/:route/:method"
               app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
               component={RouteContainer}
             />
             <PrivateRoute
               className="sectionContainer"
               path="/traces"
               app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
               component={TracesContainer}
             />
           </div>
