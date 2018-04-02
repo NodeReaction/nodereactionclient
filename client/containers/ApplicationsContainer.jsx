@@ -78,7 +78,8 @@ export default class ApplicationContainer extends Component {
             return (
               <ApplicationCard
                 title={"Application - " + app.name}
-                subtitle={"Token - " + app.token}
+                subtitle={'Token - ' + app.token}
+                text={'const NRA = require("nodereactionagent").setApiToken("' + app.token + '");'}
               />
             );
           })}

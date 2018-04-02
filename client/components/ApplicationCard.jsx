@@ -22,10 +22,7 @@ export default class ApplicationCard extends Component {
           title={<CardTitle title={this.props.title} subtitle={this.props.subtitle} />}
         />
         
-        <CardText expandable={true}>
-          make the application name editable
-          have an expanded that show the NRA configuration code
-        </CardText>
+        <CardText expandable={true}> {this.props.text}</CardText>
       </Card>
     );
   }
