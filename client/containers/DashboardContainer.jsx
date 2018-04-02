@@ -161,11 +161,11 @@ export default class DashboardContainer extends Component {
           <DashboardCard title="Total Requests" value={this.state.requests} />
           <DashboardCard
             title="Average Response Time"
-            value={this.state.response_time}
+            value={parseFloat(this.state.response_time).toFixed(3) + ' ms'}
           />
           <DashboardCard
             title="Average Throughput"
-            value={this.state.throughput}
+            value={this.state.throughput + ' rpm'}
           />
         </div>
 

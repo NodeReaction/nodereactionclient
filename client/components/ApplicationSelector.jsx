@@ -5,7 +5,7 @@ import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
-import ActionAndroid from "material-ui/svg-icons/action/android";
+import ActionAndroid from "material-ui/svg-icons/hardware/keyboard-arrow-down";
 import { Link } from "react-router-dom";
 
 export default class ApplicationSelector extends Component {
@@ -32,11 +32,12 @@ export default class ApplicationSelector extends Component {
         onItemClick={this.menuClick}
       >
         {this.props.apps &&
-          this.props.apps.map(app => (
+          this.props.apps.map((app, i) => (
             <MenuItem
               primaryText={app.name}
               app_id={app.application_id}
               name={app.name}
+              key={app.i}
               onItemClick={this.menuClick}
             />
           ))}
