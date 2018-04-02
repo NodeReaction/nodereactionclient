@@ -42,4 +42,4 @@ const muiTheme = getMuiTheme({
   }
 });
 
-module.exports = mutTheme;
+module.exports = muiTheme;
