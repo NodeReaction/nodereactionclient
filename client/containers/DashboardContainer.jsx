@@ -67,23 +67,23 @@ export default class DashboardContainer extends Component {
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
-    this.fetchStats(this.props.app_id, datetime);
+    this.props.fetchDashboardStats(this.props.app_id, datetime);
     this.fetchRows(this.props.app_id, datetime);
   }
 
-  fetchStats = (app_id, date) => {
-    window
-      .fetch(`/api/dashboard/stats/${app_id}/${date}`)
-      .then(res => res.json())
-      .then(json => {
-        let data = json[0];
-        this.setState({
-          response_time: data.avg_duration,
-          requests: data.total_requests,
-          throughput: ""
-        });
-      });
-  };
+  // fetchStats = (app_id, date) => {
+  //   window
+  //     .fetch(`/api/dashboard/stats/${app_id}/${date}`)
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       let data = json[0];
+  //       this.setState({
+  //         response_time: data.avg_duration,
+  //         requests: data.total_requests,
+  //         throughput: ""
+  //       });
+  //     });
+  // };
 
   fetchRows = (app_id, date) => {
     window
@@ -95,7 +95,7 @@ export default class DashboardContainer extends Component {
         });
       });
   };
-
+  
   //Grid functions
   handleGridSort = (sortColumn, sortDirection) => {
     const comparer = (a, b) => {
@@ -151,7 +151,7 @@ export default class DashboardContainer extends Component {
   };
 
   render() {
-    const responseTime = (this.state.response_time === null)? 'no data' : parseFloat(this.state.response_time).toFixed(3) + ' ms average';
+    const responseTime = (this.props.dashboardStats.response_time === null)? 'no data' : parseFloat(this.props.dashboardStats.response_time).toFixed(3) + ' ms average';
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -162,14 +162,14 @@ export default class DashboardContainer extends Component {
           </div>
         </div>
         <div className="dashboardCards">
-          <DashboardCard title="Total Requests" value={this.state.requests} />
+          <DashboardCard title="Total Requests" value={this.props.dashboardStats.requests} />
           <DashboardCard
             title="Response Time"
             value={responseTime}
           />
           <DashboardCard
             title="Average Throughput"
-            value={this.state.throughput + ' rpm'}
+            value={this.props.dashboardStats.throughput + ' rpm'}
           />
         </div>
 
