@@ -71,7 +71,6 @@ export default class RoutesContainer extends Component {
       .fetch(`/api/routes/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
-        console.log("herio", json);
         this.setState({
           rows: json
         });
@@ -82,11 +81,9 @@ export default class RoutesContainer extends Component {
   // Also first row doesn't redirect
   redirectAnalytics = (...args) => {
     let str = args[1].route.slice();
-    let newStr = str.replace(/\//g, '%2f');
-    newStr = '/' + newStr.slice(3);
-    this.props.history.push(
-      `${newStr}/${args[1].method}`
-    );
+    let newStr = str.replace(/\//g, "%2f");
+    newStr = "/" + newStr.slice(3);
+    this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
 
   getRandomDate = (start, end) => {
@@ -152,23 +149,27 @@ export default class RoutesContainer extends Component {
           </div>
         </div>
         <div>
-        <Paper children={<ReactDataGrid
-            enableCellSelect={false}
-            // This function redirects to the invidual route
-            // When the analytics page is rendered it will make a request for the data
+          <Paper
+            children={
+              <ReactDataGrid
+                enableCellSelect={false}
+                // This function redirects to the invidual route
+                // When the analytics page is rendered it will make a request for the data
 
-            // On row select invoke a function with route data passed as parameter
-            onRowClick={this.redirectAnalytics}
-            onGridSort={this.handleGridSort}
-            columns={this._columns}
-            rowGetter={this.rowGetter}
-            rowsCount={this.rowsCount()}
-            minHeight={500}
-            toolbar={<Toolbar enableFilter={true} />}
-            onAddFilter={this.handleFilterChange}
-            getValidFilterValues={this.getValidFilterValues}
-            onClearFilters={this.handleOnClearFilters}
-          />}/>
+                // On row select invoke a function with route data passed as parameter
+                onRowClick={this.redirectAnalytics}
+                onGridSort={this.handleGridSort}
+                columns={this._columns}
+                rowGetter={this.rowGetter}
+                rowsCount={this.rowsCount()}
+                minHeight={500}
+                toolbar={<Toolbar enableFilter={true} />}
+                onAddFilter={this.handleFilterChange}
+                getValidFilterValues={this.getValidFilterValues}
+                onClearFilters={this.handleOnClearFilters}
+              />
+            }
+          />
         </div>
       </div>
     );

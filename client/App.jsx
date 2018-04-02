@@ -23,6 +23,7 @@ class App extends Component {
     this.state.user = { username: "", email: "", isLoggedIn: false };
     this.state.applications = [];
     this.state.selectedApp = undefined;
+    this.state.selectedAppName = undefined;
 
     this.populateTopState = this.populateTopState.bind(this);
     this.changeSelectedApp = this.changeSelectedApp.bind(this);
@@ -31,8 +32,11 @@ class App extends Component {
 
   //cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
+    console.log("data = ", data);
+    console.log("tyring to set", data.apps[0].application_id);
     this.setState({ applications: data.apps });
-    this.setState({ selectedApp: data.apps[0] });
+    this.setState({ selectedApp: data.apps[0].application_id });
+    this.setState({ selectedAppName: data.apps[0].name });
     this.setState({ user_id: data.user_id });
   }
 
@@ -40,13 +44,12 @@ class App extends Component {
     this.setState({ applications: data });
   }
 
-  changeSelectedApp(app_id) {
+  changeSelectedApp(app_id, name) {
     this.setState({ selectedApp: app_id });
+    this.setState({ selectedAppName: name });
   }
 
   render() {
-   
-
     const login = props => {
       return <LoginContainer cb={this.populateTopState} />;
     };
@@ -56,7 +59,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <PropsRoute
-              path="/(dashboard|account|applications|routes|traces)"
+              path="/(dashboard|account|applications|routes|traces|analytics)"
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
               component={NavBar}
@@ -67,6 +70,7 @@ class App extends Component {
               exact
               path="/"
               app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
               render={DashboardContainer}
             />
             <PrivateRoute
@@ -86,6 +90,7 @@ class App extends Component {
               className="sectionContainer"
               path="/dashboard"
               app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
               component={DashboardContainer}
             />
             <PrivateRoute
@@ -96,7 +101,7 @@ class App extends Component {
             />
             <PrivateRoute
               className="sectionContainer"
-              path="/:route/:method"
+              path="/analytics/:route/:method"
               app_id={this.state.selectedApp}
               component={RouteContainer}
             />

@@ -84,7 +84,6 @@ export default class TracesContainer extends Component {
       .fetch(`/api/traces/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
-        console.log(json);
         this.setState({ rows: json });
       });
   };
@@ -136,11 +135,10 @@ export default class TracesContainer extends Component {
   };
 
   redirectAnalytics = (...args) => {
-    console.log("muh args", args);
     let str = args[1].route.slice();
     let newStr = str.replace(/\//g, "%2f");
     newStr = "/" + newStr.slice(3);
-    this.props.history.push(`${newStr}/${args[1].method}`);
+    this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
 
   render() {

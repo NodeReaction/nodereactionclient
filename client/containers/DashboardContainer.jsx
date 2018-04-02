@@ -67,19 +67,13 @@ export default class DashboardContainer extends Component {
       .replace("T", " ");
     this.fetchStats(this.props.app_id, datetime);
     this.fetchRows(this.props.app_id, datetime);
-    console.log("this.props.app_id = ", this.props.app_id);
   }
 
   fetchStats = (app_id, date) => {
-    console.log(
-      "fetching",
-      `/api/dashboard/stats/${app_id}/${date}`
-    );
     window
       .fetch(`/api/dashboard/stats/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
-        console.log("json = ", json);
         let data = json[0];
         this.setState({
           response_time: data.avg_duration,
@@ -148,18 +142,17 @@ export default class DashboardContainer extends Component {
   };
 
   redirectAnalytics = (...args) => {
-    console.log("correct!!", args);
     let str = args[1].route.slice();
     let newStr = str.replace(/\//g, "%2f");
     newStr = "/" + newStr.slice(3);
-    this.props.history.push(`${newStr}/${args[1].method}`);
+    this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
 
   render() {
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageHeader">Application Name - Dashboard</h1>
+          <h1 className="pageHeader">{this.props.app_name} - Dashboard</h1>
           <div className="timeSelector">
             <TimeSelector cb={this.fetchData} />
           </div>
