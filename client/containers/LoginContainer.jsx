@@ -69,6 +69,7 @@ export default class LoginContainer extends Component {
           <div className="pageHeaderContainer">
             <h1 className="pageHeader">Login</h1>
           </div>
+          <form method="post">
           <Card className="">
             {/* <CardTitle title="Login" subtitle="" /> */}
             <CardText>
@@ -79,6 +80,7 @@ export default class LoginContainer extends Component {
                 }
                 hintText="Username"
                 id="usernameLogin"
+                autoComplete="username"
               />
               <br />
               <TextField
@@ -89,6 +91,7 @@ export default class LoginContainer extends Component {
                 hintText="Password"
                 id="passwordLogin"
                 type="password"
+                autoComplete="current-password"
               />
               <br />
               <Link className="navbar-menu-item" to="/signup">signup</Link>
@@ -103,7 +106,7 @@ export default class LoginContainer extends Component {
               />
             </CardText>
           </Card>
-      
+          </form>
         </div>
       </div>
     );
