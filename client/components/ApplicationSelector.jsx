@@ -14,7 +14,7 @@ export default class ApplicationSelector extends Component {
   }
 
   menuClick = (event, child) => {
-    this.props.change_app(child.props.app_id);
+    this.props.change_app(child.props.app_id, child.props.name);
   };
 
   render() {
@@ -36,6 +36,7 @@ export default class ApplicationSelector extends Component {
             <MenuItem
               primaryText={app.name}
               app_id={app.application_id}
+              name={app.name}
               key={app.i}
               onItemClick={this.menuClick}
             />
