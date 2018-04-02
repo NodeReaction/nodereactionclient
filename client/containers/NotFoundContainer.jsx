@@ -11,7 +11,7 @@ export default class NotFoundContainer extends Component {
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
-          <h1 className="pageHeader">Page not found</h1>
+          <h1 className="pageHeader">{this.props.app_name} - Page not found</h1>
         </div>
        <p>Page not found.</p>
       </div>
