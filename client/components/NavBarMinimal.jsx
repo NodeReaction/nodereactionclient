@@ -30,10 +30,30 @@ class NavBarMinimal extends Component {
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
+        <Link className="navbar-menu-item" to="/overview">
           <h2 className="logo">NodeReaction</h2>
+        </Link>
         </ToolbarGroup>
         <ToolbarGroup>
-          
+          <Link className="navbar-menu-item" to="/overview">
+            <FlatButton size="medium" label="Overview" primary={true} />
+          </Link>
+          <FlatButton size="medium" label="Documentation" primary={true} href="https://github.com/retrowavelabs/nodereactionagent" />
+          <IconMenu
+            iconButtonElement={
+              <IconButton label="" touch={true}>
+                <PersonIcon />
+              </IconButton>
+            }
+          >
+            <Link className="navbar-menu-item" to="/login">
+              <MenuItem primaryText="Login" leftIcon={<PersonIcon />} />
+            </Link>
+            <Link className="navbar-menu-item" to="/signup">
+              <MenuItem primaryText="Sign Up" leftIcon={<PersonIcon />} />
+            </Link>
+           
+          </IconMenu>
         </ToolbarGroup>
       </Toolbar>
     );
