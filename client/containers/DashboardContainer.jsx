@@ -68,7 +68,7 @@ export default class DashboardContainer extends Component {
       .slice(0, 23)
       .replace("T", " ");
     this.props.fetchDashboardStats(this.props.app_id, datetime);
-    this.props.fetchDashboadTop5(this.props.app_id, datetime);
+    this.fetchRows(this.props.app_id, datetime);
   }
 
   // fetchStats = (app_id, date) => {
@@ -85,16 +85,16 @@ export default class DashboardContainer extends Component {
   //     });
   // };
 
-  // fetchRows = (app_id, date) => {
-  //   window
-  //     .fetch(`/api/dashboard/top/${app_id}/${date}`)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       this.setState({
-  //         rows: json
-  //       });
-  //     });
-  // };
+  fetchRows = (app_id, date) => {
+    window
+      .fetch(`/api/dashboard/top/${app_id}/${date}`)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          rows: json
+        });
+      });
+  };
   
   //Grid functions
   handleGridSort = (sortColumn, sortDirection) => {

@@ -48,6 +48,8 @@ class App extends Component {
     this.state.routeData = {};
     this.state.tracesData = {};
     //
+    this.setDashboardTop5 = this.setDashboardTop5.bind(this);
+    this.fetchDashboard = this.fetchDashboard.bind(this);
     this.fetchDashboardStats = this.fetchDashboardStats.bind(this);
     this.fetchDashboadTop5 = this.fetchDashboadTop5.bind(this);
     this.setTimeRangeSelected = this.setTimeRangeSelected.bind(this);
@@ -57,6 +59,24 @@ class App extends Component {
     this.updateApps = this.updateApps.bind(this);
     
   }
+
+  setDashboardTop5 = (rows) => {
+    this.setState({
+      dashboardTop5: {rows}
+    });
+  }
+
+  fetchDashboard = (i) => {
+    this.setTimeRangeSelected(i);
+    let offset = this.state.timeRanges[i].offset;
+    let datetime = new Date(Date.now() - offset)
+      .toISOString()
+      .slice(0, 23)
+      .replace("T", " ");
+    this.fetchDashboardStats(this.state.selectedApp, datetime);
+    this.fetchDashboadTop5(this.state.selectedApp, datetime);
+  }
+
   fetchDashboardStats = (app_id, date) => {
     window
       .fetch(`/api/dashboard/stats/${app_id}/${date}`)
@@ -89,8 +109,6 @@ class App extends Component {
 
   // cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
-    console.log("data = ", data);
-    console.log("tyring to set", data.apps[0].application_id);
     const appName =
       data.apps[0].name.charAt(0).toUpperCase() +
       data.apps[0].name.slice(1).toLowerCase();
@@ -105,8 +123,8 @@ class App extends Component {
   }
 
   changeSelectedApp(app_id, name) {
-    this.setState({ selectedApp: app_id });
     const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    this.setState({ selectedApp: app_id });
     this.setState({ selectedAppName: appName });
   }
 
@@ -161,11 +179,13 @@ class App extends Component {
 
               dashboardStats={this.state.dashboardStats}
               dashboardTop5={this.state.dashboardTop5}
+              setDashboardTop5={this.setDashboardTop5}
               fetchDashboardStats={this.fetchDashboardStats}
               fetchDashboadTop5={this.fetchDashboadTop5}
+              fetchDashboard={this.fetchDashboard}
 
               
-              render={DashboardContainer}
+              component={DashboardContainer}
             />
             <PrivateRoute
               className="sectionContainer"
@@ -179,8 +199,10 @@ class App extends Component {
 
               dashboardStats={this.state.dashboardStats}
               dashboardTop5={this.state.dashboardTop5}
+              setDashboardTop5={this.setDashboardTop5}
               fetchDashboardStats={this.fetchDashboardStats}
               fetchDashboadTop5={this.fetchDashboadTop5}
+              fetchDashboard={this.fetchDashboard}
 
               component={DashboardContainer}
             />

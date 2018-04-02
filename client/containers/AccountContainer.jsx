@@ -50,6 +50,7 @@ export default class AccountContainer extends Component {
                 onChange={(event, email) => this.setState({ email })}
                 hintText="Email"
                 id="email"
+                autoComplete="email"
               />
               <br />
               <TextField
@@ -57,6 +58,7 @@ export default class AccountContainer extends Component {
                 onChange={(event, username) => this.setState({ username })}
                 hintText="Username"
                 id="username"
+                autoComplete="username"
               />
               <br />
               <TextField
@@ -65,6 +67,7 @@ export default class AccountContainer extends Component {
                 hintText="Password"
                 id="password"
                 type="password"
+                autoComplete="new-password"
               />
               <br />
               <TextField
@@ -75,6 +78,7 @@ export default class AccountContainer extends Component {
                 hintText="Confirm Password"
                 id="passwordVerify"
                 type="password"
+                autoComplete="new-password"
               />
               <br />
               <br />
