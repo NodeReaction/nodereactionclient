@@ -58,7 +58,9 @@ export default class RoutesContainer extends Component {
   }
 
   //data fetching
-  fetchData(offset) {
+  fetchData(i) {
+    this.props.setTimeRangeSelected(i);
+    let offset = this.props.timeRanges[i].offset;
     let datetime = new Date(Date.now() - offset)
       .toISOString()
       .slice(0, 23)
@@ -144,8 +146,8 @@ export default class RoutesContainer extends Component {
         <div className="pageHeaderContainer">
           <h1 className="pageHeader">{this.props.app_name} - Routes</h1>
           <div className="timeSelector">
-            {/* Pass in cb which gets invoked whenever a time selection is made */}
-            <TimeSelector cb={this.fetchData} />
+            <TimeSelector cb={this.fetchData} timeRanges={this.props.timeRanges}
+              timeRangeSelected={this.props.timeRangeSelected}/>
           </div>
         </div>
         <div>

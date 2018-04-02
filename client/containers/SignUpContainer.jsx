@@ -7,11 +7,11 @@ import {
   CardText
 } from "material-ui/Card";
 import FlatButton from "material-ui/FlatButton";
-import { Link,Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import TextField from "material-ui/TextField";
 import authService from "../auth/AuthService.js";
 
-export default class LoginContainer extends Component {
+export default class SignUpContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,21 +20,24 @@ export default class LoginContainer extends Component {
       open: false,
       usernameLogin: "",
       passwordLogin: "",
+      usernameSignup: "",
+      passwordSignup: "",
+      emailSignup: "",
       redirectToReferer: false
     };
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  //We login here and also set up some inital state by using callback props. Not ideal
-  //but hard to avoid with current UI set up
-  handleLogin() {
+
+  handleSignup() {
     const user = {
-      username: this.state.usernameLogin,
-      password: this.state.passwordLogin
+      username: this.state.usernameSignup,
+      password: this.state.passwordSignup,
+      email: this.state.emailSignup
     };
 
     window
-      .fetch(`/api/user/validate/`, {
+      .fetch(`/api/user/create/`, {
         body: JSON.stringify(user),
         headers: {
           "content-type": "application/json"
@@ -43,7 +46,6 @@ export default class LoginContainer extends Component {
       })
       .then(res => res.json())
       .then(user_id => {
-        //console.log("user_id = ", user_id);
         window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
@@ -58,7 +60,6 @@ export default class LoginContainer extends Component {
       });
   }
 
-
   render() {
     if (this.state.redirectToReferer) {
       return <Redirect to="/dashboard" />;
@@ -66,44 +67,54 @@ export default class LoginContainer extends Component {
     return (
       <div>
         <div className="pageContainer">
-          <div className="pageHeaderContainer">
-            <h1 className="pageHeader">Login</h1>
+          <div className="pageHeaderContainer"> 
+            <h1 className="pageHeader">Sign Up</h1>
           </div>
-          <Card className="">
-            {/* <CardTitle title="Login" subtitle="" /> */}
+
+          <Card className="signup">
+            {/* <CardTitle title="Signup" subtitle="" /> */}
             <CardText>
               <TextField
-                value={this.state.usernameLogin}
-                onChange={(event, usernameLogin) =>
-                  this.setState({ usernameLogin })
+                value={this.state.usernameSignup}
+                onChange={(event, usernameSignup) =>
+                  this.setState({ usernameSignup })
                 }
                 hintText="Username"
-                id="usernameLogin"
+                id="usernameSignup"
               />
               <br />
               <TextField
-                value={this.state.passwordLogin}
-                onChange={(event, passwordLogin) =>
-                  this.setState({ passwordLogin })
+                value={this.state.emailSignup}
+                onChange={(event, emailSignup) =>
+                  this.setState({ emailSignup })
+                }
+                hintText="Email"
+                id="emailSignup"
+                type="email"
+              />
+              <br />
+              <TextField
+                value={this.state.passwordSignup}
+                onChange={(event, passwordSignup) =>
+                  this.setState({ passwordSignup })
                 }
                 hintText="Password"
-                id="passwordLogin"
+                id="passwordSignup"
                 type="password"
               />
               <br />
-              <Link className="navbar-menu-item" to="/signup">signup</Link>
+              <Link className="navbar-menu-item" to="/login">login</Link>
               <br />
               <br />
               <br />
               <FlatButton
                 size="medium"
-                label="Login"
+                label="Signup"
                 primary={true}
-                onClick={this.handleLogin}
+                onClick={this.handleSignup}
               />
             </CardText>
           </Card>
-      
         </div>
       </div>
     );

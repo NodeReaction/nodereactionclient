@@ -50,8 +50,19 @@ export default class ApplicationContainer extends Component {
   }
 
   fetchUserApplications() {}
+ 
 
   render() {
+    const apps = this.props.apps.map(app => {
+      return (
+        <ApplicationCard
+          title={app.name}
+          subtitle={'Agent API Token - ' + app.token}
+          text={'const NRA = require("nodereactionagent").setApiToken("' + app.token + '");'}
+        />
+      );
+    });
+
     return (
       <div className="pageContainer">
         <div className="pageHeaderContainer">
@@ -74,15 +85,7 @@ export default class ApplicationContainer extends Component {
         <br />
         <br />
         <div className="applicationCards">
-          {this.props.apps.map(app => {
-            return (
-              <ApplicationCard
-                title={"Application - " + app.name}
-                subtitle={'Token - ' + app.token}
-                text={'const NRA = require("nodereactionagent").setApiToken("' + app.token + '");'}
-              />
-            );
-          })}
+          {apps}
         </div>
       </div>
     );
