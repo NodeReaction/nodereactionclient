@@ -5,16 +5,16 @@ import FlatButton from "material-ui/FlatButton";
 import IconButton from "material-ui/IconButton";
 import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
-import ActionAndroid from "material-ui/svg-icons/hardware/keyboard-arrow-down";
+import DownArrow from "material-ui/svg-icons/hardware/keyboard-arrow-down";
 import { Link } from "react-router-dom";
 
 export default class ApplicationSelector extends Component {
   constructor(props) {
     super(props);
   }
-
   menuClick = (event, child) => {
-    this.props.change_app(child.props.app_id, child.props.name);
+    const id = child.key;
+    this.props.change_app(this.props.apps[id].application_id, this.props.apps[id].name);
   };
 
   render() {
@@ -26,7 +26,7 @@ export default class ApplicationSelector extends Component {
             label="Applications"
             labelPosition="before"
             primary={true}
-            icon={<ActionAndroid />}
+            icon={<DownArrow />}
           />
         }
         onItemClick={this.menuClick}
@@ -35,13 +35,12 @@ export default class ApplicationSelector extends Component {
           this.props.apps.map((app, i) => (
             <MenuItem
               primaryText={app.name}
-              app_id={app.application_id}
               name={app.name}
               key={i}
-              onItemClick={this.menuClick}
             />
           ))}
       </IconMenu>
     );
   }
 }
+
