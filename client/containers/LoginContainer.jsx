@@ -47,6 +47,7 @@ export default class LoginContainer extends Component {
       })
       .then(res => res.json())
       .then(user_id => {
+        console.log("user_id = ", user_id);
         window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
