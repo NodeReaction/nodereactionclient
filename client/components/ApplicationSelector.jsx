@@ -37,7 +37,7 @@ export default class ApplicationSelector extends Component {
               primaryText={app.name}
               app_id={app.application_id}
               name={app.name}
-              key={app.i}
+              key={i}
               onItemClick={this.menuClick}
             />
           ))}

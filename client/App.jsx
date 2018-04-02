@@ -4,8 +4,10 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { PropsRoute, PrivateRoute } from "./auth/PrivateRoute.jsx";
 import authService from "./auth/AuthService.js";
 import NavBar from "./components/NavBar.jsx";
+import NavBarMinimal from "./components/NavBarMinimal.jsx";
 
 import LoginContainer from "./containers/LoginContainer.jsx";
+import SignUpContainer from "./containers/SignUpContainer.jsx";
 import AccountContainer from "./containers/AccountContainer.jsx";
 import ApplicationsContainer from "./containers/ApplicationsContainer.jsx";
 import DashboardContainer from "./containers/DashboardContainer.jsx";
@@ -24,19 +26,38 @@ class App extends Component {
     this.state.applications = [];
     this.state.selectedApp = undefined;
     this.state.selectedAppName = undefined;
+    this.state.timeRangeSelected = 5;
+    this.state.timeRanges = [
+      { label: "Last 5 minutes", offset: 5 * 60000 },
+      { label: "Last 30 minutes", offset: 30 * 60000 },
+      { label: "Last 1 hour", offset: 60 * 60000 },
+      { label: "Last 12 hours", offset: 720 * 60000 },
+      { label: "Last 1 day", offset: 1440 * 60000 },
+      { label: "Last 3 days", offset: 4320 * 60000 }
+    ];
 
+    //
+    this.setTimeRangeSelected = this.setTimeRangeSelected.bind(this);
     this.populateTopState = this.populateTopState.bind(this);
     this.changeSelectedApp = this.changeSelectedApp.bind(this);
     this.updateApps = this.updateApps.bind(this);
+    
   }
 
-  //cb for when we get apps in login component. We will default select 1st
+  setTimeRangeSelected(id){
+    this.setState({ timeRangeSelected: id });
+  }
+
+  // cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
     console.log("data = ", data);
     console.log("tyring to set", data.apps[0].application_id);
+    const appName =
+      data.apps[0].name.charAt(0).toUpperCase() +
+      data.apps[0].name.slice(1).toLowerCase();
     this.setState({ applications: data.apps });
     this.setState({ selectedApp: data.apps[0].application_id });
-    this.setState({ selectedAppName: data.apps[0].name });
+    this.setState({ selectedAppName: appName });
     this.setState({ user_id: data.user_id });
   }
 
@@ -46,12 +67,16 @@ class App extends Component {
 
   changeSelectedApp(app_id, name) {
     this.setState({ selectedApp: app_id });
-    this.setState({ selectedAppName: name });
+    const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    this.setState({ selectedAppName: appName });
   }
 
   render() {
     const login = props => {
       return <LoginContainer cb={this.populateTopState} />;
+    };
+    const signup = props => {
+      return <SignUpContainer cb={this.populateTopState} />;
     };
 
     return (
@@ -64,15 +89,14 @@ class App extends Component {
               apps={this.state.applications}
               component={NavBar}
             />
-            <Route className="sectionContainer" path="/login" render={login} />
-            <PrivateRoute
-              className="sectionContainer"
-              exact
-              path="/"
-              app_id={this.state.selectedApp}
-              app_name={this.state.selectedAppName}
-              render={DashboardContainer}
+            <PropsRoute
+              path="/(login|signup)"
+              change_app={this.changeSelectedApp}
+              apps={this.state.applications}
+              component={NavBarMinimal}
             />
+            <Route className="sectionContainer" path="/login" render={login} />
+            <Route className="sectionContainer" path="/signup" render={signup} />
             <PrivateRoute
               className="sectionContainer"
               path="/account"
@@ -88,30 +112,54 @@ class App extends Component {
             />
             <PrivateRoute
               className="sectionContainer"
-              path="/dashboard"
+              exact
+              path="/"
               app_id={this.state.selectedApp}
               app_name={this.state.selectedAppName}
-              component={DashboardContainer}
+              timeRanges={this.state.timeRanges}
+              timeRangeSelected={this.state.timeRangeSelected}
+              setTimeRangeSelected={this.setTimeRangeSelected}
+              render={DashboardContainer}
             />
             <PrivateRoute
               className="sectionContainer"
-              path="/routes"
+              path="/dashboard"
               app_id={this.state.selectedApp}
               app_name={this.state.selectedAppName}
-              component={RoutesContainer}
+              timeRanges={this.state.timeRanges}
+              timeRangeSelected={this.state.timeRangeSelected}
+              setTimeRangeSelected={this.setTimeRangeSelected}
+              component={DashboardContainer}
             />
             <PrivateRoute
               className="sectionContainer"
               path="/analytics/:route/:method"
               app_id={this.state.selectedApp}
               app_name={this.state.selectedAppName}
+              timeRanges={this.state.timeRanges}
+              timeRangeSelected={this.state.timeRangeSelected}
+              setTimeRangeSelected={this.setTimeRangeSelected}
               component={RouteContainer}
             />
+            <PrivateRoute
+              className="sectionContainer"
+              path="/routes"
+              app_id={this.state.selectedApp}
+              app_name={this.state.selectedAppName}
+              timeRanges={this.state.timeRanges}
+              timeRangeSelected={this.state.timeRangeSelected}
+              setTimeRangeSelected={this.setTimeRangeSelected}
+              component={RoutesContainer}
+            />
+            
             <PrivateRoute
               className="sectionContainer"
               path="/traces"
               app_id={this.state.selectedApp}
               app_name={this.state.selectedAppName}
+              timeRanges={this.state.timeRanges}
+              timeRangeSelected={this.state.timeRangeSelected}
+              setTimeRangeSelected={this.setTimeRangeSelected}
               component={TracesContainer}
             />
           </div>

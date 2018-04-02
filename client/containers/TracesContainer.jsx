@@ -45,7 +45,7 @@ export default class TracesContainer extends Component {
       {
         key: "method",
         name: "Method",
-        width: 120,
+        width: 134,
         filterable: true,
         filterRenderer: MultiSelectFilter,
         sortable: true
@@ -53,7 +53,7 @@ export default class TracesContainer extends Component {
       {
         key: "avg_duration",
         name: "Avg. Time",
-        width: 120,
+        width: 134,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -61,7 +61,7 @@ export default class TracesContainer extends Component {
       {
         key: "total_requests",
         name: "# of Calls",
-        width: 120,
+        width: 134,
         filterable: true,
         filterRenderer: NumericFilter,
         sortable: true
@@ -71,7 +71,9 @@ export default class TracesContainer extends Component {
     this.state = { rows: [], filters: {} };
   }
 
-  fetchData(offset) {
+  fetchData(i) {
+    this.props.setTimeRangeSelected(i);
+    let offset = this.props.timeRanges[i].offset;
     let datetime = new Date(Date.now() - offset)
       .toISOString()
       .slice(0, 23)
@@ -147,8 +149,8 @@ export default class TracesContainer extends Component {
         <div className="pageHeaderContainer">
           <h1 className="pageTitle">{this.props.app_name} - Traces</h1>
           <div className="timeSelector">
-            {/* Pass in cb which gets invoked whenever a time selection is made */}
-            <TimeSelector cb={this.fetchData} />
+            <TimeSelector cb={this.fetchData} timeRanges={this.props.timeRanges}
+              timeRangeSelected={this.props.timeRangeSelected}/>
           </div>
         </div>
         <div>

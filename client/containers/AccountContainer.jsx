@@ -41,6 +41,7 @@ export default class AccountContainer extends Component {
           <div className="pageHeaderContainer">
           <h1 className="pageHeader">Account Settings</h1>
           </div>
+          <form method="post">
           <Card className="">
             <CardTitle title="Update Account" subtitle="" />
             <CardText>
@@ -85,6 +86,7 @@ export default class AccountContainer extends Component {
               />
             </CardText>
           </Card>
+          </form>
         </div>
       </div>
     );

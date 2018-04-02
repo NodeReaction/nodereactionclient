@@ -28,7 +28,7 @@ class NavBar extends Component {
 
   signout() {
     authService.signout(() => this.props.history.push("/login"));
-    this.props.navbarToggle();
+    // this.props.navbarToggle();
   }
 
   render() {
