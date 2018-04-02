@@ -35,14 +35,53 @@ class App extends Component {
       { label: "Last 1 day", offset: 1440 * 60000 },
       { label: "Last 3 days", offset: 4320 * 60000 }
     ];
+    this.state.dashboardStats = {
+      response_time: "",
+      requests: "",
+      throughput: ""
+    }
+    this.state.dashboardTop5 = {
+      rows: ""
+    }
 
+    this.state.routesData = {};
+    this.state.routeData = {};
+    this.state.tracesData = {};
     //
+    this.fetchDashboardStats = this.fetchDashboardStats.bind(this);
+    this.fetchDashboadTop5 = this.fetchDashboadTop5.bind(this);
+    this.setTimeRangeSelected = this.setTimeRangeSelected.bind(this);
     this.setTimeRangeSelected = this.setTimeRangeSelected.bind(this);
     this.populateTopState = this.populateTopState.bind(this);
     this.changeSelectedApp = this.changeSelectedApp.bind(this);
     this.updateApps = this.updateApps.bind(this);
     
   }
+  fetchDashboardStats = (app_id, date) => {
+    window
+      .fetch(`/api/dashboard/stats/${app_id}/${date}`)
+      .then(res => res.json())
+      .then(json => {
+        let data = json[0];
+        this.setState({dashboardStats: {
+          response_time: data.avg_duration,
+          requests: data.total_requests,
+          throughput: ""
+        }});
+      });
+  };
+
+  fetchDashboadTop5 = (app_id, date) => {
+    window
+      .fetch(`/api/dashboard/top/${app_id}/${date}`)
+      .then(res => res.json())
+      .then(json => {
+        this.setState({dashboardTop5: {
+          rows: json
+        }});
+      });
+  };
+
 
   setTimeRangeSelected(id){
     this.setState({ timeRangeSelected: id });
@@ -119,6 +158,13 @@ class App extends Component {
               timeRanges={this.state.timeRanges}
               timeRangeSelected={this.state.timeRangeSelected}
               setTimeRangeSelected={this.setTimeRangeSelected}
+
+              dashboardStats={this.state.dashboardStats}
+              dashboardTop5={this.state.dashboardTop5}
+              fetchDashboardStats={this.fetchDashboardStats}
+              fetchDashboadTop5={this.fetchDashboadTop5}
+
+              
               render={DashboardContainer}
             />
             <PrivateRoute
@@ -129,6 +175,13 @@ class App extends Component {
               timeRanges={this.state.timeRanges}
               timeRangeSelected={this.state.timeRangeSelected}
               setTimeRangeSelected={this.setTimeRangeSelected}
+
+
+              dashboardStats={this.state.dashboardStats}
+              dashboardTop5={this.state.dashboardTop5}
+              fetchDashboardStats={this.fetchDashboardStats}
+              fetchDashboadTop5={this.fetchDashboadTop5}
+
               component={DashboardContainer}
             />
             <PrivateRoute
