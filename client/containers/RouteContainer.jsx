@@ -17,15 +17,19 @@ export default class RouteContainer extends Component {
     this.routePost = this.routePre.replace(/%2f/g, "/");
   }
 
-  fetchData(offset) {
-    this.setState({
-      graphData: [],
-      rangeData: []
-    });
+  fetchData(i) {
+    this.props.setTimeRangeSelected(i);
+    let offset = this.props.timeRanges[i].offset;
     let datetime = new Date(Date.now() - offset)
       .toISOString()
       .slice(0, 23)
       .replace("T", " ");
+
+    this.setState({
+      graphData: [],
+      rangeData: []
+    });
+    
     this.fetchGraphData(this.props.app_id, offset, datetime);
   }
 
@@ -73,7 +77,8 @@ export default class RouteContainer extends Component {
             {this.routePost}
           </h1>
           <div className="timeSelector">
-            <TimeSelector cb={this.fetchData} />
+            <TimeSelector cb={this.fetchData} timeRanges={this.props.timeRanges}
+              timeRangeSelected={this.props.timeRangeSelected} />
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
