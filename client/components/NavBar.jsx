@@ -35,7 +35,9 @@ class NavBar extends Component {
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
+          <Link className="navbar-menu-item" to="/dashboard">
           <h2 className="logo">NodeReaction</h2>
+          </Link>
         </ToolbarGroup>
         <ToolbarGroup>
           <ApplicationSelector
