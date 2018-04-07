@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route, Redirect, browserHistory, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  browserHistory,
+  Switch
+} from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { PropsRoute, PrivateRoute } from "./auth/PrivateRoute.jsx";
 import authService from "./auth/AuthService.js";
@@ -40,10 +46,10 @@ class App extends Component {
       response_time: "",
       requests: "",
       throughput: ""
-    }
+    };
     this.state.dashboardTop5 = {
       rows: ""
-    }
+    };
 
     this.state.routesData = {};
     this.state.routeData = {};
@@ -58,16 +64,15 @@ class App extends Component {
     this.populateTopState = this.populateTopState.bind(this);
     this.changeSelectedApp = this.changeSelectedApp.bind(this);
     this.updateApps = this.updateApps.bind(this);
-    
   }
 
-  setDashboardTop5 = (rows) => {
+  setDashboardTop5 = rows => {
     this.setState({
-      dashboardTop5: {rows}
+      dashboardTop5: { rows }
     });
-  }
+  };
 
-  fetchDashboard = (i) => {
+  fetchDashboard = i => {
     this.setTimeRangeSelected(i);
     let offset = this.state.timeRanges[i].offset;
     let datetime = new Date(Date.now() - offset)
@@ -76,7 +81,7 @@ class App extends Component {
       .replace("T", " ");
     this.fetchDashboardStats(this.state.selectedApp, datetime);
     this.fetchDashboadTop5(this.state.selectedApp, datetime);
-  }
+  };
 
   fetchDashboardStats = (app_id, date) => {
     window
@@ -84,11 +89,13 @@ class App extends Component {
       .then(res => res.json())
       .then(json => {
         let data = json[0];
-        this.setState({dashboardStats: {
-          response_time: data.avg_duration,
-          requests: data.total_requests,
-          throughput: ""
-        }});
+        this.setState({
+          dashboardStats: {
+            response_time: data.avg_duration,
+            requests: data.total_requests,
+            throughput: ""
+          }
+        });
       });
   };
 
@@ -97,25 +104,27 @@ class App extends Component {
       .fetch(`/api/dashboard/top/${app_id}/${date}`)
       .then(res => res.json())
       .then(json => {
-        this.setState({dashboardTop5: {
-          rows: json
-        }});
+        this.setState({
+          dashboardTop5: {
+            rows: json
+          }
+        });
       });
   };
 
-
-  setTimeRangeSelected(id){
+  setTimeRangeSelected(id) {
     this.setState({ timeRangeSelected: id });
   }
 
   // cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
-    const appName =
-      data.apps[0].name.charAt(0).toUpperCase() +
-      data.apps[0].name.slice(1).toLowerCase();
+    console.log("muh", data);
+    //  const appName =
+    // data.apps[0].name.charAt(0).toUpperCase() +
+    //   data.apps[0].name.slice(1).toLowerCase();
     this.setState({ applications: data.apps });
-    this.setState({ selectedApp: data.apps[0].application_id });
-    this.setState({ selectedAppName: appName });
+    //this.setState({ selectedApp: data.apps[0].application_id });
+    //this.setState({ selectedAppName: appName });
     this.setState({ user_id: data.user_id });
   }
 
@@ -124,9 +133,9 @@ class App extends Component {
   }
 
   changeSelectedApp(app_id, name) {
-    const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    //const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     this.setState({ selectedApp: app_id });
-    this.setState({ selectedAppName: appName });
+    //this.setState({ selectedAppName: appName });
   }
 
   render() {
@@ -138,12 +147,12 @@ class App extends Component {
     };
     const overview = props => {
       return <OverviewContainer />;
-    }
+    };
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <BrowserRouter>
           <div>
-           {/* public routes */}
+            {/* public routes */}
             <PropsRoute
               path="/(login|signup|overview)"
               change_app={this.changeSelectedApp}
@@ -151,8 +160,16 @@ class App extends Component {
               component={NavBarMinimal}
             />
             <Route className="sectionContainer" path="/login" render={login} />
-            <Route className="sectionContainer" path="/overview" render={overview} />
-            <Route className="sectionContainer" path="/signup" render={signup} />
+            <Route
+              className="sectionContainer"
+              path="/overview"
+              render={overview}
+            />
+            <Route
+              className="sectionContainer"
+              path="/signup"
+              render={signup}
+            />
             <Redirect from="/" to="/overview" key="from-root" />
             {/* private routes */}
             <PropsRoute
@@ -174,7 +191,7 @@ class App extends Component {
               apps={this.state.applications}
               component={ApplicationsContainer}
             />
-            
+
             <PrivateRoute
               className="sectionContainer"
               path="/dashboard"
@@ -183,15 +200,12 @@ class App extends Component {
               timeRanges={this.state.timeRanges}
               timeRangeSelected={this.state.timeRangeSelected}
               setTimeRangeSelected={this.setTimeRangeSelected}
-
-
               dashboardStats={this.state.dashboardStats}
               dashboardTop5={this.state.dashboardTop5}
               setDashboardTop5={this.setDashboardTop5}
               fetchDashboardStats={this.fetchDashboardStats}
               fetchDashboadTop5={this.fetchDashboadTop5}
               fetchDashboard={this.fetchDashboard}
-
               component={DashboardContainer}
             />
             <PrivateRoute
@@ -214,7 +228,7 @@ class App extends Component {
               setTimeRangeSelected={this.setTimeRangeSelected}
               component={RoutesContainer}
             />
-            
+
             <PrivateRoute
               className="sectionContainer"
               path="/traces"
