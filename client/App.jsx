@@ -154,7 +154,7 @@ class App extends Component {
           <div>
             {/* public routes */}
             <PropsRoute
-              path="/(login|signup|overview)"
+              path="/(login|signup)"
               change_app={this.changeSelectedApp}
               apps={this.state.applications}
               component={NavBarMinimal}
@@ -162,15 +162,10 @@ class App extends Component {
             <Route className="sectionContainer" path="/login" render={login} />
             <Route
               className="sectionContainer"
-              path="/overview"
-              render={overview}
-            />
-            <Route
-              className="sectionContainer"
               path="/signup"
               render={signup}
             />
-            <Redirect from="/" to="/overview" key="from-root" />
+            <Redirect from="/" to="/login" key="from-root" />
             {/* private routes */}
             <PropsRoute
               path="/(dashboard|account|applications|routes|traces|analytics)"
