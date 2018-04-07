@@ -35,9 +35,9 @@ class NavBarMinimal extends Component {
         </Link>
         </ToolbarGroup>
         <ToolbarGroup>
-          <Link className="navbar-menu-item" to="/overview">
+          {/* <Link className="navbar-menu-item" to="/overview">
             <FlatButton size="medium" label="Overview" primary={true} />
-          </Link>
+          </Link> */}
           <FlatButton size="medium" label="Documentation" primary={true} href="https://github.com/retrowavelabs/nodereactionagent" />
           <IconMenu
             iconButtonElement={
