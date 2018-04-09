@@ -42,12 +42,16 @@ export default class LoginContainer extends Component {
     }
     else {
       if(!isValidUsername.isValid) {
-        // add error text
         this.setState({ usernameLoginErrorText: isValidUsername.errorText });
       }
+      else {
+        this.setState({ usernameLoginErrorText: ""});
+      }
       if(!isValidPassword.isValid) {
-        // add error text
         this.setState({ passwordLoginErrorText: isValidPassword.errorText });
+      }
+      else {
+        this.setState({ passwordLoginErrorText: "" });
       }
     }
   }
@@ -90,11 +94,13 @@ export default class LoginContainer extends Component {
       })
       .then(res => res.json())
       .then(user_id => {
-        //console.log("user_id = ", user_id);
+        console.log("user_id = ", user_id);
+        // console.log("login appears to be good: ", user_id);
         window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
           .then(apps => {
+            console.log("apps = ", apps);
             authService.isAuthenticated = true;
             this.setState({ redirectToReferer: true });
             let data = {};
