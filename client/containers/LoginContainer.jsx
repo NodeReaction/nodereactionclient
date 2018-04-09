@@ -28,6 +28,7 @@ export default class LoginContainer extends Component {
     this.isValidUsername = this.isValidUsername.bind(this);
     this.isValidPassword = this.isValidPassword.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.inValidLogin = this.inValidLogin.bind(this);
   }
 
   //We login here and also set up some inital state by using callback props. Not ideal
@@ -78,6 +79,11 @@ export default class LoginContainer extends Component {
     return validPassword;
   }
 
+  inValidLogin(){
+    this.setState({ usernameLoginErrorText: "please enter valid username" });
+    this.setState({ passwordLoginErrorText: "enter valid password" });
+  }
+
   handleLogin() {
     const user = {
       username: this.state.usernameLogin,
@@ -95,8 +101,14 @@ export default class LoginContainer extends Component {
       .then(res => res.json())
       .then(user_id => {
         console.log("user_id = ", user_id);
-        // console.log("login appears to be good: ", user_id);
-        window
+        if(user_id.type !== undefined){
+          // show an error msg
+          // bad_credentials
+          this.inValidLogin()
+        }
+        else {
+          // console.log("login appears to be good: ", user_id);
+          window
           .fetch(`/api/applications/${user_id}`)
           .then(res => res.json())
           .then(apps => {
@@ -108,6 +120,7 @@ export default class LoginContainer extends Component {
             data.user_id = user_id;
             this.props.cb(data);
           });
+        }
       });
   }
 
