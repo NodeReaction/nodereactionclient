@@ -139,7 +139,7 @@ export default class TracesContainer extends Component {
   redirectAnalytics = (...args) => {
     let str = args[1].route.slice();
     let newStr = str.replace(/\//g, "%2f");
-    newStr = "/" + newStr.slice(3);
+    newStr = newStr.slice(3);
     this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
 

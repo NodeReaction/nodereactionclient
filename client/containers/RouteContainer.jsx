@@ -36,13 +36,12 @@ export default class RouteContainer extends Component {
   fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
-
+    let fetchUrl = `/api/analytics/graph/${this.props.app_id}/${
+      this.props.match.params.route
+    }/${this.props.match.params.method}/${offset}/${datetime}`;
+    console.log(`fetchUrl: `, fetchUrl);
     window
-      .fetch(
-        `/api/analytics/graph/${this.props.app_id}/${
-          this.props.match.params.route
-        }/${this.props.match.params.method}/${offset}/${datetime}`
-      )
+      .fetch(fetchUrl)
       .then(res => res.json())
       .then(json => {
         json.graphData[4].forEach(elem => {
