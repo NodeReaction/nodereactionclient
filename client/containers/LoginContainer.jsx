@@ -19,14 +19,61 @@ export default class LoginContainer extends Component {
       message: "Event added to your calendar",
       open: false,
       usernameLogin: "",
+      usernameLoginErrorText: "",
       passwordLogin: "",
+      passwordLoginErrorText: "",
       redirectToReferer: false
     };
+    this.validateLogin = this.validateLogin.bind(this);
+    this.isValidUsername = this.isValidUsername.bind(this);
+    this.isValidPassword = this.isValidPassword.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
   }
 
   //We login here and also set up some inital state by using callback props. Not ideal
   //but hard to avoid with current UI set up
+  validateLogin(){
+    const isValidUsername = this.isValidUsername();
+    const isValidPassword = this.isValidPassword();
+
+    if(isValidUsername.isValid && isValidPassword.isValid){
+      this.handleLogin();
+      this.setState({ usernameLoginErrorText: "", passwordLoginErrorText: "" });
+    }
+    else {
+      if(!isValidUsername.isValid) {
+        // add error text
+        this.setState({ usernameLoginErrorText: isValidUsername.errorText });
+      }
+      if(!isValidPassword.isValid) {
+        // add error text
+        this.setState({ passwordLoginErrorText: isValidPassword.errorText });
+      }
+    }
+  }
+  
+  isValidUsername(){
+    let validUsername = {}
+    validUsername.isValid = true;
+    const username = this.state.usernameLogin;
+    if(username.length < 1){
+      validUsername.isValid = false;
+      validUsername.errorText = "username can not be blank";
+    }
+    return validUsername;
+  }
+
+  isValidPassword(){
+    let validPassword = {}
+    validPassword.isValid = true;
+    const password = this.state.passwordLogin;
+    if(password.length < 1){
+      validPassword.isValid = false;
+      validPassword.errorText = "password can not be blank";
+    }
+    return validPassword;
+  }
+
   handleLogin() {
     const user = {
       username: this.state.usernameLogin,
@@ -79,8 +126,10 @@ export default class LoginContainer extends Component {
                   this.setState({ usernameLogin })
                 }
                 hintText="Username"
+                floatingLabelText="Username"
                 id="usernameLogin"
                 autoComplete="username"
+                errorText={this.state.usernameLoginErrorText}
               />
               <br />
               <TextField
@@ -89,9 +138,11 @@ export default class LoginContainer extends Component {
                   this.setState({ passwordLogin })
                 }
                 hintText="Password"
+                floatingLabelText="Password"
                 id="passwordLogin"
                 type="password"
                 autoComplete="current-password"
+                errorText={this.state.passwordLoginErrorText}
               />
               <br />
               <br />
@@ -100,7 +151,7 @@ export default class LoginContainer extends Component {
                 size="medium"
                 label="Login"
                 primary={true}
-                onClick={this.handleLogin}
+                onClick={this.validateLogin}
               />
             </CardText>
           </Card>
