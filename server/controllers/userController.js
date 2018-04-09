@@ -144,7 +144,7 @@ userController.userVerify = (req, res, next) => {
       if (err) {
         err = new Error("Database error");
         err.functionName = "userController.verifyUser";
-        err.status = 400;
+        err.status = 500;
         next(err);
       }
       if (results.length) {
@@ -152,15 +152,17 @@ userController.userVerify = (req, res, next) => {
           res.locals.auth = true;
           res.locals.userId = results[0].user_id;
           // valid credentials
+          // console.log('res.locals.userId: ' + res.locals.userId);
           next();
         }
       } else {
-        err = new Error(
-          "Invalid credentials username: " + username + " password: " + password
-        );
-        err.functionName = "userController.verifyUser";
-        err.status = 400;
-        next(err);
+        let err = {};
+        err.message = "Invalid credentials username: " + username + " password: " + password;
+        err.type = "bad_credentials";
+        // err.functionName = "userController.verifyUser";
+        // err.status = 401;
+        console.log('err: ' , err);
+        res.status(401).json(err);
       }
     }
   );
