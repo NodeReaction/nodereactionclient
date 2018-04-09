@@ -119,12 +119,12 @@ class App extends Component {
   // cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
     console.log("muh", data);
-    //  const appName =
-    // data.apps[0].name.charAt(0).toUpperCase() +
-    //   data.apps[0].name.slice(1).toLowerCase();
+    if(data.apps[0].name && data.apps[0].application_id){
+      const appName = data.apps[0].name.charAt(0).toUpperCase() + data.apps[0].name.slice(1).toLowerCase();
+      this.setState({ selectedApp: data.apps[0].application_id });
+      this.setState({ selectedAppName: appName });
+    }
     this.setState({ applications: data.apps });
-    //this.setState({ selectedApp: data.apps[0].application_id });
-    //this.setState({ selectedAppName: appName });
     this.setState({ user_id: data.user_id });
   }
 
@@ -133,9 +133,11 @@ class App extends Component {
   }
 
   changeSelectedApp(app_id, name) {
-    //const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    if(app_id && name) {
+    const appName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
     this.setState({ selectedApp: app_id });
-    //this.setState({ selectedAppName: appName });
+    this.setState({ selectedAppName: appName });
+    }
   }
 
   render() {
