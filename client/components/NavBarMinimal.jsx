@@ -30,7 +30,7 @@ class NavBarMinimal extends Component {
     return (
       <Toolbar className="navbar-menu">
         <ToolbarGroup>
-        <Link className="navbar-menu-item" to="/overview">
+        <Link className="navbar-menu-item" to="/">
           <h2 className="logo">NodeReaction</h2>
         </Link>
         </ToolbarGroup>
