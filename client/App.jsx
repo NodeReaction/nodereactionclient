@@ -118,7 +118,7 @@ class App extends Component {
 
   // cb for when we get apps in login component. We will default select 1st
   populateTopState(data) {
-    console.log("muh", data);
+    // console.log("muh", data);
     if(data.apps[0].name && data.apps[0].application_id){
       const appName = data.apps[0].name.charAt(0).toUpperCase() + data.apps[0].name.slice(1).toLowerCase();
       this.setState({ selectedApp: data.apps[0].application_id });
