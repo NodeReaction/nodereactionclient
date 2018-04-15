@@ -150,6 +150,11 @@ export default class DashboardContainer extends Component {
     this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
 
+componentDidMount = () => {
+  // const i = this.props.timeRanges.length? 
+  // this.fetchData()
+} 
+
   render() {
     const responseTime = (this.props.dashboardStats.response_time === null)? 'no data' : parseFloat(this.props.dashboardStats.response_time).toFixed(3) + ' ms average';
     return (
