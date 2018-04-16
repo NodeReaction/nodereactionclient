@@ -45,8 +45,11 @@ router.get(
 router.get("/routes/:application_id/:offset", routeController.getRoutes);
 router.get(
   "/analytics/graph/:application_id/:route/:method/:offset/:time",
-  analyticsController.graphData,
-  analyticsController.rangeData
+  analyticsController.rangeData,
+  analyticsController.graphData, 
+  (req, res) => {
+    res.json(res.locals);
+  }
 );
 
 // USER

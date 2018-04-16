@@ -35,7 +35,7 @@ export default class LineGraphComponent extends Component {
         <br></br>
         <br></br>
         <div>
-          <BarChart layout="vertical" width={600} height={300} data={this.props.data.rangeData} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+          <BarChart layout="vertical" width={700} height={300} data={this.props.data.rangeData} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <XAxis type="number"/>
             <YAxis type="category" dataKey="Name" />
             <CartesianGrid strokeDasharray="3 3"/>

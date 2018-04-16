@@ -146,9 +146,14 @@ export default class DashboardContainer extends Component {
   redirectAnalytics = (...args) => {
     let str = args[1].route.slice();
     let newStr = str.replace(/\//g, "%2f");
-    newStr = "/" + newStr.slice(3);
+    newStr = newStr.slice(3);
     this.props.history.push(`analytics/${newStr}/${args[1].method}`);
   };
+
+componentDidMount = () => {
+  // const i = this.props.timeRanges.length? 
+  // this.fetchData()
+} 
 
   render() {
     const responseTime = (this.props.dashboardStats.response_time === null)? 'no data' : parseFloat(this.props.dashboardStats.response_time).toFixed(3) + ' ms average';

@@ -36,15 +36,16 @@ export default class RouteContainer extends Component {
   fetchGraphData = (app_id, offset, datetime) => {
     let graphDataJson = [];
     let rangeDataJson = [];
-
+    let fetchUrl = `/api/analytics/graph/${this.props.app_id}/${
+      this.props.match.params.route
+    }/${this.props.match.params.method}/${offset}/${datetime}`;
+    console.log(`fetchUrl: `, fetchUrl);
     window
-      .fetch(
-        `/api/analytics/graph/${this.props.app_id}/${
-          this.props.match.params.route
-        }/${this.props.match.params.method}/${offset}/${datetime}`
-      )
+      .fetch(fetchUrl)
       .then(res => res.json())
       .then(json => {
+       
+        if(Array.isArray(json.graphData)){
         json.graphData[4].forEach(elem => {
           graphDataJson.push({
             Time: elem.timekey2,
@@ -52,6 +53,7 @@ export default class RouteContainer extends Component {
             NumberOfRequests: elem.numRequests
           });
         });
+        } else {  console.log('=================' + JSON.stringify(json));}
         rangeDataJson.push({
           Name: `${json.rangeData[0].method} ${json.rangeData[0].route}`,
           AverageDuration: parseFloat(
@@ -82,7 +84,8 @@ export default class RouteContainer extends Component {
           </div>
         </div>
         <h3>Default time: {this.props.match.params.default_time}</h3>
-        <LineGraph data={this.state} />
+        <Paper
+              children={<LineGraph data={this.state} />} />
       </div>
     );
   }
