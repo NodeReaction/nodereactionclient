@@ -12,40 +12,51 @@ analyticsController.graphData = (req, res, next) => {
   let seconds;
   let datetime;
   const {application_id, route, method, offset, time} = req.params;
+  console.log(`analyticsController.graphData 
+    application_id: ${application_id}
+    route: ${route}
+    method: ${method}
+    offset: ${offset}
+    time: ${time}`)
   seconds = parseInt(offset) / 1000;
   let currentTime = new Date(Date.now()).toISOString().slice(0, 23).replace("T", " ");
   // todo: use sqlstring
+  let queryStr = `SET @date_min = '${time}';
+  SET @date_max = '${currentTime}';
+  CREATE TEMPORARY TABLE IF NOT EXISTS datesTable AS (
+    SELECT *, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_generator.date) / (${seconds} / 60)) * (${seconds} / 60)) as timekey2
+       -- ifnull(avg(duration), 0) as sum_val
+    from (
+       select DATE_ADD(@date_min, INTERVAL (@i := @i + (${seconds} / 60)) - 1 SECOND) as 'date'
+       from information_schema.columns,(SELECT @i := 0) gen_sub 
+       where DATE_ADD(@date_min, INTERVAL @i SECOND) BETWEEN @date_min AND @date_max
+    ) as date_generator
+  );
+  
+  CREATE TEMPORARY TABLE IF NOT EXISTS joinTable AS (
+    SELECT * FROM datesTable as a
+    LEFT JOIN (
+      SELECT AVG(duration) as avgdur, COUNT(*) as numRequests, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(start_timestamp) / (${seconds} / 60)) * (${seconds} / 60)) as timekey 
+      FROM transactions
+      WHERE application_id='${application_id}' and route='/${route}' and method='${method}' and start_timestamp > '${time}' 
+      GROUP BY UNIX_TIMESTAMP(start_timestamp) DIV (${seconds} / 60), timekey
+    ) as b
+    ON a.timekey2 = b.timekey
+    ORDER BY a.timekey2 ASC
+  );
+  
+  SELECT timekey2, IFNULL(avgdur,0) AS avgduration, IFNULL(numRequests,0) AS numRequests FROM joinTable;
+  DROP TABLE datesTable;
+  DROP TABLE joinTable;`;
+  console.log(queryStr);
   sql.query(
-    `SET @date_min = '${time}';
-    SET @date_max = '${currentTime}';
-
-    CREATE TEMPORARY TABLE IF NOT EXISTS datesTable AS (
-      SELECT *, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(date_generator.date) / (${seconds} / 60)) * (${seconds} / 60)) as timekey2
-         -- ifnull(avg(duration), 0) as sum_val
-      from (
-         select DATE_ADD(@date_min, INTERVAL (@i := @i + (${seconds} / 60)) - 1 SECOND) as 'date'
-         from information_schema.columns,(SELECT @i := 0) gen_sub 
-         where DATE_ADD(@date_min, INTERVAL @i SECOND) BETWEEN @date_min AND @date_max
-      ) as date_generator
-    );
-    
-    CREATE TEMPORARY TABLE IF NOT EXISTS joinTable AS (
-      SELECT * FROM datesTable as a
-      LEFT JOIN (
-        SELECT AVG(duration) as avgdur, COUNT(*) as numRequests, FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(start_timestamp) / (${seconds} / 60)) * (${seconds} / 60)) as timekey 
-        FROM transactions
-        WHERE application_id='${application_id}' and route='/${route}' and method='${method}' and start_timestamp > '${time}' 
-        GROUP BY UNIX_TIMESTAMP(start_timestamp) DIV (${seconds} / 60), timekey
-      ) as b
-      ON a.timekey2 = b.timekey
-      ORDER BY a.timekey2 ASC
-    );
-    
-    SELECT timekey2, IFNULL(avgdur,0) AS avgduration, IFNULL(numRequests,0) AS numRequests FROM joinTable;
-    DROP TABLE datesTable;
-    DROP TABLE joinTable;`, 
+    queryStr, 
   (err, result) => {
-    if (err) return res.send(err); 
+    if (err) {
+      console.log(`analyticsController.graphData query error: ${err}`);
+      res.locals.graphData = err;
+      return res.json(res.locals);
+    } 
     result[4].forEach(elem => {
       let utc = elem.timekey2.toISOString().slice(0, 19).replace("T", " ");
       let utcToLocal = moment.utc(utc).toDate();
@@ -64,17 +75,24 @@ analyticsController.graphData = (req, res, next) => {
 analyticsController.rangeData = (req, res, next) => {
   console.log('***params*** ', req.params);
   const {route, method, time} = req.params;
+  const sqlQueryStr = `select a.route, a.method, avg(a.duration), b.library, b.type, avg(b.duration) ` +
+  `from transactions a ` +
+  `right join traces b ` +
+  `on a.transaction_id = b.transaction_id ` +
+  `where a.start_timestamp > '${time}' and a.route='/${route}' and a.method='${method}' ` +
+  `group by library, b.type;`
+
+
   sql.query(
-    `select a.route, a.method, avg(a.duration), b.library, b.type, avg(b.duration) ` +
-    `from transactions a ` +
-    `right join traces b ` +
-    `on a.transaction_id = b.transaction_id ` +
-    `where a.start_timestamp > '${time}' and a.route='/${route}' and a.method='${method}' ` +
-    `group by library, b.type;`, 
+    sqlQueryStr, 
   (err, result) => {
-    if (err) return res.send(err);
+    if (err) {
+      console.log(`analyticsController.rangeData error: ${sqlQueryStr}`);
+      return res.send(err)
+    };
     res.locals.rangeData = result;
-    res.send(res.locals);
+    console.log(`analyticsController.rangeData success: ${JSON.stringify(res.locals)}`);
+    next();
   });
 };
 
