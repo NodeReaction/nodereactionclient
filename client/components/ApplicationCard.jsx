@@ -21,9 +21,9 @@ export default class ApplicationCard extends Component {
           showExpandableButton={true}
           title={<CardTitle title={this.props.title} subtitle={this.props.subtitle} />}
         />
-        
+
         <CardText expandable={true}> {this.props.text}</CardText>
       </Card>
     );
-  }
-}
+  };
+};
